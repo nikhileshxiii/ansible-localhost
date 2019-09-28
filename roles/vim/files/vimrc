@@ -1,0 +1,25 @@
+" My edits
+set number
+syntax on
+set tabstop=4
+set softtabstop=4
+set shiftwidth=4
+set expandtab
+set autoindent
+set updatetime=1000
+
+
+" Plugins will be downloaded under the specified directory.
+call plug#begin('~/.vim/plugged')
+Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
+"
+" " Declare the list of plugins.
+Plug 'tpope/vim-sensible'
+Plug 'junegunn/seoul256.vim'
+"
+" " List ends here. Plugins become visible to Vim after this call.
+Plug 'itchyny/lightline.vim'
+
+Plug 'terryma/vim-multiple-cursors'
+Plug 'airblade/vim-gitgutter'
+call plug#end()

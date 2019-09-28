@@ -1,0 +1,62 @@
+# - name: Docker Installation
+#   apt:
+#     name: docker.io
+#     state: present
+#     update_cache: true
+
+# - name: install APT Transport HTTPS
+#   apt:
+#     name: apt-transport-https
+#     state: present
+
+# - name: add Kubernetes apt-key for APT repository
+#   apt_key:
+#     url: https://packages.cloud.google.com/apt/doc/apt-key.gpg
+#     state: present
+
+# - name: add Kubernetes APT repository
+#   apt_repository:
+#    repo: deb http://apt.kubernetes.io/ kubernetes-xenial main
+#    state: present
+#    filename: 'kubernetes'
+
+# - name: install kubelet
+#   apt:
+#     name: kubelet
+#     state: absent
+#     update_cache: true
+
+# - name: install kubeadm
+#   apt:
+#     name: kubeadm
+#     state: absent
+#     update_cache: true
+
+
+- name: software-properties-common
+  apt:
+    name: software-properties-common
+    state: latest
+    update_cache: yes
+
+# On Ubuntu target:
+- apt_repository: 
+    repo: ppa:projectatomic/ppa
+
+# - name: podman
+#   apt:
+#     name: podman
+#     state: present
+#     update_cache: yes
+
+- name: microk8s
+  snap:
+    name: microk8s
+    state: present
+    classic: yes
+
+- name: helm
+  snap:
+    name: helm
+    state: present
+    classic: yes

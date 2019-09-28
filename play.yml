@@ -1,0 +1,12 @@
+- hosts: local
+  # sudo: yes
+  become: yes
+  become_method: sudo
+  roles:
+  - update
+  - common
+  - create-new-user
+  - linux-headers
+  - players
+  - tools
+  - kubernetes

@@ -1,0 +1,96 @@
+- name: Install htop
+  apt:
+    name: htop
+    state: present
+    update_cache: true
+
+- name: install APT Transport HTTPS
+  apt:
+    name: apt-transport-https
+    state: present
+
+
+- name: install linux-generic
+  apt:
+    name: linux-generic
+    state: present
+
+- name: install linux-headers-generic
+  apt:
+    name: linux-headers-generic
+    state: present
+
+- name: install firefox
+  apt:
+    name: firefox
+    state: present
+
+- name: install wget
+  apt:
+    name: wget
+    state: present
+
+- name: install curl
+  apt:
+    name: curl
+    state: present
+
+- name: install mplayer
+  apt:
+    name: mplayer
+    state: present
+
+- name: install vlc
+  apt:
+    name: vlc
+    state: present
+
+- name: install ffmpeg
+  apt:
+    name: ffmpeg
+    state: present
+
+- name: install ranger
+  apt:
+    name: ranger
+    state: present            
+
+- name: install mpv
+  apt:
+    name: mpv
+    state: present            
+ 
+- name: install openshot
+  apt:
+    name: openshot
+    state: present
+
+- name: install kdenlive
+  apt:
+    name: kdenlive
+    state: present
+
+- name: install audacity
+  apt:
+    name: audacity
+    state: present
+
+- name: install build-essential
+  apt:
+    name: build-essential
+    state: present
+
+- name: install checkinstall
+  apt:
+    name: checkinstall
+    state: present
+
+- name: install texlive
+  apt:
+    name: texlive
+    state: present
+
+- name: install ranger
+  apt:
+    name: ranger
+    state: present

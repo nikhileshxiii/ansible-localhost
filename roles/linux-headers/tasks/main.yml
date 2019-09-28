@@ -1,0 +1,19 @@
+- name: install build-essential
+  apt:
+    name: build-essential
+    state: present
+
+- name: install checkinstall
+  apt:
+    name: checkinstall
+    state: present
+
+- name: install linux-generic
+  apt:
+    name: linux-generic
+    state: present
+
+- name: install linux-headers-generic
+  apt:
+    name: linux-headers-generic
+    state: present
