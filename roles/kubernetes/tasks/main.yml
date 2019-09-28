@@ -49,14 +49,12 @@
 #     state: present
 #     update_cache: yes
 
-- name: microk8s
+- name: Install snap packages for helm, docker and microk8s
   snap:
-    name: microk8s
+    name: "{{ item }}"
     state: present
     classic: yes
-
-- name: helm
-  snap:
-    name: helm
-    state: present
-    classic: yes
+  with_items:
+  - helm
+  - docker
+  - microk8s

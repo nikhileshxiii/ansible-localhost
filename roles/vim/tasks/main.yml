@@ -2,6 +2,6 @@
 - name: Place vimrc on ~/.vimrc
   copy:
     src: vimrc
-    dest: /home/{ username }/.vimrc
+    dest: /home/{{ username }}/.vimrc
     mode: 0644
-    owner: "{ username }"
+    owner: "{{ username }}"

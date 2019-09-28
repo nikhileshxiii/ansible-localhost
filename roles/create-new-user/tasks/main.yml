@@ -32,3 +32,25 @@
     regexp: "{{ username }} ALL"
     line: "{{ username }} ALL=(ALL) ALL"
     state: present
+
+- git:
+    repo: https://github.com/robbyrussell/oh-my-zsh.git
+    dest: /home/{{ username }}/.oh-my-zsh
+
+- name: check if rules file exists
+  stat: 
+    path: /home/{{ username }}/.oh-my-zsh/templates/zshrc.zsh-template
+  register: check_zsh_exists
+
+- name: Copy default zshrc file
+  copy: src="/home/{{ username }}/.oh-my-zsh/templates/zshrc.zsh-template" dest="/home/{{ username }}/.zshrc"
+  when: check_zsh_exists.stat.exists == True 
+
+
+- name: copy alias and export files
+  file:
+    src: "{{ item }}"
+    dest: /home/{{ username }}/.{{ item }}
+  with_items:
+    - alias_file.sh
+    - tmux.conf
