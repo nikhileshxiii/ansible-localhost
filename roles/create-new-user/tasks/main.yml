@@ -54,3 +54,4 @@
   with_items:
     - alias_file.sh
     - tmux.conf
+    - source.sh
