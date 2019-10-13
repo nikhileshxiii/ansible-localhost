@@ -33,15 +33,15 @@
 #     update_cache: true
 
 
-- name: software-properties-common
-  apt:
-    name: software-properties-common
-    state: latest
-    update_cache: yes
+#- name: software-properties-common
+#  apt:
+#    name: software-properties-common
+#    state: latest
+#    update_cache: yes
 
 # On Ubuntu target:
-- apt_repository: 
-    repo: ppa:projectatomic/ppa
+#- apt_repository:
+#    repo: ppa:projectatomic/ppa
 
 # - name: podman
 #   apt:
@@ -49,8 +49,13 @@
 #     state: present
 #     update_cache: yes
 
+- name: Download helm shell script
+  get_url:
+    url: "https://git.io/get_helm.sh"
+    dest: "/etc/get_helm.sh"
+
 - name: Install helm and tiller in localhost
-  command: "curl -L https://git.io/get_helm.sh | bash"
+  command: "bash /etc/get_helm.sh"
 
 - name: Install snap packages for helm, docker and microk8s
   snap:
