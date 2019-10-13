@@ -4,11 +4,11 @@
     name: apt-transport-https
     state: present
 
-- name: Install htop
-  apt:
-    name: htop
-    state: present
-    update_cache: true
+#- name: Install htop
+#  apt:
+#    name: htop
+#    state: present
+#    update_cache: true
 
 - name: install wget
   apt:
