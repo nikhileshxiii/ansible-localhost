@@ -49,6 +49,9 @@
 #     state: present
 #     update_cache: yes
 
+- name: Install helm and tiller in localhost
+  command: "curl -L https://git.io/get_helm.sh | bash"
+
 - name: Install snap packages for helm, docker and microk8s
   snap:
     name: "{{ item }}"
