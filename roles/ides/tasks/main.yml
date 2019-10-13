@@ -1,0 +1,23 @@
+- name: Remove Intellij
+  file:
+    state: absent
+    path: "/home/{{ username }}/.IntelliJIdea2019.*"
+
+- name: Remove Pycharm
+  file:
+    state: absent
+    path: "/home/{{ username }}/.PyCharm2019.*"
+
+- name: Remove .java
+  file:
+    state: absent
+    path: "/home/{{ username }}/.java"
+
+- name: Install pycharm and intellij
+  snap:
+    name: "{{ item }}"
+    state: present
+    classic: yes
+  with_items:
+  - pycharm-professional
+  - intellij-idea-ultimate
