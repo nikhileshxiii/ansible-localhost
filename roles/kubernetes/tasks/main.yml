@@ -55,6 +55,6 @@
     state: present
     classic: yes
   with_items:
-  - helm
+      #  - helm
   - docker
   - microk8s
