@@ -27,3 +27,8 @@
   apt:
     name: texlive
     state: present
+
+- name: Install thunderbird
+  apt:
+    state: present
+    name: thunderbird
