@@ -52,10 +52,10 @@
 - name: Download helm shell script
   get_url:
     url: "https://git.io/get_helm.sh"
-    dest: "/etc/get_helm.sh"
+    dest: "/tmp/get_helm.sh"
 
 - name: Install helm and tiller in localhost
-  command: "bash /etc/get_helm.sh"
+  command: "bash /tmp/get_helm.sh"
 
 - name: Install snap packages for helm, docker and microk8s
   snap:
@@ -66,3 +66,8 @@
       #  - helm
   - docker
   - microk8s
+
+- name: Install docker-compose
+  apt:
+    state: present
+    name: docker-compose
