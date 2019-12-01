@@ -29,4 +29,8 @@
   apt:
     name: tree
     state: present
-    
+
+- name: install powerline fonts
+  apt:
+    name: fonts-powerline
+    state: present
