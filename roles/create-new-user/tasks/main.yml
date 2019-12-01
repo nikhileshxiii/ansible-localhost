@@ -1,17 +1,17 @@
 ---
 - name: Creating a user named {{ username }} on the specified web server.
-  user: 
+  user:
     name: "{{ username }}"
     # password: "{{ hashed_password }}"
     state: present
     shell: /bin/zsh
     groups:
-    - sudo
-    - docker
-    - "{{ username }}"
-    - microk8s
-    - lxd
-    - docker
+      - sudo
+      - docker
+      - "{{ username }}"
+      - microk8s
+      - lxd
+      - docker
     append: yes
     generate_ssh_key: yes
     ssh_key_bits: 2048
@@ -19,7 +19,7 @@
 
 # - name: Copy .ssh/id_rsa from host box to the remote box for user {{ username }}
 #   become: true
-#   copy: 
+#   copy:
 #     src: ~/.ssh/id_rsa.pub
 #     dest: /home/{{ username }}/.ssh/authorized_keys
 #     mode: 0600
@@ -37,15 +37,18 @@
     repo: https://github.com/robbyrussell/oh-my-zsh.git
     dest: /home/{{ username }}/.oh-my-zsh
 
+- git:
+    repo: https://github.com/bhilburn/powerlevel9k.git
+    dest: /home/{{ username }}//.oh-my-zsh/custom/themes/powerlevel9k
+
 - name: check if rules file exists
-  stat: 
+  stat:
     path: /home/{{ username }}/.oh-my-zsh/templates/zshrc.zsh-template
   register: check_zsh_exists
 
 - name: Copy default zshrc file
   copy: src="/home/{{ username }}/.oh-my-zsh/templates/zshrc.zsh-template" dest="/home/{{ username }}/.zshrc"
-  when: check_zsh_exists.stat.exists == True 
-
+  when: check_zsh_exists.stat.exists == True
 
 - name: copy alias and export files
   file:
@@ -55,3 +58,5 @@
     - alias_file.sh
     - tmux.conf
     - source.sh
+    - zshrc
+    - bashrc
