@@ -10,6 +10,7 @@ export HELM_HOST=localhost
 
 
 if [ -f ~/.sdkman/bin/sdkman-init.sh ]
+then
     source ~/.sdkman/bin/sdkman-init.sh
 fi
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
