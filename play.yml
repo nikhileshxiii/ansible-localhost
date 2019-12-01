@@ -3,11 +3,14 @@
   become: yes
   become_method: sudo
   roles:
-  - update
-  - common
-  - create-new-user
-  - linux-headers
-  - players
-  - tools
-  - kubernetes
-  - vim
+  # - browsers
+  # - sdkman
+  # - ides
+  # - update
+  # - common
+  # - create-new-user
+  # - linux-headers
+  # - players
+  # - tools
+  # - kubernetes
+  # - vim
