@@ -1,0 +1,9 @@
+- name: install ranger
+  apt:
+    name: ranger
+    state: present
+
+- name: copy ranger rc.conf
+  synchronize:
+    src: rifle.conf
+    dest: /home/{{ username }}/.config/ranger/{{ item }}
