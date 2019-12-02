@@ -1,0 +1,10 @@
+- name: Install snap packages for golang
+  snap:
+    name: go
+    state: present
+    classic: yes
+
+- name: Setup golib
+  command: mkdir /home/{{ username }}/golib
+  
+    
