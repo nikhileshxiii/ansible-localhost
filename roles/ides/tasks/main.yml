@@ -1,12 +1,16 @@
-- name: Remove Intellij
+- name: Remove All jetbrains apps
   file:
     state: absent
-    path: "/home/{{ username }}/.IntelliJIdea2019.*"
-
-- name: Remove Pycharm
-  file:
-    state: absent
-    path: "/home/{{ username }}/.PyCharm2019.*"
+    path: "/home/{{ username }}/{{ item.jetbrains }}"
+  loop:
+    - { jetbrains: .IntelliJIdea2019.* }
+    - { jetbrains: .PyCharm2019.* }
+    - { jetbrains: .CLion2019.* }
+    - { jetbrains: .DataGrip2019.* }
+    - { jetbrains: .GoLand2019.* }
+    - { jetbrains: .RubyMine2019.* }
+    - { jetbrains: .WebStorm2019.* }
+    - { jetbrains: .java }
 
 - name: Remove .java
   file:
@@ -15,9 +19,14 @@
 
 - name: Install pycharm and intellij
   snap:
-    name: "{{ item }}"
+    name:
+      - pycharm-professional
+      - intellij-idea-ultimate
+      - webstorm
+      - datagrip
+      - clion
+      - rubymine
+      - goland
     state: present
     classic: yes
-  with_items:
-  - pycharm-professional
-  - intellij-idea-ultimate
+    channel: latest/edge
