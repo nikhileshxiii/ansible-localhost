@@ -57,17 +57,17 @@
 #- name: Install helm and tiller in localhost
 #  command: "bash /tmp/get_helm.sh"
 
-- name: Install snap packages for helm, docker and microk8s
-  snap:
-    name: "{{ item }}"
-    state: present
-    classic: yes
-  with_items:
-      #  - helm
-  - docker
-#  - microk8s
+# - name: Install snap packages for helm, docker and microk8s
+#   snap:
+#     name: "{{ item }}"
+#     state: present
+#     classic: yes
+#   with_items:
+#      - helm
+#      - docker
+#      - microk8s
 
 - name: Install docker-compose
   apt:
     state: present
-    name: docker-compose
+    name: ["docker-compose", "docker"]
