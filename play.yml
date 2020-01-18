@@ -14,5 +14,5 @@
     - browsers
     - keeweb
 #    - kubernetes
-#    - comm
-#    - sdkman # TODO: sdkman installation is not working yet
+    - comm
+    - sdkman # TODO: sdkman installation is not working yet
