@@ -27,6 +27,7 @@
       - clion
       - rubymine
       - goland
+      - android-studio-canary
     state: present
     classic: yes
     channel: latest/edge
