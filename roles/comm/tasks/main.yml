@@ -4,24 +4,27 @@
     name: thunderbird
 
 - name: Does the Signal apt file exist?
-  command: test -f {{ signal_apt_file }}
+  stat:
+    path: '{{ signal_apt_file }}'
   register: signal_apt_exists
-  ignore_errors: True
+
+- debug:
+    msg: signal status = {{ signal_apt_exists }}
 
 - name: Add signal apt file
   apt_key:
     url: https://updates.signal.org/desktop/apt/keys.asc
     state: present
-#  when: signal_apt_exists.rc == 1
+  when: signal_apt_exists.stat.exists == False
 
 - name: Add signal dev
   copy: content="deb [arch=amd64] https://updates.signal.org/desktop/apt xenial main" dest={{ signal_apt_file }} owner=root group=root mode=644
-#  when: signal_apt_exists.rc == 1
+  when: signal_apt_exists.stat.exists == False
 
 - name: Update apt cache
   apt: update_cache=yes
 
 - name: Run update and install signal
   apt:
-    name: signal-desktop
+    name: signal-desktop-beta
     update_cache: yes
