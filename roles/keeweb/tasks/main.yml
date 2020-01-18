@@ -1,0 +1,12 @@
+---
+
+- name: Download keeweb deb file
+  get_url:
+    url: https://github.com/keeweb/keeweb/releases/download/v1.12.3/KeeWeb-1.12.3.linux.x64.deb
+    dest: /tmp/keeweb.deb
+
+- name: Install keeweb package from tmp
+  apt:
+    deb: /tmp/keeweb.deb
+
+...
