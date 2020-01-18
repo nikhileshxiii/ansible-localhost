@@ -17,7 +17,7 @@
     state: absent
     path: "/home/{{ username }}/.java"
 
-- name: Install pycharm and intellij
+- name: Install all ides
   snap:
     name:
       - pycharm-professional
@@ -28,6 +28,7 @@
       - rubymine
       - goland
       - android-studio-canary
+      - code
     state: present
     classic: yes
     channel: latest/edge
