@@ -65,4 +65,9 @@
     - tmux.conf
     - source.sh
     - zshrc
-    # - bashrc
+    - bashrc
+
+- name: copy alias and export files
+  synchronize:
+    src: disable-ipv6.sh
+    dest: /home/{{ username }}/disable-ipv6.sh
