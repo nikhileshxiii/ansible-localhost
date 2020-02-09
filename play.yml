@@ -13,6 +13,8 @@
     - ides
     - browsers
     - keeweb
+    - vpn
+    - torrent
 #    - kubernetes
     - comm
     - sdkman # TODO: sdkman installation is not working yet
