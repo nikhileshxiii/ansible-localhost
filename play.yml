@@ -3,16 +3,18 @@
   become: yes
   become_method: sudo
   roles:
-#    - create-new-user
-#    - common
-#    - update
-#    - linux-headers
-#    - players
-#    - tools
-#    - vim
+    - create-new-user
+    - common
+    - update
+    - linux-headers
+    - players
+    - tools
+    - vim
+    - ides
+    - browsers
+    - keeweb
+    - vpn
+    - torrent
 #    - kubernetes
-#    - nordvpn
-#    - browsers
-#    - comm
-#    - sdkman # TODO: sdkman installation is not working yet
-#    - ide
+    - comm
+    - sdkman # TODO: sdkman installation is not working yet

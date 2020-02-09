@@ -61,5 +61,10 @@ export SCM_CHECK=true
 # Load Bash It
 source "$BASH_IT"/bash_it.sh
 
-source ~/.alias_file.sh
-source ~/.source.sh
+if [ -z ~/.alias.sh ]; then
+    source ~/.alias.sh
+fi
+
+if [ -z ~/.source.sh ]; then
+    source ~/.source.sh
+fi

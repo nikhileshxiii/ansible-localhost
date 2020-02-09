@@ -4,7 +4,7 @@
     state: present
     classic: yes
 
-- name: Setup golib
-  command: mkdir /home/{{ username }}/golib
+# - name: Setup golib
+#   command: mkdir /home/{{ username }}/golib
   
     

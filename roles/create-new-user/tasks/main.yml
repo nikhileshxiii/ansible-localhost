@@ -1,15 +1,21 @@
 ---
+- name: Install docker-compose
+  apt:
+    state: present
+    name: ["docker-compose", "docker", "lxd", "adb"]
+
 - name: Creating a user named {{ username }} on the specified web server.
   user:
     name: "{{ username }}"
     # password: "{{ hashed_password }}"
     state: present
-    shell: /bin/zsh
+    shell: /bin/bash
     groups:
       - sudo
       - docker
       - "{{ username }}"
-      - microk8s
+      # - microk8s
+      - plugdev
       - lxd
       - docker
     append: yes
@@ -55,8 +61,8 @@
     src: "{{ item }}"
     dest: /home/{{ username }}/.{{ item }}
   with_items:
-    - alias_file.sh
+    - alias.sh
     - tmux.conf
     - source.sh
     - zshrc
-    - bashrc
+    # - bashrc

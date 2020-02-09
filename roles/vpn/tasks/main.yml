@@ -1,0 +1,28 @@
+---
+- name: Install openvpn
+  package:
+    name: openvpn
+    state: present
+    update_cache: yes
+
+- name: Install nordvpn
+  apt:
+    deb: https://repo.nordvpn.com/deb/nordvpn/debian/pool/main/nordvpn-release_1.0.0_all.deb
+
+- name: Download openvpn profiles
+  get_url:
+    url: https://downloads.nordcdn.com/configs/archives/servers/ovpn.zip
+    dest: /etc/openvpn
+
+- name: openvpn easy-rsa
+  file:
+    state: directory
+    path: /etc/openvpn/easy-rsa
+
+- name: Unzip openvpn profiles
+  unarchive:
+    src: /etc/openvpn/ovpn.zip
+    dest: /etc/openvpn/
+    remote_src: yes
+
+...

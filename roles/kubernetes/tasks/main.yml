@@ -10,7 +10,7 @@
 
 - name: Docker Installation
   apt:
-    name: ['docker.io', 'docker-compose']
+    name: ['docker.io', 'docker-compose', 'docker']
     state: present
     update_cache: true
 
@@ -28,25 +28,25 @@
 - debug:
     msg:  "Virtualization in the os is enabled/disabled: {{ check_virtualization.stdout }}"
 
-- name: Get latest kubectl version to tmp file
-  get_url:
-    url:  https://storage.googleapis.com/kubernetes-release/release/stable.txt
-    dest: /tmp/kubectlversion.txt
-
-- name: Get kubectl version from tmp file
-  command:  cat /tmp/kubectlversion.txt
-  register: kubectl_version
+#- name: Get latest kubectl version to tmp file
+#  get_url:
+#    url:  https://storage.googleapis.com/kubernetes-release/release/stable.txt
+#    dest: /tmp/kubectlversion.txt
+#
+#- name: Get kubectl version from tmp file
+#  command:  cat /tmp/kubectlversion.txt
+#  register: kubectl_version
   #  command: curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt
   #  warn: false
 
-- debug:
-    msg: "kubectl version = {{ kubectl_version.stdout }}"
-
-- name: Install kubectl
-  get_url:
-    url:  https://storage.googleapis.com/kubernetes-release/release/{{ kubectl_version.stdout }}/bin/linux/amd64/kubectl
-    mode: 0755
-    dest: /usr/local/bin/kubectl
+#- debug:
+#    msg: "kubectl version = {{ kubectl_version.stdout }}"
+#
+#- name: Install kubectl
+#  get_url:
+#    url:  https://storage.googleapis.com/kubernetes-release/release/{{ kubectl_version.stdout }}/bin/linux/amd64/kubectl
+#    mode: 0755
+#    dest: /usr/local/bin/kubectl
 
 - name: Install minikube
   get_url:
@@ -55,13 +55,13 @@
     dest: /usr/local/bin/minikube
     validate_certs: no
 
-- name: Download helm shell script
-  get_url:
-    url: "https://git.io/get_helm.sh"
-    dest: "/tmp/get_helm.sh"
-
-- name: Install helm and tiller in localhost
-  command: "bash /tmp/get_helm.sh"
+#- name: Download helm shell script
+#  get_url:
+#    url: "https://git.io/get_helm.sh"
+#    dest: "/tmp/get_helm.sh"
+#
+#- name: Install helm and tiller in localhost
+#  command: "bash /tmp/get_helm.sh"
 
   #
   #- name: Add docker GPG key apt key
@@ -131,6 +131,13 @@
   #     state: present
   #     update_cache: yes
 
+#- name: Download helm shell script
+#  get_url:
+#    url: "https://git.io/get_helm.sh"
+#    dest: "/tmp/get_helm.sh"
+#
+#- name: Install helm and tiller in localhost
+#  command: "bash /tmp/get_helm.sh"
 
 
   #- name: Install snap packages for helm, docker and microk8s
@@ -142,5 +149,3 @@
   #  - helm
   #  - docker
   #  - microk8s
-
-

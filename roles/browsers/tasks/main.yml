@@ -1,3 +1,4 @@
+---
 - name: install firefox
   apt:
     name: firefox
@@ -34,11 +35,15 @@
   when: google_apt_exists.rc == 1
 
 - name: Update apt cache
-  apt: update_cache=yes
+  apt: 
+    update_cache: yes
   when: google_apt_exists.rc == 1
 
 - name: Install Google Chrome
-  apt: pkg=google-chrome-stable state=installed
+  apt: 
+    name: google-chrome-unstable 
+    state: installed
+  when: google_apt_exists.rc == 1
 
 
 ##################### Brave browser
@@ -86,3 +91,4 @@
 - name: Run update and install brave-browser-dev
   apt:
     name: brave-browser-dev
+...
