@@ -61,7 +61,7 @@
     src: "{{ item }}"
     dest: /home/{{ username }}/.{{ item }}
   with_items:
-    - alias_file.sh
+    - alias.sh
     - tmux.conf
     - source.sh
     - zshrc
