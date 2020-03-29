@@ -1,94 +1,95 @@
 ---
 - name: install firefox
-  apt:
+  package:
     name: firefox
     state: present
 
 - name: install chromium
-  apt:
+  package:
     name: chromium-browser
     state: present
+  when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
 
 - name: install wget
-  apt:
+  package:
     name: wget
     state: present
 
 - name: install curl
-  apt:
+  package:
     name: curl
     state: present
 
 ################### Google chrome
 
-- name: Does the Google apt file exist?
-  command: test -f {{google_chrome_apt_file}}
-  register: google_apt_exists
-  ignore_errors: True
+# - name: Does the Google apt file exist?
+#  command: test -f {{google_chrome_apt_file}}
+#  register: google_apt_exists
+#  ignore_errors: True
 
-- name: Add Google Chrome key
-  shell: wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add -
-  when: google_apt_exists.rc == 1
+#- name: Add Google Chrome key
+#  shell: wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add -
+#  when: google_apt_exists.rc == 1
 
-- name: Add Google Chrome repo
-  copy: content="deb http://dl.google.com/linux/chrome/deb/ stable main" dest={{google_chrome_apt_file}} owner=root group=root mode=644
-  when: google_apt_exists.rc == 1
+#- name: Add Google Chrome repo
+#  copy: content="deb http://dl.google.com/linux/chrome/deb/ stable main" dest={{google_chrome_apt_file}} owner=root group=root mode=644
+#  when: google_apt_exists.rc == 1
 
-- name: Update apt cache
-  apt: 
-    update_cache: yes
-  when: google_apt_exists.rc == 1
+#- name: Update apt cache
+#  apt: 
+#    update_cache: yes
+#  when: google_apt_exists.rc == 1
 
-- name: Install Google Chrome
-  apt: 
-    name: google-chrome-unstable 
-    state: installed
-  when: google_apt_exists.rc == 1
+#- name: Install Google Chrome
+#  apt: 
+#    name: google-chrome-unstable 
+#    state: installed
+#  when: google_apt_exists.rc == 1
 
 
 ##################### Brave browser
 
-- name: Get ubuntu-codename
-  shell:  cat /etc/os-release | grep -i "UBUNTU_CODENAME" | cut -d "=" -f2
-  register: ubuntucode
+#- name: Get ubuntu-codename
+#  shell:  cat /etc/os-release | grep -i "UBUNTU_CODENAME" | cut -d "=" -f2
+#  register: ubuntucode
 
-- name: brave apt file
-  shell: echo "/etc/apt/sources.list.d/brave-browser-release-{{ ubuntucode.stdout }}.list"
-  register: brave_apt_file
+#- name: brave apt file
+#  shell: echo "/etc/apt/sources.list.d/brave-browser-release-{{ ubuntucode.stdout }}.list"
+#  register: brave_apt_file
 
-- debug:
-    msg: ubuntucode = {{ ubuntucode.stdout }}
+#- debug:
+#    msg: ubuntucode = {{ ubuntucode.stdout }}
 
-- debug:
-    msg: brave_apt_file = {{ brave_apt_file.stdout }}
+#- debug:
+#    msg: brave_apt_file = {{ brave_apt_file.stdout }}
 
-- name: Does the Brave apt file exist?
-  command: test -f {{ brave_apt_file.stdout }}
-  register: brave_apt_exists
-  ignore_errors: True
+#- name: Does the Brave apt file exist?
+#  command: test -f {{ brave_apt_file.stdout }}
+#  register: brave_apt_exists
+#  ignore_errors: True
 
-- name: Add brave-dev apt key
-  apt_key:
-    url: https://brave-browser-apt-dev.s3.brave.com/brave-core-nightly.asc
-    keyring: /etc/apt/trusted.gpg.d/brave-browser-dev.gpg
-    state: present
-  when: brave_apt_exists.rc == 1
+#- name: Add brave-dev apt key
+#  apt_key:
+#    url: https://brave-browser-apt-dev.s3.brave.com/brave-core-nightly.asc
+#    keyring: /etc/apt/trusted.gpg.d/brave-browser-dev.gpg
+#    state: present
+#  when: brave_apt_exists.rc == 1
 
-- name: Add brave dev
-  copy: content="deb [arch=amd64] https://brave-browser-apt-dev.s3.brave.com/ {{ ubuntucode.stdout }} main" dest={{ brave_apt_file.stdout }} owner=root group=root mode=644
-  when: brave_apt_exists.rc == 1
+#- name: Add brave dev
+#  copy: content="deb [arch=amd64] https://brave-browser-apt-dev.s3.brave.com/ {{ ubuntucode.stdout }} main" dest={{ brave_apt_file.stdout }} owner=root group=root mode=644
+#  when: brave_apt_exists.rc == 1
 
-- name: install |brave| add the apt repository
-  become: true
-  apt_repository:
-    repo: deb [arch=amd64] https://brave-browser-apt-release.s3.brave.com/{{ ubuntucode }} main
-    state: absent
-  when: brave_apt_exists.rc == 1
+#- name: install |brave| add the apt repository
+#  become: true
+#  apt_repository:
+#    repo: deb [arch=amd64] https://brave-browser-apt-release.s3.brave.com/{{ ubuntucode }} main
+#    state: absent
+#  when: brave_apt_exists.rc == 1
 
-- name: Update apt cache
-  apt: update_cache=yes
+#- name: Update apt cache
+#  apt: update_cache=yes
 
-- name: Run update and install brave-browser-dev
-  apt:
-    name: brave-browser-dev
+#- name: Run update and install brave-browser-dev
+#  apt:
+#    name: brave-browser-dev
 ...
