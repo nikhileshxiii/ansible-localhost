@@ -8,6 +8,10 @@ Configure new installation of ubuntu based systems with my default configs.
 - Install new virtualenv
 - Run run-playbook.sh
 
+## Print ansible facts
+
+ansible localhost -m setup
+
 ## Credits and Acknowledgements
 
 Ripped code from multiple sources
