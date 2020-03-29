@@ -1,13 +1,14 @@
-- name: Install snap packages for lang
+- name: Install snap packages for golang
   snap:
-    name: "{{ lang }}"
+    name: go
     state: present
     classic: yes
-  with_items:
-  - go
-  - ruby-full
-
+  
+- name: Install ruby
+  package:
+    state: present
+    name: ruby-full
+  when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu' or ansible_distribution == 'elementary OS'
 # - name: Setup golib
 #   command: mkdir /home/{{ username }}/golib
-  
-    
+

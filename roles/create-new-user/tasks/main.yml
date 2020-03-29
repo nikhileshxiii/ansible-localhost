@@ -10,7 +10,7 @@
     - lxd
     - adb
     - snapd
-  when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
+  when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu' or ansible_distribution == 'elementary OS'
 
 - name: Install kvm
   package:
@@ -22,7 +22,7 @@
    - libvirt-clients 
    - bridge-utils
    - virt-manager
-  when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
+  when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu' or ansible_distribution == 'elementary OS'
 
 - name: Creating a user named {{ username }} on the specified web server.
   user:

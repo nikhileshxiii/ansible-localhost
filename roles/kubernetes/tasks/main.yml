@@ -12,7 +12,7 @@
   - docker-compose
   - docker-ce
   - docker-ee
-  when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
+  when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu' or ansible_distribution == 'elementary OS'
 
 - name: Install prereqs
   apt:
