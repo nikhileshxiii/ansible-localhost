@@ -1,5 +1,5 @@
 - name: install ranger
-  apt:
+  package:
     name: ranger
     state: present
 
