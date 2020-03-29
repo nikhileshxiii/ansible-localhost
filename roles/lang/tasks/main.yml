@@ -1,8 +1,11 @@
-- name: Install snap packages for golang
+- name: Install snap packages for lang
   snap:
-    name: go
+    name: "{{ lang }}"
     state: present
     classic: yes
+  with_items:
+  - go
+  - ruby-full
 
 # - name: Setup golib
 #   command: mkdir /home/{{ username }}/golib
