@@ -4,9 +4,22 @@
     name: vim
     state: present
 
+- name: Create vim directory
+  file:
+    path: /home/{{ username }}/.vim/autoload
+    state: directory
+    
+- name: Install vim-plug
+  get_url:
+    url: https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+    dest: /home/{{ username }}/.vim/autoload/plug.vim
+
 - name: Place vimrc on ~/.vimrc
   copy:
     src: vimrc
     dest: /home/{{ username }}/.vimrc
     mode: 0644
     owner: "{{ username }}"
+
+- name: Install vim-plug
+  shell: vim +PluginInstall +qall
