@@ -15,6 +15,7 @@
     - keeweb
     - vpn
     - torrent
+    - golang
 #    - kubernetes
     - comm
     - sdkman # TODO: sdkman installation is not working yet
