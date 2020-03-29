@@ -1,29 +1,34 @@
 - name: install openshot
-  apt:
+  package:
     name: openshot
     state: present
 
 - name: install kdenlive
-  apt:
+  package:
     name: kdenlive
     state: present
 
 - name: install audacity
-  apt:
+  package:
     name: audacity
     state: present
 
 - name: install texlive
-  apt:
+  package:
     name: texlive
     state: present
 
 - name: install ranger
-  apt:
+  package:
     name: ranger
     state: present
     
 - name: install texlive
-  apt:
+  package:
     name: texlive
+    state: present
+
+- name: install xclip
+  package:
+    name: xclip
     state: present

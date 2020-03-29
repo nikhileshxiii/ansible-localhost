@@ -5,13 +5,18 @@
 #     deb: https://github.com/webtorrent/webtorrent-desktop/releases/download/v0.21.0/webtorrent-desktop_0.21.0_amd64.deb
 
 
-- name: Install deluge
-  apt:
-    name: '{{ item.deluge }}'
+# - name: Install deluge
+#   apt:
+#     name: '{{ item.deluge }}'
+#     state: present
+#   loop:
+#   - { deluge: 'deluged' }
+#   - { deluge: 'deluge-console' }
+#   - { deluge: 'deluge-gtk' }
+
+- name: Install qbittorrent
+  package:
+    name: qbittorrent-nox
     state: present
-  loop:
-  - { deluge: 'deluged' }
-  - { deluge: 'deluge-console' }
-  - { deluge: 'deluge-gtk' }
 
 ...

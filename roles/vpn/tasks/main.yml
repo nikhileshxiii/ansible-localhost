@@ -5,9 +5,9 @@
     state: present
     update_cache: yes
 
-- name: Install nordvpn
-  apt:
-    deb: https://repo.nordvpn.com/deb/nordvpn/debian/pool/main/nordvpn-release_1.0.0_all.deb
+# - name: Install nordvpn
+#   apt:
+#     deb: https://repo.nordvpn.com/deb/nordvpn/debian/pool/main/nordvpn-release_1.0.0_all.deb
 
 - name: Download openvpn profiles
   get_url:

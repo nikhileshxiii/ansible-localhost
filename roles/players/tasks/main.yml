@@ -1,19 +1,19 @@
 - name: install mplayer
-  apt:
+  package:
     name: mplayer
     state: present
 
 - name: install vlc
-  apt:
+  package:
     name: vlc
     state: present
 
 - name: install ffmpeg
-  apt:
+  package:
     name: ffmpeg
     state: present
 
 - name: install mpv
-  apt:
+  package:
     name: mpv
     state: present 

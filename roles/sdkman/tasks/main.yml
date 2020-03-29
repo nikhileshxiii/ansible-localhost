@@ -4,3 +4,20 @@
   args:
     warn: no
 ...
+#- name: Check for SDKMAN installation
+#  stat:
+#    path: '/home/{{ username }}/.sdkman/bin/sdkman-init.sh'
+#  register: sdkman_init
+#
+#- name: Download SDKMAN
+#  get_url:
+#    url: https://get.sdkman.io
+#    dest: '{{ sdkman_tmp_dir }}/sdkman_script'
+#    validate_certs: '{{ sdkman_validate_ssl }}'
+#
+#- name: Run SDKMAN script
+#  command: /bin/bash {{ sdkman_tmp_dir }}/sdkman_script
+#  args:
+#    creates: '/home/{{ username }}/.sdkman/bin/sdkman-init.sh'
+#  notify: Cleanup SDKMAN script
+
