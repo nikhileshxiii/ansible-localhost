@@ -19,16 +19,18 @@
 
 - name: Install all ides
   snap:
-    name:
-      - pycharm-professional
-      - intellij-idea-ultimate
-      - webstorm
-      - datagrip
-      - clion
-      - rubymine
-      - goland
-      - android-studio-canary
-      - code
+    name: "{{ item }}"
     state: present
     classic: yes
     channel: latest/edge
+  with_items:
+    - pycharm-professional
+    - intellij-idea-ultimate
+    - webstorm
+    - datagrip
+    - clion
+    - rubymine
+    - goland
+    - android-studio-canary
+    - code
+    - circleci
