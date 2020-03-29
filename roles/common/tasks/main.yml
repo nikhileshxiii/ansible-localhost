@@ -3,34 +3,35 @@
   apt:
     name: apt-transport-https
     state: present
+  when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
 
-#- name: Install htop
-#  apt:
-#    name: htop
-#    state: present
-#    update_cache: true
+- name: Install htop
+  package:
+    name: htop
+    state: present
 
 - name: install wget
-  apt:
+  package:
     name: wget
     state: present
 
 - name: install curl
-  apt:
+  package:
     name: curl
     state: present
 
 - name: install ranger
-  apt:
+  package:
     name: ranger
     state: present
 
 - name: install tree
-  apt:
+  package:
     name: tree
     state: present
 
 - name: install powerline fonts
-  apt:
+  package:
     name: fonts-powerline
     state: present
+  when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
