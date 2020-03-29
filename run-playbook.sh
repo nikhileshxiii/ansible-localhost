@@ -1,4 +1,4 @@
-#!/bin/zsh
+#!/bin/bash
 
 #rm -rf venv
 
@@ -6,7 +6,7 @@
 source venv/bin/activate
 pip install -r requirements.txt
 
-#ansible-playbook -i hosts play.yml --extra-vars "ansible_sudo_pass="
-ansible-playbook -i hosts play.yml -K
+#ansible-playbook -i hosts main.yml --extra-vars "ansible_sudo_pass="
+ansible-playbook -i hosts main.yml -K
 
 #rm -rf venv
