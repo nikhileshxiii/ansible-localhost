@@ -1,14 +1,21 @@
 ---
 - name: install firefox
   package:
+    name: firefox-esr
+    state: present
+  when: ansible_distribution == "Kali GNU/Linux"
+
+- name: install firefox
+  package:
     name: firefox
     state: present
+  when: ansible_distribution != "Kali GNU/Linux"
 
 - name: install chromium
   package:
     name: chromium-browser
     state: present
-  when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu' or ansible_distribution == 'elementary OS'
+  when: ansible_distribution != "Kali GNU/Linux" and (ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu' or ansible_distribution == 'elementary OS')
 
 - name: install wget
   package:

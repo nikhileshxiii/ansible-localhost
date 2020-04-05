@@ -1,9 +1,13 @@
+---
+
 - name: Install snap packages for golang
   snap:
     name: go
     state: present
     classic: yes
-  
+
+####
+
 - name: Install ruby
   package:
     state: present
@@ -12,3 +16,162 @@
 # - name: Setup golib
 #   command: mkdir /home/{{ username }}/golib
 
+###
+
+- name: Install rust
+  package:
+    name: "{{ item }}"
+    state: present
+  with_items:
+  - rustc
+  - cargo
+
+###
+
+- name: Install nodejs
+  package:
+    name: nodejs
+    state: present
+
+- name: Setup node modules prefix to user home
+  shell: npm config set prefix "$HOME/.npm/node_modules"
+  become: yes
+  become_user: "{{ username }}"
+  args:
+    executable: /bin/bash
+
+- name: Setup npm cache to user home
+  shell: npm config set cache "$HOME/.npm/npm_cache"
+  become: yes
+  become_user: "{{ username }}"
+  args:
+    executable: /bin/bash
+
+- name: Setup node modules tmp to user home
+  shell: npm config set tmp "$HOME/.npm/tmp"
+  become: yes
+  become_user: "{{ username }}"
+  args:
+    executable: /bin/bash
+
+
+
+###
+
+- name: Install sdkman
+  shell: |
+    curl -s "https://get.sdkman.io" | bash
+  become: true
+  become_user: "{{ username }}"
+  args:
+    warn: no
+
+- name: Install sdk java
+  shell: |
+    source /home/{{ username }}/.sdkman/bin/sdkman-init.sh && \
+    sdk install java 
+  become: true
+  become_user: "{{ username }}"
+  args:
+    executable: /bin/bash
+    warn: no
+  register: command_result
+  changed_when: "'is already installed' in command_result.stdout"
+  ignore_errors: yes
+
+
+- name: Install sdk maven
+  shell: |
+    source /home/{{ username }}/.sdkman/bin/sdkman-init.sh && \
+    sdk install maven
+  become: true
+  become_user: "{{ username }}"
+  args:
+    executable: /bin/bash
+    warn: no
+  register: command_result
+  changed_when: "'is already installed' in command_result.stdout"
+  ignore_errors: yes
+
+- name: Install sdk gradle
+  shell: |
+    source /home/{{ username }}/.sdkman/bin/sdkman-init.sh && \
+    sdk install gradle
+  become: true
+  become_user: "{{ username }}"
+  args:
+    executable: /bin/bash
+    warn: no
+  register: command_result
+  changed_when: "'is already installed' in command_result.stdout"
+  ignore_errors: yes
+
+- name: Install sdk scala
+  shell: |
+    source /home/{{ username }}/.sdkman/bin/sdkman-init.sh && \
+    sdk install scala
+  become: true
+  become_user: "{{ username }}"
+  args:
+    executable: /bin/bash
+    warn: no
+  register: command_result
+  changed_when: "'is already installed' in command_result.stdout"
+  ignore_errors: yes
+
+- name: Install sdk sbt
+  shell: |
+    source /home/{{ username }}/.sdkman/bin/sdkman-init.sh && \
+    sdk install sbt
+  become: true
+  become_user: "{{ username }}"
+  args:
+    executable: /bin/bash
+    warn: no
+  register: command_result
+  changed_when: "'is already installed' in command_result.stdout"
+  ignore_errors: yes
+
+- name: Install sdk kotlin
+  shell: |
+    source /home/{{ username }}/.sdkman/bin/sdkman-init.sh && \
+    sdk install kotlin
+  become: true
+  become_user: "{{ username }}"
+  args:
+    executable: /bin/bash
+    warn: no
+  register: command_result
+  changed_when: "'is already installed' in command_result.stdout"
+  ignore_errors: yes
+
+- name: Install sdk spring-boot
+  shell: |
+    source /home/{{ username }}/.sdkman/bin/sdkman-init.sh && \
+    sdk install spring-boot
+  become: true
+  become_user: "{{ username }}"
+  args:
+    executable: /bin/bash
+    warn: no
+  register: command_result
+  changed_when: "'is already installed' in command_result.stdout"
+  ignore_errors: yes
+
+...
+#- name: Check for SDKMAN installation
+#  stat:
+#    path: '/home/{{ username }}/.sdkman/bin/sdkman-init.sh'
+#  register: sdkman_init
+#
+#- name: Download SDKMAN
+#  get_url:
+#    url: https://get.sdkman.io
+#    dest: '{{ sdkman_tmp_dir }}/sdkman_script'
+#    validate_certs: '{{ sdkman_validate_ssl }}'
+#
+#- name: Run SDKMAN script
+#  command: /bin/bash {{ sdkman_tmp_dir }}/sdkman_script
+#  args:
+#    creates: '/home/{{ username }}/.sdkman/bin/sdkman-init.sh'
+#  notify: Cleanup SDKMAN script

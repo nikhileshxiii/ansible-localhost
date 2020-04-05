@@ -12,8 +12,10 @@
   apt:
     name: linux-generic
     state: present
+  when: ansible_distribution == "ubuntu" or ansible_distribution == "debian"
 
 - name: install linux-headers-generic
   apt:
     name: linux-headers-generic
     state: present
+  when: ansible_distribution == "ubuntu" or ansible_distribution == "debian"

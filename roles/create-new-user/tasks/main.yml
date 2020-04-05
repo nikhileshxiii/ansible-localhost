@@ -7,10 +7,10 @@
     - docker-compose
     - docker
     - docker.io
-    - lxd
+      #    - lxd
     - adb
     - snapd
-  when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu' or ansible_distribution == 'elementary OS'
+  when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu' or ansible_distribution == 'elementary OS' or ansible_distribution == "Kali GNU/Linux"
 
 - name: Install kvm
   package:
@@ -22,7 +22,7 @@
    - libvirt-clients 
    - bridge-utils
    - virt-manager
-  when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu' or ansible_distribution == 'elementary OS'
+  when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu' or ansible_distribution == 'elementary OS' or ansible_distribution == "Kali GNU/Linux"
 
 - name: Creating a user named {{ username }} on the specified web server.
   user:
@@ -60,6 +60,8 @@
     regexp: "{{ username }} ALL"
     line: "{{ username }} ALL=(ALL) ALL"
     state: present
+  notify: Start docker
+  notify: Start sshd
 
 - git:
     repo: https://github.com/robbyrussell/oh-my-zsh.git

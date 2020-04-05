@@ -16,6 +16,12 @@
 
 - name: Install qbittorrent
   package:
+    name: qbittorrent
+    state: present
+  when: ansible_distribution == "Kali GNU/Linux"
+
+- name: Install qbittorrent-nox
+  package:
     name: qbittorrent-nox
     state: present
 

@@ -2,6 +2,7 @@
   package:
     name: openshot
     state: present
+  when: ansible_distribution != "Kali GNU/Linux"
 
 - name: install kdenlive
   package:
@@ -31,4 +32,9 @@
 - name: install xclip
   package:
     name: xclip
+    state: present
+
+- name: install calibre
+  package:
+    name: calibre
     state: present

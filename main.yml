@@ -18,4 +18,4 @@
     - lang
 #    - kubernetes
     - comm
-    - sdkman # TODO: sdkman installation is not working yet
+    # - sdkman # TODO: sdkman installation is not working yet
