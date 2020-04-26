@@ -25,4 +25,18 @@
     dest: /etc/openvpn/
     remote_src: yes
 
+- name: find nordvpn servers
+  find:
+    paths:
+    - "/etc/openvpn/ovpn_tcp/"
+    - "/etc/openvpn/ovpn_udp/"
+    patterns: "auth-user-pass"
+  register: nordvpnservers
+
+- name: Replace foo with bar in the files
+  replace:
+    path: "{{ item.path }}"
+    regexp: 'auth-user-pass'
+    replace: 'auth-user-ass nordvpnauth.txt'
+  with_items: "{{ nordvpnservers.files }}"
 ...

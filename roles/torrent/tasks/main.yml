@@ -14,13 +14,21 @@
 #   - { deluge: 'deluge-console' }
 #   - { deluge: 'deluge-gtk' }
 
+- name: disable ipv6
+  blockinfile:
+    path: /etc/sysctl.conf
+    block: |
+      net.ipv6.conf.all.disable_ipv6 = 1
+      net.ipv6.conf.default.disable_ipv6 = 1
+      net.ipv6.conf.lo.disable_ipv6 = 1
+
+
 - name: Install qbittorrent
   package:
     name: qbittorrent
     state: present
   # when: ansible_distribution == "Kali GNU/Linux"
   tags:
-  - kali
   - debian
 
 - name: Install qbittorrent-nox
