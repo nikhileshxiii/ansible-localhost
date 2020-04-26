@@ -18,7 +18,10 @@
   package:
     name: qbittorrent
     state: present
-  when: ansible_distribution == "Kali GNU/Linux"
+  # when: ansible_distribution == "Kali GNU/Linux"
+  tags:
+  - kali
+  - debian
 
 - name: Install qbittorrent-nox
   package:

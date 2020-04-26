@@ -1,6 +1,6 @@
 ---
 - name: install vim
-  apt:
+  package:
     name: vim
     state: present
 

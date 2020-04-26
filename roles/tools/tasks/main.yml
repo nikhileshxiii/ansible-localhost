@@ -38,3 +38,13 @@
   package:
     name: calibre
     state: present
+
+- name: install tmux
+  package:
+    name: tmux
+    state: present
+
+- name: install smartmontools
+  package:
+    name: smartmontools
+    state: present

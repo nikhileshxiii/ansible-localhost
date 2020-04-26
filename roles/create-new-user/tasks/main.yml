@@ -7,10 +7,12 @@
     - docker-compose
     - docker
     - docker.io
-      #    - lxd
+    - lxd
     - adb
     - snapd
-  when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu' or ansible_distribution == 'elementary OS' or ansible_distribution == "Kali GNU/Linux"
+  # when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu' or ansible_distribution == 'elementary OS' or ansible_distribution == "Kali GNU/Linux"
+  tags:
+  - debian
 
 - name: Install kvm
   package:
@@ -22,8 +24,10 @@
    - libvirt-clients 
    - bridge-utils
    - virt-manager
-  when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu' or ansible_distribution == 'elementary OS' or ansible_distribution == "Kali GNU/Linux"
-
+  # when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu' or ansible_distribution == 'elementary OS' or ansible_distribution == "Kali GNU/Linux"
+  tags:
+  - debian
+  
 - name: Creating a user named {{ username }} on the specified web server.
   user:
     name: "{{ username }}"
