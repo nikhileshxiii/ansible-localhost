@@ -11,7 +11,7 @@
 - name: Restart openssh
   become: true
   service:
-    name: sshd
+    name: ssh
     state: started
     enabled: yes
     use: auto
