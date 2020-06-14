@@ -1,21 +1,32 @@
-- hosts: local
+- hosts: all
   # sudo: yes
   become: yes
   become_method: sudo
-  roles:
-    - create-new-user
-    - common
-    - update
-    - linux-headers
-    - players
-    - tools
-    - vim
-    - ides
-    - browsers
-    - keeweb
-    - vpn
-    - torrent
-    - lang
-#    - kubernetes
-    - comm
+  tasks:
+  - name: Ensure ntpd
+    apt:
+      name: ntp
+      state: latest
+  - name: service ntpd
+    service:
+      name: ntp
+      state: started
+      enabled: yes
+
+  # roles:
+    # - create-new-user
+    # - common
+    # - update
+    # - linux-headers
+    # - players
+    # - tools
+    # - vim
+    # - ides
+    # - browsers
+    # - keeweb
+    # - vpn
+    # - torrent
+    # - lang
+    # - kubernetes
+    # - comm
     # - sdkman # TODO: sdkman installation is not working yet
