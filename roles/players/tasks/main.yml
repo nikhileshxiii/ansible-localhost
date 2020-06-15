@@ -2,18 +2,26 @@
   package:
     name: mplayer
     state: present
+  tags:
+    - debian
 
 - name: install vlc
   package:
     name: vlc
     state: present
+  tags:
+    - debian
 
 - name: install ffmpeg
   package:
     name: ffmpeg
     state: present
+  tags:
+    - debian
 
 - name: install mpv
   package:
     name: mpv
-    state: present 
+    state: present
+  tags:
+    - debian

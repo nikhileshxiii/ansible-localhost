@@ -1,19 +1,4 @@
 ---
-
-# - name: Install webtorrent desktop
-#   apt:
-#     deb: https://github.com/webtorrent/webtorrent-desktop/releases/download/v0.21.0/webtorrent-desktop_0.21.0_amd64.deb
-
-
-# - name: Install deluge
-#   apt:
-#     name: '{{ item.deluge }}'
-#     state: present
-#   loop:
-#   - { deluge: 'deluged' }
-#   - { deluge: 'deluge-console' }
-#   - { deluge: 'deluge-gtk' }
-
 - name: disable ipv6
   blockinfile:
     path: /etc/sysctl.conf
@@ -22,18 +7,16 @@
       net.ipv6.conf.default.disable_ipv6 = 1
       net.ipv6.conf.lo.disable_ipv6 = 1
 
-
 - name: Install qbittorrent
   package:
     name: qbittorrent
     state: present
-  # when: ansible_distribution == "Kali GNU/Linux"
   tags:
-  - debian
+    - debian
 
 - name: Install qbittorrent-nox
   package:
     name: qbittorrent-nox
     state: present
-
-...
+  tags:
+    - debian

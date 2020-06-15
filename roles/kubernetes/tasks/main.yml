@@ -3,49 +3,66 @@
     name: "{{ item }}"
     state: absent
   with_items:
-  - docker
-  - docker-engine
-  - docker.io
-  - containerd
-  - runc
-  - docker-common
-  - docker-compose
-  - docker-ce
-  - docker-ee
-  when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu' or ansible_distribution == 'elementary OS'
+    - docker
+    - docker-engine
+    - docker.io
+    - containerd
+    - runc
+    - docker-common
+    - docker-compose
+    - docker-ce
+    - docker-ee
+  tags:
+    - server
 
 - name: Install prereqs
-  apt:
+  package:
     name: "{{ item }}"
-    state:  present
+    state: present
   with_items:
-  - apt-transport-https
-  - ca-certificates
-  - software-properties-common
+    - apt-transport-https
+    - ca-certificates
+    - software-properties-common
+  tags:
+    - debian
+    - server
 
 - name: Docker Installation
-  apt:
+  package:
     name: "{{ item }}"
     state: present
     update_cache: true
   with_items:
-  - docker.io
-  - docker-compose
-  - docker
+    - docker.io
+    - docker-compose
+    - docker
+  tags:
+    - debian
+    - server
 
 - name: Remove /etc/docker/daemon.json
   file:
     path: /etc/docker/daemon.json
-    state:  absent
+    state: absent
   notify:
     - Start docker
+  tags:
+    - debian
+    - server
 
 - name: Check virtualization
-  command:  grep -E --color 'vmx|svm' /proc/cpuinfo
+  command: grep -E --color 'vmx|svm' /proc/cpuinfo
   register: check_virtualization
+  tags:
+    - debian
+    - server
 
-- debug:
-    msg:  "Virtualization in the os is enabled/disabled: {{ check_virtualization.stdout }}"
+# - name: print result of Check virtualization
+#   debug:
+#     msg: "Virtualization in the os is enabled/disabled: {{ check_virtualization.stdout }}"
+#   tags:
+#     - debian
+#     - server
 
 #- name: Get latest kubectl version to tmp file
 #  get_url:
@@ -55,8 +72,8 @@
 #- name: Get kubectl version from tmp file
 #  command:  cat /tmp/kubectlversion.txt
 #  register: kubectl_version
-  #  command: curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt
-  #  warn: false
+#  command: curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt
+#  warn: false
 
 #- debug:
 #    msg: "kubectl version = {{ kubectl_version.stdout }}"
@@ -69,10 +86,12 @@
 
 - name: Install minikube
   get_url:
-    url:  https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
+    url: https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
     mode: 0755
     dest: /usr/local/bin/minikube
     validate_certs: no
+  tags:
+    - server
 
 #- name: Download helm shell script
 #  get_url:
@@ -82,73 +101,56 @@
 #- name: Install helm and tiller in localhost
 #  command: "bash /tmp/get_helm.sh"
 
-  #
-  #- name: Add docker GPG key apt key
-  #  apt_key:
-  #    url: https://download.docker.com/linux/ubuntu/gpg
-  #    state: present
+#
+#- name: Add docker GPG key apt key
+#  apt_key:
+#    url: https://download.docker.com/linux/ubuntu/gpg
+#    state: present
 
-  #- name: Get ubuntu lsb_release -cs
-  #  command: lsb_release -cs
-  #  register: lsb_release
+#- name: Get ubuntu lsb_release -cs
+#  command: lsb_release -cs
+#  register: lsb_release
 
-  #- debug:
-  #    var:  lsb_release
-  #    verbosity: 2
-  #
-  #- debug:
-  #    msg:  "lsb_release = {{ lsb_release.stdout }}"
+#- debug:
+#    var:  lsb_release
+#    verbosity: 2
+#
+#- debug:
+#    msg:  "lsb_release = {{ lsb_release.stdout }}"
 
-  #- name: Add Docker Repository
-  #  apt_repository:
-  #    repo: deb https://download.docker.com/linux/ubuntu disco stable
-  #    state: present
+#- name: Add Docker Repository
+#  apt_repository:
+#    repo: deb https://download.docker.com/linux/ubuntu disco stable
+#    state: present
 
+# - name: add Kubernetes apt-key for APT repository
+#   apt_key:
+#     url: https://packages.cloud.google.com/apt/doc/apt-key.gpg
+#     state: present
 
+# - name: add Kubernetes APT repository
+#   apt_repository:
+#    repo: deb http://apt.kubernetes.io/ kubernetes-xenial main
+#    state: present
+#    filename: 'kubernetes'
 
+# - name: install kubelet
+#   apt:
+#     name: kubelet
+#     state: absent
+#     update_cache: true
 
+# - name: install kubeadm
+#   apt:
+#     name: kubeadm
+#     state: absent
+#     update_cache: true
 
-
-
-  # - name: add Kubernetes apt-key for APT repository
-  #   apt_key:
-  #     url: https://packages.cloud.google.com/apt/doc/apt-key.gpg
-  #     state: present
-
-  # - name: add Kubernetes APT repository
-  #   apt_repository:
-  #    repo: deb http://apt.kubernetes.io/ kubernetes-xenial main
-  #    state: present
-  #    filename: 'kubernetes'
-
-  # - name: install kubelet
-  #   apt:
-  #     name: kubelet
-  #     state: absent
-  #     update_cache: true
-
-  # - name: install kubeadm
-  #   apt:
-  #     name: kubeadm
-  #     state: absent
-  #     update_cache: true
-
-
-  #- name: software-properties-common
-  #  apt:
-  #    name: software-properties-common
-  #    state: latest
-  #    update_cache: yes
-
-  # On Ubuntu target:
-  #- apt_repository:
-  #    repo: ppa:projectatomic/ppa
-
-  # - name: podman
-  #   apt:
-  #     name: podman
-  #     state: present
-  #     update_cache: yes
+# - name: podman
+#   apt:
+#     name: podman
+#     state: present
+#     update_cache: yes
 
 #- name: Download helm shell script
 #  get_url:
@@ -158,13 +160,13 @@
 #- name: Install helm and tiller in localhost
 #  command: "bash /tmp/get_helm.sh"
 
-
-  #- name: Install snap packages for helm, docker and microk8s
-  #  snap:
-  #    name: "{{ item }}"
-  #    state: present
-  #    classic: yes
-  #  with_items:
-  #  - helm
-  #  - docker
-  #  - microk8s
+- name: Install snap packages for helm and microk8s
+  snap:
+    name: "{{ item }}"
+    state: present
+    classic: yes
+  with_items:
+    - helm
+    - microk8s
+  tags:
+    - server

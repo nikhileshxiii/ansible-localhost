@@ -2,54 +2,82 @@
   package:
     name: openshot
     state: present
-  when: ansible_distribution != "Kali GNU/Linux"
+  tags:
+    - debian
 
 - name: install kdenlive
   package:
     name: kdenlive
     state: present
+  tags:
+    - debian
 
 - name: install audacity
   package:
     name: audacity
     state: present
+  tags:
+    - debian
 
 - name: install texlive
   package:
     name: texlive
     state: present
+  tags:
+    - debian
 
-- name: install ranger
+- name: install blender
   package:
-    name: ranger
+    name: blender
     state: present
-    
-- name: install texlive
-  package:
-    name: texlive
-    state: present
+  tags:
+    - debian
 
 - name: install xclip
   package:
     name: xclip
     state: present
+  tags:
+    - debian
+
+- name: install dtrx
+  package:
+    name: dtrx
+    state: present
+  tags:
+    - debian
 
 - name: install calibre
   package:
     name: calibre
     state: present
+  tags:
+    - debian
 
 - name: install tmux
   package:
     name: tmux
     state: present
+  tags:
+    - debian
 
 - name: install arandr
   package:
     name: arandr
     state: present
-    
+  tags:
+    - debian
+
 - name: install smartmontools
   package:
     name: smartmontools
     state: present
+  tags:
+    - debian
+
+- name: install gsmartcontrol
+  package:
+    name: gsmartcontrol
+    state: present
+  tags:
+    - debian

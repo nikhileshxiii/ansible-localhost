@@ -11,11 +11,8 @@
     - { jetbrains: .RubyMine2019.* }
     - { jetbrains: .WebStorm2019.* }
     - { jetbrains: .java }
-
-- name: Remove .java
-  file:
-    state: absent
-    path: "/home/{{ username }}/.java"
+  tags:
+    - debian
 
 - name: Install all ides
   snap:
@@ -34,3 +31,6 @@
     - android-studio-canary
     - code
     - circleci
+    - helm
+  tags:
+    - debian

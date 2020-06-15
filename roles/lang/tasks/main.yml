@@ -4,21 +4,15 @@
     name: go
     state: present
     classic: yes
-
-####
+  tags:
+    - debian
 
 - name: Install ruby
   package:
     state: present
     name: ruby-full
-  # when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu' or ansible_distribution == 'elementary OS'
   tags:
     - debian
-
-# - name: Setup golib
-#   command: mkdir /home/{{ username }}/golib
-
-###
 
 - name: Install rust
   package:
@@ -27,8 +21,8 @@
   with_items:
     - rustc
     - cargo
-
-###
+  tags:
+    - debian
 
 - name: Install node
   package:
@@ -37,6 +31,8 @@
   with_items:
     - nodejs
     - npm
+  tags:
+    - debian
 
 - name: Setup node modules prefix to user home
   shell: npm config set prefix "$HOME/.npm/node_modules"
@@ -44,6 +40,8 @@
   become_user: "{{ username }}"
   args:
     executable: /bin/bash
+  tags:
+    - debian
 
 - name: Setup npm cache to user home
   shell: npm config set cache "$HOME/.npm/npm_cache"
@@ -51,6 +49,8 @@
   become_user: "{{ username }}"
   args:
     executable: /bin/bash
+  tags:
+    - debian
 
 - name: Setup node modules tmp to user home
   shell: npm config set tmp "$HOME/.npm/tmp"
@@ -58,16 +58,34 @@
   become_user: "{{ username }}"
   args:
     executable: /bin/bash
+  tags:
+    - debian
 
-###
+- name: check if sdkman template file exists
+  stat:
+    path: /home/{{ username }}/.sdkman/bin/sdkman-init.sh
+  register: check_sdkman_exists
+  tags:
+    - debian
 
 - name: Install sdkman
   shell: |
     curl -s "https://get.sdkman.io" | bash
   become: true
   become_user: "{{ username }}"
-  args:
-    warn: no
+  when: check_sdkman_exists.stat.exists == False
+  register: sdkman_result
+  # args:
+  #   warn: no
+  tags:
+    - debian
+
+- name: check if sdkman template file exists
+  stat:
+    path: /home/{{ username }}/.sdkman/bin/sdkman-init.sh
+  register: check_sdkman_before_lang_install
+  tags:
+    - debian
 
 - name: Install sdk java
   shell: |
@@ -81,6 +99,9 @@
   register: command_result
   changed_when: "'is already installed' in command_result.stdout"
   ignore_errors: yes
+  when: check_sdkman_before_lang_install.stat.exists == True
+  tags:
+    - debian
 
 - name: Install sdk maven
   shell: |
@@ -94,6 +115,9 @@
   register: command_result
   changed_when: "'is already installed' in command_result.stdout"
   ignore_errors: yes
+  when: check_sdkman_before_lang_install.stat.exists == True
+  tags:
+    - debian
 
 - name: Install sdk gradle
   shell: |
@@ -107,6 +131,9 @@
   register: command_result
   changed_when: "'is already installed' in command_result.stdout"
   ignore_errors: yes
+  when: check_sdkman_before_lang_install.stat.exists == True
+  tags:
+    - debian
 
 - name: Install sdk scala
   shell: |
@@ -120,6 +147,9 @@
   register: command_result
   changed_when: "'is already installed' in command_result.stdout"
   ignore_errors: yes
+  when: check_sdkman_before_lang_install.stat.exists == True
+  tags:
+    - debian
 
 - name: Install sdk sbt
   shell: |
@@ -133,6 +163,9 @@
   register: command_result
   changed_when: "'is already installed' in command_result.stdout"
   ignore_errors: yes
+  when: check_sdkman_before_lang_install.stat.exists == True
+  tags:
+    - debian
 
 - name: Install sdk kotlin
   shell: |
@@ -146,6 +179,9 @@
   register: command_result
   changed_when: "'is already installed' in command_result.stdout"
   ignore_errors: yes
+  when: check_sdkman_before_lang_install.stat.exists == True
+  tags:
+    - debian
 
 - name: Install sdk springboot
   shell: |
@@ -159,20 +195,6 @@
   register: command_result
   changed_when: "'is already installed' in command_result.stdout"
   ignore_errors: yes
-
-#- name: Check for SDKMAN installation
-#  stat:
-#    path: '/home/{{ username }}/.sdkman/bin/sdkman-init.sh'
-#  register: sdkman_init
-#
-#- name: Download SDKMAN
-#  get_url:
-#    url: https://get.sdkman.io
-#    dest: '{{ sdkman_tmp_dir }}/sdkman_script'
-#    validate_certs: '{{ sdkman_validate_ssl }}'
-#
-#- name: Run SDKMAN script
-#  command: /bin/bash {{ sdkman_tmp_dir }}/sdkman_script
-#  args:
-#    creates: '/home/{{ username }}/.sdkman/bin/sdkman-init.sh'
-#  notify: Cleanup SDKMAN script
+  when: check_sdkman_before_lang_install.stat.exists == True
+  tags:
+    - debian

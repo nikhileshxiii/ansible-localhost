@@ -2,6 +2,8 @@
   package:
     state: present
     name: thunderbird
+  tags:
+    - debian
 
 #- name: Does the Signal apt file exist?
 #  stat:
@@ -21,12 +23,6 @@
 #  copy: content="deb [arch=amd64] https://updates.signal.org/desktop/apt xenial main" dest={{ signal_apt_file }} owner=root group=root mode=644
 #  when: signal_apt_exists.stat.exists == False
 
-- name: Update apt cache
-  apt: 
-    update_cache: yes
-  # when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu' or ansible_distribution == 'elementary OS' or ansible_distribution == "Kali GNU/Linux" 
-  tags:
-  - debian
 #- name: Run update and install signal
 #  apt:
 #    name: signal-desktop-beta

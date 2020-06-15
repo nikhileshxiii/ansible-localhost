@@ -4,6 +4,8 @@
     name: openvpn
     state: present
     update_cache: yes
+  tags:
+    - debian
 
 # - name: Install nordvpn
 #   apt:
@@ -13,30 +15,63 @@
   get_url:
     url: https://downloads.nordcdn.com/configs/archives/servers/ovpn.zip
     dest: /etc/openvpn
+  tags:
+    - debian
 
 - name: openvpn easy-rsa
   file:
     state: directory
     path: /etc/openvpn/easy-rsa
+  tags:
+    - debian
 
 - name: Unzip openvpn profiles
   unarchive:
     src: /etc/openvpn/ovpn.zip
     dest: /etc/openvpn/
     remote_src: yes
+  tags:
+    - debian
+    - vpnauth
 
 - name: find nordvpn servers
   find:
     paths:
-    - "/etc/openvpn/ovpn_tcp/"
-    - "/etc/openvpn/ovpn_udp/"
-    patterns: "auth-user-pass"
+      - "/etc/openvpn/ovpn_tcp/"
+      - "/etc/openvpn/ovpn_udp/"
+    patterns: "*.ovpn"
   register: nordvpnservers
+  tags:
+    - debian
+    - vpnauth
 
-- name: Replace foo with bar in the files
+- name: Print all openvpn profiles
+  debug:
+    msg: nordvpnservers = {{ nordvpnservers }}
+  tags:
+    - debian
+    - vpnauth
+
+- name: Add credential in the openvpn profiles files
   replace:
     path: "{{ item.path }}"
-    regexp: 'auth-user-pass'
-    replace: 'auth-user-ass nordvpnauth.txt'
+    regexp: "^(auth-user-pass[ ]*$)"
+    replace: "auth-user-pass nordvpnauth.txt"
   with_items: "{{ nordvpnservers.files }}"
-...
+  tags:
+    - debian
+    - vpnauth
+
+- name: Copy nordvpnauth.txt to tcp profiles
+  synchronize:
+    src: /home/{{ username }}/nordvpnauth.txt
+    dest: "/etc/openvpn/ovpn_tcp/nordvpnauth.txt"
+  tags:
+    - debian
+
+- name: Copy nordvpnauth.txt to udp profiles
+  synchronize:
+    src: /home/{{ username }}/nordvpnauth.txt
+    dest: "/etc/openvpn/ovpn_udp/nordvpnauth.txt"
+  tags:
+    - debian

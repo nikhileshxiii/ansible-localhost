@@ -1,25 +1,27 @@
 - name: install build-essential
-  apt:
+  package:
     name: build-essential
     state: present
+  tags:
+    - debian
 
 - name: install checkinstall
   apt:
     name: checkinstall
     state: present
+  tags:
+    - debian
 
 - name: install linux-generic
   apt:
     name: linux-generic
     state: present
-  # when: ansible_distribution == "ubuntu" or ansible_distribution == "debian"
   tags:
-  - debian
+    - debian
 
 - name: install linux-headers-generic
   apt:
     name: linux-headers-generic
     state: present
-  # when: ansible_distribution == "ubuntu" or ansible_distribution == "debian"
   tags:
-  - debian
+    - debian
