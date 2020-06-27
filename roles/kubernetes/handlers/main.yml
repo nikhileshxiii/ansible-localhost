@@ -1,3 +1,4 @@
+---
 - name: Start docker
   service:
     name: docker

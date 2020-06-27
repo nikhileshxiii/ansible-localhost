@@ -1,5 +1,5 @@
 ---
-username: nik
+username: vagrant
 vagrant_version: 2.2.9
 virtualbox_url: https://download.virtualbox.org/virtualbox/6.1.10/virtualbox-6.1_6.1.10-138449~Ubuntu~eoan_amd64.deb
 virtualbox_ext: https://download.virtualbox.org/virtualbox/6.1.10/Oracle_VM_VirtualBox_Extension_Pack-6.1.10.vbox-extpack

@@ -1,3 +1,4 @@
+---
 - name: install openshot
   package:
     name: openshot

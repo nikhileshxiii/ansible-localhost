@@ -1,4 +1,49 @@
 ---
+- name: download latest vagrant
+  get_url:
+    url: "https://releases.hashicorp.com/vagrant/{{ vagrant_version }}/vagrant_{{ vagrant_version }}_x86_64.deb"
+    dest: "/tmp/vagrant.deb"
+  tags:
+    - debian
+
+- name: install latest vagrant
+  apt:
+    deb: "/tmp/vagrant.deb"
+  tags:
+    - debian
+
+- name: install virtualbox
+  get_url:
+    url: "{{ virtualbox_url }}"
+    dest: "/tmp/virtualbox.deb"
+  tags:
+    - debian
+
+- name: install latest virtualbox
+  apt:
+    deb: "/tmp/virtualbox.deb"
+  ignore_errors: true
+  tags:
+    - debian
+
+- name: apt install -f
+  command: apt install -f
+  become: true
+  changed_when: false
+  tags:
+    - debian
+
+- name: install virtualbox extension tools
+  get_url:
+    url: "{{ virtualbox_ext }}"
+    dest: "/tmp/virtualbox_ext.vbox-extpack"
+  tags:
+    - debian
+
+- name: install virtualbox extension tools
+  command: vboxmanage extpack install "/tmp/virtualbox_ext.vbox-extpack"
+  changed_when: false
+
 - name: Install prereqs - docker, kvm, snapd
   package:
     state: present
@@ -10,8 +55,6 @@
     - lxd
     - adb
     - snapd
-    - vagrant
-    - vagrant-libvirt
     - ruby-libvirt
     - qemu-kvm
     - libvirt-daemon-system
@@ -23,6 +66,53 @@
     - ruby-dev
     - bridge-utils
     - virt-manager
+  tags:
+    - debian
+
+- name: vagrant plugin install vagrant-libvirt
+  command: vagrant plugin install vagrant-libvirt
+  become: true
+  become_user: "{{ username }}"
+  args:
+    executable: /bin/bash
+    warn: no
+  changed_when: false
+  tags:
+    - debian
+
+- name: vagrant plugin install vagrant-mutate
+  command: vagrant plugin install vagrant-mutate
+  become: true
+  become_user: "{{ username }}"
+  args:
+    executable: /bin/bash
+    warn: no
+  ignore_errors: true
+  changed_when: false
+  tags:
+    - debian
+
+- name: vagrant plugin install winrm
+  command: vagrant plugin install winrm
+  become: true
+  become_user: "{{ username }}"
+  args:
+    executable: /bin/bash
+    warn: no
+  changed_when: false
+  ignore_errors: true
+  tags:
+    - debian
+
+- name: vagrant plugin install winrm-fs
+  command: vagrant plugin install winrm-fs
+  become: true
+  become_user: "{{ username }}"
+  args:
+    executable: /bin/bash
+    warn: no
+  changed_when: false
+  ignore_errors: true
   tags:
     - debian
 
@@ -44,27 +134,28 @@
   tags:
     - debian
 
-# - name: Remove libvirt and qemu users
-#   become: yes
-#   user:
-#     name: "Libvirt Qemu"
-#     state: absent
-#   tags:
-#     - debian
+- name: Remove libvirt and qemu users
+  become: yes
+  user:
+    name: "Libvirt Qemu"
+    state: absent
+  tags:
+    - debian
 
-# # - name: Add user to sudoers list
-# #   lineinfile:
-# #     dest: /etc/sudoers
-# #     regexp: "{{ username }} ALL"
-# #     line: "{{ username }} ALL=(ALL) ALL"
-# #     state: present
-# #   notify: Start docker
-# #   notify: Start sshd
+# - name: Add user to sudoers list
+#   lineinfile:
+#     dest: /etc/sudoers
+#     regexp: "{{ username }} ALL"
+#     line: "{{ username }} ALL=(ALL) ALL"
+#     state: present
+#   notify: Start docker
+#   notify: Start sshd
 
 - name: Clone zsh
   git:
     repo: https://github.com/robbyrussell/oh-my-zsh.git
     dest: /home/{{ username }}/.oh-my-zsh
+    version: master
   tags:
     - debian
 
@@ -72,6 +163,7 @@
   git:
     repo: https://github.com/bhilburn/powerlevel9k.git
     dest: /home/{{ username }}//.oh-my-zsh/custom/themes/powerlevel9k
+    version: master
   tags:
     - debian
 
@@ -86,7 +178,8 @@
   copy:
     src: "/home/{{ username }}/.oh-my-zsh/templates/zshrc.zsh-template"
     dest: "/home/{{ username }}/.zshrc"
-  when: check_zsh_exists.stat.exists == True
+    remote_src: yes
+  when: check_zsh_exists.stat.exists
   tags:
     - debian
 
@@ -94,11 +187,12 @@
   git:
     repo: https://github.com/Bash-it/bash-it.git
     dest: /home/{{ username }}/.bash-it
+    version: master
   tags:
     - debian
 
 - name: copy alias and export files
-  synchronize:
+  copy:
     src: "{{ item }}"
     dest: /home/{{ username }}/.{{ item }}
   with_items:
@@ -111,7 +205,7 @@
     - debian
 
 - name: copy script to disable ipv6
-  synchronize:
+  copy:
     src: disable-ipv6.sh
     dest: /home/{{ username }}/disable-ipv6.sh
   tags:
@@ -128,12 +222,12 @@
   file:
     path: /home/{{ username }}/.config/ranger
     state: directory
-    mode: '0755'
+    mode: "0755"
   tags:
     - debian
 
 - name: copy ranger rc.conf
-  synchronize:
+  copy:
     src: rifle.conf
     dest: /home/{{ username }}/.config/ranger/rifle.conf
   tags:

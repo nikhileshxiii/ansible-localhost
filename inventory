@@ -1,6 +1,20 @@
 [local]
-127.0.0.1   ansible_connection=local  ansible_python_interpreter=/usr/bin/python3
-# /home/nik/ansible-config/venv/bin/python
+127.0.0.1
+
+[local:vars]
+ansible_connection=local
+
+[server]
+server          
+
+[localandserver:children]
+local
+server
+
+[localandserver:vars]
+ansible_ssh_user=nik
+# ansible_sudo_pass=
+ansible_python_interpreter=/usr/bin/python3
 
 [localmachine]
 192.168.60.4    ansible_ssh_user=vagrant    ansible_ssh_private_key=~/.vagrant.d/insecure_private_key
@@ -16,4 +30,5 @@ servermachine
 
 [multi:vars]
 ansible_ssh_user=vagrant
+ansible_python_interpreter=/usr/bin/python3
 ansible_ssh_private_key=~/.vagrant.d/insecure_private_key

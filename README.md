@@ -10,9 +10,15 @@ Configure new installation of ubuntu based systems with my default configs.
 
 ## Print ansible facts
 
-ansible localhost -m setup
+* ansible localhost -m setup
+* ansible -i inventory local  -m "setup"
+
+## TODO
+- virtualbox, qemu install is still iffy
+- yamllint folder exclusion doesn't work
 
 ## Credits and Acknowledgements
 
 Ripped code from multiple sources
-- https://michaelheap.com/ansible-installing-google-chrome/
+- [Jeff Geerling](https://www.youtube.com/channel/UCR-DXc1voovS8nhAvccRZhg)
+- [Michael heap](https://michaelheap.com/ansible-installing-google-chrome/)

@@ -30,6 +30,7 @@
     src: /etc/openvpn/ovpn.zip
     dest: /etc/openvpn/
     remote_src: yes
+    creates: "/etc/openvpn/ovpn_tcp"
   tags:
     - debian
     - vpnauth
@@ -63,14 +64,14 @@
     - vpnauth
 
 - name: Copy nordvpnauth.txt to tcp profiles
-  synchronize:
+  copy:
     src: /home/{{ username }}/nordvpnauth.txt
     dest: "/etc/openvpn/ovpn_tcp/nordvpnauth.txt"
   tags:
     - debian
 
 - name: Copy nordvpnauth.txt to udp profiles
-  synchronize:
+  copy:
     src: /home/{{ username }}/nordvpnauth.txt
     dest: "/etc/openvpn/ovpn_udp/nordvpnauth.txt"
   tags:

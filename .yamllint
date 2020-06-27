@@ -1,0 +1,20 @@
+---
+extends: default
+
+ignore: |
+  '/venv/**/*.yml'
+
+files_or_dirs:
+  exclude:
+    - venv
+
+rules:
+  line-length:
+    max: 200
+    level: warning
+  truthy:
+    allowed-values:
+      - "true"
+      - "false"
+      - "yes"
+      - "no"

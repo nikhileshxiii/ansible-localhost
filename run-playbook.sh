@@ -1,14 +1,22 @@
 #!/bin/bash
 
-rm -rf venv
+# rm -rf venv
 
-python3 -m venv venv
+# python3 -m venv venv
 source venv/bin/activate
 # pip install -r requirements.txt
 pip install ansible
+pip install yamllint
+pip install ansible-lint
 
-#ansible-playbook -i hosts main.yml --extra-vars "ansible_sudo_pass="
-# ansible-playbook -i hosts main.yml -K --skip-tags "kali"
+echo ""
+echo "==> Run yamllint"
+yamllint *.yml && yamllint roles/ 
+
+echo "==> Run syntax-check"
+ansible-playbook --syntax-check main.yml
+
+echo "==> Run ansible-lint"
+ansible-lint main.yml
+
 ansible-playbook main.yml --tags "debian" --skip-tags "vpnauth" -K
-
-#rm -rf venv

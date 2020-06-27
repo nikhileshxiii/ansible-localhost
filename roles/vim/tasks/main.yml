@@ -30,8 +30,13 @@
     - debian
 
 - name: Install vim-plug
-  shell: vim +PluginInstall +qall
+  command: vim +PluginInstall +qall
   become: yes
   become_user: "{{ username }}"
   args:
     executable: /bin/bash
+    warn: no
+  ignore_errors: yes
+  changed_when: false
+  tags:
+    - debian
