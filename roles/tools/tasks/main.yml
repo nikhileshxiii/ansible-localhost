@@ -75,6 +75,7 @@
     state: present
   tags:
     - debian
+    - server
 
 - name: install gsmartcontrol
   package:
@@ -82,3 +83,4 @@
     state: present
   tags:
     - debian
+    - server

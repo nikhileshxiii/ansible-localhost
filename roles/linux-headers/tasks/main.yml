@@ -5,6 +5,7 @@
     state: present
   tags:
     - debian
+    - server
 
 - name: install checkinstall
   apt:
@@ -12,6 +13,7 @@
     state: present
   tags:
     - debian
+    - server
 
 - name: install linux-generic
   apt:
@@ -19,6 +21,7 @@
     state: present
   tags:
     - debian
+    - server
 
 - name: install linux-headers-generic
   apt:
@@ -26,3 +29,4 @@
     state: present
   tags:
     - debian
+    - server

@@ -5,12 +5,14 @@
     dest: "/tmp/vagrant.deb"
   tags:
     - debian
+    - server
 
 - name: install latest vagrant
   apt:
     deb: "/tmp/vagrant.deb"
   tags:
     - debian
+    - server
 
 - name: install virtualbox
   get_url:
@@ -18,6 +20,7 @@
     dest: "/tmp/virtualbox.deb"
   tags:
     - debian
+    - server
 
 - name: install latest virtualbox
   apt:
@@ -25,6 +28,7 @@
   ignore_errors: true
   tags:
     - debian
+    - server
 
 - name: apt install -f
   command: apt install -f
@@ -32,6 +36,7 @@
   changed_when: false
   tags:
     - debian
+    - server
 
 - name: install virtualbox extension tools
   get_url:
@@ -39,6 +44,7 @@
     dest: "/tmp/virtualbox_ext.vbox-extpack"
   tags:
     - debian
+    - server
 
 - name: install virtualbox extension tools
   command: vboxmanage extpack install "/tmp/virtualbox_ext.vbox-extpack"
@@ -68,6 +74,7 @@
     - virt-manager
   tags:
     - debian
+    - server
 
 - name: vagrant plugin install vagrant-libvirt
   command: vagrant plugin install vagrant-libvirt
@@ -79,6 +86,7 @@
   changed_when: false
   tags:
     - debian
+    - server
 
 - name: vagrant plugin install vagrant-mutate
   command: vagrant plugin install vagrant-mutate
@@ -91,6 +99,7 @@
   changed_when: false
   tags:
     - debian
+    - server
 
 - name: vagrant plugin install winrm
   command: vagrant plugin install winrm
@@ -103,6 +112,7 @@
   ignore_errors: true
   tags:
     - debian
+    - server
 
 - name: vagrant plugin install winrm-fs
   command: vagrant plugin install winrm-fs
@@ -115,6 +125,7 @@
   ignore_errors: true
   tags:
     - debian
+    - server
 
 - name: Creating a user named {{ username }} on the specified machine with groups.
   user:
@@ -133,6 +144,7 @@
     append: yes
   tags:
     - debian
+    - server
 
 - name: Remove libvirt and qemu users
   become: yes
@@ -141,6 +153,7 @@
     state: absent
   tags:
     - debian
+    - server
 
 # - name: Add user to sudoers list
 #   lineinfile:
@@ -158,6 +171,7 @@
     version: master
   tags:
     - debian
+    - server
 
 - name: Clone powerline fonts
   git:
@@ -166,6 +180,7 @@
     version: master
   tags:
     - debian
+    - server
 
 - name: check if zsh template file exists
   stat:
@@ -173,6 +188,7 @@
   register: check_zsh_exists
   tags:
     - debian
+    - server
 
 - name: Copy default zshrc file
   copy:
@@ -182,6 +198,7 @@
   when: check_zsh_exists.stat.exists
   tags:
     - debian
+    - server
 
 - name: Clone bash-it
   git:
@@ -190,6 +207,7 @@
     version: master
   tags:
     - debian
+    - server
 
 - name: copy alias and export files
   copy:
@@ -203,6 +221,7 @@
   #     # - bashrc
   tags:
     - debian
+    - server
 
 - name: copy script to disable ipv6
   copy:
@@ -210,6 +229,7 @@
     dest: /home/{{ username }}/disable-ipv6.sh
   tags:
     - debian
+    - server
 
 - name: Install ranger
   package:
@@ -217,6 +237,7 @@
     state: present
   tags:
     - debian
+    - server
 
 - name: Create ranger config directory if it does not exist
   file:
@@ -225,6 +246,7 @@
     mode: "0755"
   tags:
     - debian
+    - server
 
 - name: copy ranger rc.conf
   copy:
@@ -232,3 +254,4 @@
     dest: /home/{{ username }}/.config/ranger/rifle.conf
   tags:
     - debian
+    - server

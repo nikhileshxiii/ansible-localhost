@@ -5,6 +5,7 @@
     state: present
   tags:
     - debian
+    - server
 
 - name: install ranger
   package:
@@ -12,6 +13,7 @@
     state: present
   tags:
     - debian
+    - server
 
 - name: install tree
   package:
@@ -19,6 +21,7 @@
     state: present
   tags:
     - debian
+    - server
 
 - name: install powerline fonts
   package:
@@ -26,3 +29,4 @@
     state: present
   tags:
     - debian
+    - server

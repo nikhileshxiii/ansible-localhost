@@ -14,6 +14,7 @@
     - {jetbrains: .java}
   tags:
     - debian
+    - server
 
 - name: Install all ides
   snap:
@@ -35,3 +36,4 @@
     - helm
   tags:
     - debian
+    - server

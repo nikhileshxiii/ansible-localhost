@@ -4,6 +4,7 @@
     update_cache: yes
   tags:
     - debian
+    - server
 
 - name: Update and upgrade apt
   apt:
@@ -11,6 +12,7 @@
     update_cache: yes
   tags:
     - debian
+    - server
 
 - name: install APT Transport HTTPS
   apt:
@@ -18,3 +20,4 @@
     state: present
   tags:
     - debian
+    - server

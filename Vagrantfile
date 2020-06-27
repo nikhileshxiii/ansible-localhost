@@ -44,7 +44,7 @@ Vagrant.configure("2") do |config|
     server.vm.network :private_network, :ip => "192.168.60.5"
     config.vm.provision "ansible" do |ansible|
       ansible.playbook = "servermachine.yml"
-      ansible.tags = "debian"
+      ansible.tags = "server"
       ansible.skip_tags = "vpnauth"
     end
   end

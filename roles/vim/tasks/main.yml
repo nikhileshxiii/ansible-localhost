@@ -5,6 +5,7 @@
     state: present
   tags:
     - debian
+    - server
 
 - name: Create vim directory
   file:
@@ -12,6 +13,7 @@
     state: directory
   tags:
     - debian
+    - server
 
 - name: Install vim-plug
   get_url:
@@ -19,6 +21,7 @@
     dest: /home/{{ username }}/.vim/autoload/plug.vim
   tags:
     - debian
+    - server
 
 - name: Place vimrc on ~/.vimrc
   copy:
@@ -28,6 +31,7 @@
     owner: "{{ username }}"
   tags:
     - debian
+    - server
 
 - name: Install vim-plug
   command: vim +PluginInstall +qall
@@ -40,3 +44,4 @@
   changed_when: false
   tags:
     - debian
+    - server
