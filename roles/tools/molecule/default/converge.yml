@@ -1,0 +1,11 @@
+---
+- name: Converge
+  hosts: all
+  tasks:
+    - name: Update apt
+      apt:
+        update_cache: yes
+        
+    - name: "Include tools"
+      include_role:
+        name: "tools"
