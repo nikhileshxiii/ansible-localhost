@@ -1,0 +1,47 @@
+---
+# This is an example playbook to execute Ansible tests.
+
+- name: Verify
+  hosts: all
+  tasks:
+    - name: update cache
+      apt:
+        update_cache: yes
+        
+    - name: Get build-essential packages status
+      package:
+        name: "build-essential"
+        state: present
+      check_mode: yes
+      register: "build_essential_status"
+
+    - name: Get checkinstall package status
+      package:
+        name: "checkinstall"
+        state: present
+      check_mode: yes
+      register: "checkinstall_status"
+
+    - name: Get linux-generic package status
+      package:
+        name: "linux-generic"
+        state: present
+      check_mode: yes
+      register: "linux_generic_status"
+
+    - name: Get linux-headers-generic package status
+      package:
+        name: "linux-headers-generic"
+        state: present
+      check_mode: yes
+      register: "linux_headers_generic_status"
+
+    - name: Assert {{ item }} is installed
+      assert:
+        that:
+          - not {{ item }}_status.changed
+      with_items:
+        - build_essential
+        - checkinstall
+        - linux_generic
+        - linux_headers_generic

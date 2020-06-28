@@ -1,0 +1,17 @@
+---
+dependency:
+  name: galaxy
+driver:
+  name: docker
+platforms:
+  - name: instance
+    image: docker.io/pycontribs/ubuntu:latest
+    pre_build_image: true
+provisioner:
+  name: ansible
+verifier:
+  name: ansible
+  # name: testinfra
+  # lint:
+  #   name: flake8
+
