@@ -3,4 +3,4 @@ venv/**
 .idea/**
 nohup.out
 .vagrant/**
-**/_pycache__/**
+**/__pycache__/**
