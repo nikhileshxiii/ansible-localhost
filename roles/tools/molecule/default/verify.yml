@@ -4,6 +4,100 @@
 - name: Verify
   hosts: all
   tasks:
-  - name: Example assertion
-    assert:
-      that: true
+    - name: Example assertion
+      assert:
+        that: true
+
+    - name: Get kdenlive packages status
+      package:
+        name: "kdenlive"
+        state: present
+      check_mode: yes
+      register: "kdenlive_status"
+
+    - name: Get audacity packages status
+      package:
+        name: "audacity"
+        state: present
+      check_mode: yes
+      register: "audacity_status"
+
+    - name: Get texlive packages status
+      package:
+        name: "texlive"
+        state: present
+      check_mode: yes
+      register: "texlive_status"
+
+    - name: Get blender packages status
+      package:
+        name: "blender"
+        state: present
+      check_mode: yes
+      register: "blender_status"
+
+    - name: Get xclip packages status
+      package:
+        name: "xclip"
+        state: present
+      check_mode: yes
+      register: "xclip_status"
+
+    - name: Get dtrx packages status
+      package:
+        name: "dtrx"
+        state: present
+      check_mode: yes
+      register: "dtrx_status"
+
+    - name: Get calibri packages status
+      package:
+        name: "calibre"
+        state: present
+      check_mode: yes
+      register: "calibre_status"
+
+    - name: Get tmux packages status
+      package:
+        name: "tmux"
+        state: present
+      check_mode: yes
+      register: "tmux_status"
+
+    - name: Get arandr packages status
+      package:
+        name: "arandr"
+        state: present
+      check_mode: yes
+      register: "arandr_status"
+
+    - name: Get smartmontools packages status
+      package:
+        name: "smartmontools"
+        state: present
+      check_mode: yes
+      register: "smartmontools_status"
+
+    - name: Get gsmartcontrol packages status
+      package:
+        name: "gsmartcontrol"
+        state: present
+      check_mode: yes
+      register: "gsmartcontrol_status"
+
+    - name: Assert all packages are is installed
+      assert:
+        that:
+          - not {{ item }}_status.changed
+      with_items:
+        - "kdenlive"
+        - "audacity"
+        - "texlive"
+        - "blender"
+        - "xclip"
+        - "dtrx"
+        - "calibre"
+        - "tmux"
+        - "arandr"
+        - "smartmontools"
+        - "gsmartcontrol"
