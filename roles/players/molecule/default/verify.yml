@@ -1,0 +1,44 @@
+---
+# This is an example playbook to execute Ansible tests.
+
+- name: Verify
+  hosts: all
+  tasks:
+        
+    - name: Get mplayer packages status
+      package:
+        name: "mplayer"
+        state: present
+      check_mode: yes
+      register: "mplayer_status"
+
+    - name: Get vlc package status
+      package:
+        name: "vlc"
+        state: present
+      check_mode: yes
+      register: "vlc_status"
+
+    - name: Get ffmpeg package status
+      package:
+        name: "ffmpeg"
+        state: present
+      check_mode: yes
+      register: "ffmpeg_status"
+
+    - name: Get mpv package status
+      package:
+        name: "mpv"
+        state: present
+      check_mode: yes
+      register: "mpv_status"
+
+    - name: Assert {{ item }} is installed
+      assert:
+        that:
+          - not {{ item }}_status.changed
+      with_items:
+        - mplayer
+        - vlc
+        - ffmpeg
+        - mpv
