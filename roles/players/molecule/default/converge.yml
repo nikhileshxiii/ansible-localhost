@@ -2,6 +2,10 @@
 - name: Converge
   hosts: all
   tasks:
+    - name: Update
+      apt:
+        update_cache: yes
+    
     - name: "Include players"
       include_role:
         name: "players"
