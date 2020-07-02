@@ -1,0 +1,69 @@
+---
+# tasks file for virtualbox
+- name: Add virtualbox key
+  apt_key:
+    id: 9F8D658297AF3EFC18D5CDFA2F683C52980AECF
+    url: https://www.virtualbox.org/download/oracle_vbox_2016.asc
+    state: present
+  tags:
+    - debian
+    - server
+
+- name: Add ansible_distribution_release to deb location
+  apt_repository:
+    repo: deb [arch=amd64] https://download.virtualbox.org/virtualbox/debian {{ansible_distribution_release}} contrib
+    state: present
+  tags:
+    - debian
+    - server
+
+- name: Update cache
+  apt:
+    update_cache: yes
+  tags:
+    - debian
+    - server
+
+- name: Install virtualbox-6.1
+  apt:
+    name: virtualbox-6.1
+    state: present
+  tags:
+    - debian
+    - server
+
+# - name: Install virtualbox-ext-pack
+#   apt:
+#     name: virtualbox-ext-pack
+#     state: present
+
+- name: Add wolfgang vagrant key
+  apt_key:
+    url: https://vagrant-deb.linestarve.com/vagrant-deb.asc
+    state: present
+  tags:
+    - debian
+    - server
+
+- name: Add vagrant unofficial repo
+  apt_repository:
+    repo: deb https://vagrant-deb.linestarve.com any main
+    state: present
+  tags:
+    - debian
+    - server
+
+- name: Update cache
+  apt:
+    update_cache: yes
+  tags:
+    - debian
+    - server
+
+- name: Install vagrant
+  apt:
+    name: vagrant
+    state: present
+  tags:
+    - debian
+    - server

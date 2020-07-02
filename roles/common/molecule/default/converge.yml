@@ -2,10 +2,10 @@
 - name: Converge
   hosts: all
   tasks:
-    - name: Update apt
+    - name: Update cache
       apt:
         update_cache: yes
 
-    - name: "Include tools"
+    - name: "Include common"
       include_role:
-        name: "tools"
+        name: "common"

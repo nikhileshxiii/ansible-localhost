@@ -5,12 +5,7 @@
     path: "/home/{{ username }}/{{ item.jetbrains }}"
   loop:
     - {jetbrains: .IntelliJIdea2019.*}
-    - {jetbrains: .PyCharm2019.*}
-    - {jetbrains: .CLion2019.*}
     - {jetbrains: .DataGrip2019.*}
-    - {jetbrains: .GoLand2019.*}
-    - {jetbrains: .RubyMine2019.*}
-    - {jetbrains: .WebStorm2019.*}
     - {jetbrains: .java}
   tags:
     - debian
@@ -23,13 +18,8 @@
     classic: yes
     channel: latest/edge
   with_items:
-    - pycharm-professional
     - intellij-idea-ultimate
-    - webstorm
     - datagrip
-    - clion
-    - rubymine
-    - goland
     - android-studio-canary
     - code
     - circleci

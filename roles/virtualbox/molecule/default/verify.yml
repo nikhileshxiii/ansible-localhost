@@ -1,0 +1,39 @@
+---
+# This is an example playbook to execute Ansible tests.
+
+- name: Verify
+  hosts: all
+  tasks:
+  - name: Example assertion
+    assert:
+      that: true
+  
+  - name: Virtualbox should be present
+    apt:
+      name: virtualbox-6.1
+      state: present
+    check_mode: yes
+    register: virtualbox_6_1_status
+
+  # - name: Install virtualbox-ext-pack
+  #   apt:
+  #     name: virtualbox-ext-pack
+  #     state: present
+  #   check_mode: yes
+  #   register: virtualbox_ext_pack_status
+    
+  - name: Vagrant should be present
+    apt:
+      name: vagrant
+      state: present
+    check_mode: yes
+    register: vagrant_status
+
+  - name: Assert all packages are is installed
+    assert:
+      that:
+        - not {{ item }}_status.changed
+    with_items:
+      - "virtualbox_6_1"
+      # - "virtualbox_ext_pack"
+      - "vagrant"

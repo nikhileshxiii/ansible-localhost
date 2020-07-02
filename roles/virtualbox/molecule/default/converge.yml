@@ -1,0 +1,16 @@
+---
+- name: Converge
+  hosts: all
+  tasks:
+    - name: "Update cache"
+      apt:
+        update_cache: yes
+    
+    - name: "Install linux-headers-generic"
+      apt:
+        name: ["linux-generic", "linux-headers-generic"]
+        state: present
+    
+    - name: "Include virtualbox"
+      include_role:
+        name: "virtualbox"

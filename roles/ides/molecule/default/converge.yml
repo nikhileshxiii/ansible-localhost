@@ -1,0 +1,19 @@
+---
+- name: Converge
+  hosts: all
+  vars:
+    username: nik
+
+  tasks:
+    - name: "Update apt cache"
+      apt:
+        update_cache: yes
+
+    - name: "Install snapd"
+      apt:
+        name: snapd
+        state: present
+
+    - name: "Include ides"
+      include_role:
+        name: "ides"

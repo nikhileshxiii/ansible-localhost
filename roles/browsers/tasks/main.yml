@@ -1,10 +1,4 @@
 ---
-- name: install firefox
-  package:
-    name: firefox-esr
-    state: present
-  tags:
-    - kali
 
 - name: install firefox
   package:

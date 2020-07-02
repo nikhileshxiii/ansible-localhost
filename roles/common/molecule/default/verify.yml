@@ -1,0 +1,47 @@
+---
+# This is an example playbook to execute Ansible tests.
+
+- name: Verify
+  hosts: all
+  tasks:
+    - name: Example assertion
+      assert:
+        that: true
+
+    - name: Install htop
+      package:
+        name: htop
+        state: present
+      check_mode: yes
+      register: "htop_status"
+      
+    - name: install ranger
+      package:
+        name: ranger
+        state: present
+      check_mode: yes
+      register: "ranger_status"
+    
+    - name: install tree
+      package:
+        name: tree
+        state: present
+      check_mode: yes
+      register: "tree_status"
+    
+    - name: install powerline fonts
+      package:
+        name: fonts-powerline
+        state: present
+      check_mode: yes
+      register: "fonts_powerline_status"
+
+    - name: Assert all packages are is installed
+      assert:
+        that:
+          - not {{ item }}_status.changed
+      with_items:
+        - "htop"
+        - "ranger"
+        - "tree"
+        - "fonts_powerline"

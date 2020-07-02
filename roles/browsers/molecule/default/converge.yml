@@ -6,6 +6,6 @@
       apt:
         update_cache: yes
 
-    - name: "Include tools"
+    - name: "Include browsers"
       include_role:
-        name: "tools"
+        name: "browsers"

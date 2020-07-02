@@ -1,0 +1,23 @@
+---
+# This is an example playbook to execute Ansible tests.
+
+- name: Verify
+  hosts: all
+  tasks:
+  - name: Example assertion
+    assert:
+      that: true
+
+  - name: Get thunderbird packages status
+    package:
+      name: "thunderbird"
+      state: present
+    check_mode: yes
+    register: "thunderbird_status"
+
+  - name: Assert all packages are is installed
+    assert:
+      that:
+        - not {{ item }}_status.changed
+    with_items:
+      - "thunderbird"

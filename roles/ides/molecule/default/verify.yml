@@ -1,0 +1,49 @@
+---
+# This is an example playbook to execute Ansible tests.
+
+- name: Verify
+  hosts: all
+  tasks:
+  - name: Example assertion
+    assert:
+      that: true
+
+- name: Remove All jetbrains apps
+  assert:
+    that: "/home/{{ username }}/{{ item.jetbrains }}.exists"
+    check_mode: yes
+  loop:
+    - {jetbrains: .IntelliJIdea2019.*}
+    - {jetbrains: .PyCharm2019.*}
+    - {jetbrains: .CLion2019.*}
+    - {jetbrains: .DataGrip2019.*}
+    - {jetbrains: .GoLand2019.*}
+    - {jetbrains: .RubyMine2019.*}
+    - {jetbrains: .WebStorm2019.*}
+    - {jetbrains: .java}
+  tags:
+    - debian
+    - server
+
+- name: Install all ides
+  snap:
+    name: "{{ item }}"
+    state: present
+    classic: yes
+    channel: latest/edge
+    check_mode: yes
+  with_items:
+    - pycharm-professional
+    - intellij-idea-ultimate
+    - webstorm
+    - datagrip
+    - clion
+    - rubymine
+    - goland
+    - android-studio-canary
+    - code
+    - circleci
+    - helm
+  tags:
+    - debian
+    - server

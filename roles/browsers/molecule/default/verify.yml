@@ -1,0 +1,74 @@
+---
+# This is an example playbook to execute Ansible tests.
+
+- name: Verify
+  hosts: all
+  tasks:
+    - name: Example assertion
+      assert:
+        that: true
+
+    - name: install firefox
+      package:
+        name: firefox
+        state: present
+      check_mode: yes
+      register: "firefox_status"
+
+    - name: install chromium
+      package:
+        name: chromium-browser
+        state: present
+      check_mode: yes
+      register: "chromium_status"
+
+    - name: install wget
+      package:
+        name: wget
+        state: present
+      check_mode: yes
+      register: "wget_status"
+
+    - name: install curl
+      package:
+        name: curl
+        state: present
+      check_mode: yes
+      register: "curl_status"
+
+    - name: Add chrome key if not present
+      apt_key:
+        url: https://dl-ssl.google.com/linux/linux_signing_key.pub
+        id: 4CCA1EAF950CEE4AB83976DCA040830F7FAC5991
+        state: present
+      become: true
+      check_mode: yes
+      register: "chrome_key_status"
+
+    - name: Add Google Chrome repo
+      apt_repository:
+        repo: deb http://dl.google.com/linux/chrome/deb stable main
+        update_cache: yes
+        state: present
+      check_mode: yes
+      register: "chrome_repo_status"
+
+    - name: Install Google Chrome
+      apt:
+        name: google-chrome-unstable
+        state: present
+      check_mode: yes
+      register: "chrome_status"
+
+    - name: Assert all packages are is installed
+      assert:
+        that:
+          - not {{ item }}_status.changed
+      with_items:
+        - "firefox"
+        - "chromium"
+        - "wget"
+        - "curl"
+        - "chrome_key"
+        - "chrome_repo"
+        - "chrome"

@@ -13,6 +13,7 @@
       changed_when: false
 
   roles:
+    - virtualbox
     - create-new-user
     - common
     - update
