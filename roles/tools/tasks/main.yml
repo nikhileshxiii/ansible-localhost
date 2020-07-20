@@ -42,7 +42,7 @@
     - debian
 
 - name: install dtrx
-  package:
+  pip:
     name: dtrx
     state: present
   tags:
@@ -80,6 +80,14 @@
 - name: install gsmartcontrol
   package:
     name: gsmartcontrol
+    state: present
+  tags:
+    - debian
+    - server
+
+- name: "Install bochs"
+  package:
+    name: bochs
     state: present
   tags:
     - debian

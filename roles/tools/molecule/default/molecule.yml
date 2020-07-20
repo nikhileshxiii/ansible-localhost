@@ -21,7 +21,7 @@ platforms:
 provisioner:
   name: ansible
 verifier:
-  # name: ansible
-  name: testinfra
-  lint:
-    name: flake8
+  name: ansible
+  # name: testinfra
+  # lint:
+  #   name: flake8

@@ -44,7 +44,7 @@
       register: "xclip_status"
 
     - name: Get dtrx packages status
-      package:
+      pip:
         name: "dtrx"
         state: present
       check_mode: yes
