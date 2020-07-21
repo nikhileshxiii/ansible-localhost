@@ -34,7 +34,7 @@
     - server
 
 - name: Install vim-plug
-  command: vim +PluginInstall +qall
+  shell: vim +PluginInstall +qall
   become: yes
   become_user: "{{ username }}"
   args:

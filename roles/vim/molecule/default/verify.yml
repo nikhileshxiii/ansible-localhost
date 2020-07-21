@@ -1,0 +1,51 @@
+---
+# This is an example playbook to execute Ansible tests.
+
+- name: Verify
+  hosts: all
+
+  vars:
+    - username: nik
+
+  tasks:
+    - name: Example assertion
+      assert:
+        that: true
+
+    - name: "Install vim status"
+      package:
+        name: vim
+        state: present
+      check_mode: yes
+      register: "vim_status"
+
+    - name: "Register vim autoload dir status"
+      stat:
+        path: /home/{{ username }}/.vim/autoload
+      register: "vim_autoload_status"
+
+    - name: Register vim-plug status
+      stat:
+        path: /home/{{ username }}/.vim/autoload/plug.vim
+      register: "vim_plug_status"
+
+    - name: "Register vimrc status"
+      stat:
+        path: /home/{{ username }}/.vimrc
+      register: "vimrc_status"
+
+    - name: Assert all packages are installed
+      assert:
+        that:
+          - not {{ item }}_status.changed
+      with_items:
+        - vim
+
+    - name: Assert all files status are present
+      assert:
+        that:
+          - "{{ item }}_status.stat.exists"
+      with_items:
+        - vim_autoload
+        - vim_plug
+        - vimrc
