@@ -1,0 +1,19 @@
+---
+# This is an example playbook to execute Ansible tests.
+
+- name: Verify
+  hosts: all
+  tasks:
+  - name: Example assertion
+    assert:
+      that: true
+
+  - name: Install keeweb package from tmp
+    apt:
+      deb: /tmp/keeweb.deb
+    check_mode: yes
+    register: keeweb_status
+
+  - name: "check if keeweb is installed"
+    assert:
+      that: not keeweb_status.changed

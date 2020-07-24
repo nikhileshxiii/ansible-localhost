@@ -1,0 +1,16 @@
+---
+- name: Converge
+  hosts: all
+  tasks:
+    - name: "Update cache"
+      apt:
+        update_cache: yes
+
+    - name: "Create /tmp directory"
+      file:
+        path: /tmp
+        state: directory
+
+    - name: "Include keeweb"
+      include_role:
+        name: "keeweb"
