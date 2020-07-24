@@ -19,6 +19,13 @@
       check_mode: yes
       register: "vim_status"
 
+    - name: "Install neovim status"
+      package:
+        name: neovim
+        state: present
+      check_mode: yes
+      register: "neovim_status"
+
     - name: "Register vim autoload dir status"
       stat:
         path: /home/{{ username }}/.vim/autoload
@@ -40,6 +47,7 @@
           - not {{ item }}_status.changed
       with_items:
         - vim
+        - neovim
 
     - name: Assert all files status are present
       assert:

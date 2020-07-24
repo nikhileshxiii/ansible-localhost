@@ -7,6 +7,14 @@
     - debian
     - server
 
+- name: install neovim
+  package:
+    name: neovim
+    state: present
+  tags:
+    - debian
+    - server
+
 - name: Create vim directory
   file:
     path: /home/{{ username }}/.vim/autoload
