@@ -1,0 +1,115 @@
+---
+# This is an example playbook to execute Ansible tests.
+
+- name: Verify
+  hosts: all
+  vars:
+    username: nik
+
+  tasks:
+    - name: Example assertion
+      assert:
+        that: true
+
+    - name: check snap packages for golang
+      snap:
+        name: go
+        state: present
+        classic: yes
+      check_mode: yes
+      register: go_status
+
+    - name: check ruby
+      package:
+        state: present
+        name: ruby-full
+      check_mode: yes
+      register: ruby_status
+
+    - name: check rust
+      package:
+        name: rustc
+        state: present
+      check_mode: yes
+      register: rust_status
+
+    - name: check cargo
+      package:
+        name: cargo
+        state: present
+      check_mode: yes
+      register: cargo_status
+
+    - name: check nodejs
+      package:
+        name: nodejs
+        state: present
+      check_mode: yes
+      register: nodejs_status
+
+    - name: check npm
+      package:
+        name: npm
+        state: present
+      check_mode: yes
+      register: npm_status
+
+    - name: Assert {{ item }} is installed
+      assert:
+        that:
+          - not {{ item }}_status.changed
+      with_items:
+        - go
+        - ruby
+        - rust
+        - cargo
+        - nodejs
+        - npm
+
+    - name: check java
+      stat:
+        path: /home/{{ username }}/.sdkman/candidates/java/current/bin/java
+      register: java_status
+
+    - name: check maven
+      stat:
+        path: /home/{{ username }}/.sdkman/candidates/maven/current/bin/mvn
+      register: maven_status
+
+    - name: check gradle
+      stat:
+        path: /home/{{ username }}/.sdkman/candidates/gradle/current/bin/gradle
+      register: gradle_status
+
+    - name: check scala
+      stat:
+        path: /home/{{ username }}/.sdkman/candidates/scala/current/bin/scala
+      register: scala_status
+
+    - name: check sbt
+      stat:
+        path: /home/{{ username }}/.sdkman/candidates/sbt/current/bin/sbt
+      register: sbt_status
+
+    - name: check kotlin
+      stat:
+        path: /home/{{ username }}/.sdkman/candidates/kotlin/current/bin/kotlin
+      register: kotlin_status
+
+    - name: check springboot
+      stat:
+        path: /home/{{ username }}/.sdkman/candidates/springboot/current/bin/spring
+      register: springboot_status
+
+    - name: Check sdkman jvms exist
+      assert:
+        that:
+          - "{{ item }}_status.stat.exists"
+      with_items:
+        - "java"
+        - "maven"
+        - "gradle"
+        - "scala"
+        - "sbt"
+        - "kotlin"
+        - "springboot"

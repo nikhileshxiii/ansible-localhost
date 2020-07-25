@@ -34,6 +34,17 @@
   tags:
     - debian
 
+- name: Create npm folders
+  file:
+    path: "{{ item }}"
+    state: directory
+  become: yes
+  become_user: "{{ username }}"
+  with_items:
+    - "$HOME/.npm/node_modules"
+    - "$HOME/.npm/npm_cache"
+    - "$HOME/.npm/tmp"
+
 - name: Setup node modules prefix to user home
   shell: npm config set prefix "$HOME/.npm/node_modules"
   become: yes
@@ -78,8 +89,9 @@
   become_user: "{{ username }}"
   when: (not check_sdkman_exists.stat.exists)
   register: sdkman_result
-  # args:
-  #   warn: no
+  args:
+    executable: /bin/bash
+    warn: no
   tags:
     - debian
 

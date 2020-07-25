@@ -1,0 +1,25 @@
+---
+- name: Converge
+  hosts: all
+  vars:
+    username: nik
+    no_logging: false
+
+  tasks:
+    - name: "Update cache"
+      apt:
+        update_cache: yes
+
+    - name: "Add user"
+      user:
+        name: "{{ username }}"
+
+    - name: "Install snapd and curl"
+      apt:
+        name: ["snapd", "curl"]
+        state: present
+
+    - name: "Include lang"
+      include_role:
+        name: "lang"
+      no_log: "{{ no_logging }}"

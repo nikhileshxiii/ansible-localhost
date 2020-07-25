@@ -1,0 +1,17 @@
+---
+dependency:
+  name: galaxy
+driver:
+  name: docker
+platforms:
+  - name: systemd
+    image: jrei/systemd-ubuntu
+    privileged: true
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro
+      - /var/run/snapd-snap.socket:/var/run/snapd-snap.socket:ro
+      - /var/run/snapd.socket:/var/run/snapd.socket:ro
+provisioner:
+  name: ansible
+verifier:
+  name: ansible
