@@ -3,37 +3,60 @@
 
 - name: Verify
   hosts: all
+  vars:
+    username: nik
+
   tasks:
-  - name: Example assertion
-    assert:
-      that: true
-  
-  - name: Virtualbox should be present
-    apt:
-      name: virtualbox-6.1
-      state: present
-    check_mode: yes
-    register: virtualbox_6_1_status
+    - name: Example assertion
+      assert:
+        that: true
 
-  # - name: Install virtualbox-ext-pack
-  #   apt:
-  #     name: virtualbox-ext-pack
-  #     state: present
-  #   check_mode: yes
-  #   register: virtualbox_ext_pack_status
-    
-  - name: Vagrant should be present
-    apt:
-      name: vagrant
-      state: present
-    check_mode: yes
-    register: vagrant_status
+    - name: Virtualbox should be present
+      apt:
+        name: virtualbox-6.1
+        state: present
+      check_mode: yes
+      register: virtualbox_6_1_status
 
-  - name: Assert all packages are is installed
-    assert:
-      that:
-        - not {{ item }}_status.changed
-    with_items:
-      - "virtualbox_6_1"
-      # - "virtualbox_ext_pack"
-      - "vagrant"
+    # - name: Install virtualbox-ext-pack
+    #   apt:
+    #     name: virtualbox-ext-pack
+    #     state: present
+    #   check_mode: yes
+    #   register: virtualbox_ext_pack_status
+
+    - name: Vagrant should be present
+      apt:
+        name: vagrant
+        state: present
+      check_mode: yes
+      register: vagrant_status
+
+    - name: Assert all packages are is installed
+      assert:
+        that:
+          - not {{ item }}_status.changed
+      with_items:
+        - "virtualbox_6_1"
+        # - "virtualbox_ext_pack"
+        - "vagrant"
+
+    - name: vagrant plugin list
+      shell: vagrant plugin list
+      become: true
+      become_user: "{{ username }}"
+      args:
+        executable: /bin/bash
+        warn: yes
+      check_mode: yes
+      register: vagrant_plugin_list
+
+    - name: debug msg
+      debug:
+        msg: "vagrant plugin list = {{ vagrant_plugin_list }}"
+
+    - name: assert vagrant plugins
+      assert:
+        that:
+          - "vagrant_plugin_list.stdout is search('libvirt')"
+          - "vagrant_plugin_list.stdout is search('mutate')"

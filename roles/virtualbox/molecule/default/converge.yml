@@ -1,16 +1,38 @@
 ---
 - name: Converge
   hosts: all
+  vars:
+    username: nik
+
   tasks:
     - name: "Update cache"
       apt:
         update_cache: yes
-    
+
+    - name: add user
+      user:
+        name: "{{ username }}"
+
     - name: "Install linux-headers-generic"
       apt:
-        name: ["linux-generic", "linux-headers-generic"]
+        name:
+          [
+            "linux-generic",
+            "linux-headers-generic",
+            "ruby-libvirt",
+            "qemu-kvm",
+            "libvirt-daemon-system",
+            "libvirt-clients",
+            "libxslt-dev",
+            "libxml2-dev",
+            "libvirt-dev",
+            "zlib1g-dev",
+            "ruby-dev",
+            "bridge-utils",
+            "virt-manager",
+          ]
         state: present
-    
+
     - name: "Include virtualbox"
       include_role:
         name: "virtualbox"

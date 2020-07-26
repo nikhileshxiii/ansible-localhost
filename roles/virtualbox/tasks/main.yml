@@ -36,6 +36,9 @@
 #   apt:
 #     name: virtualbox-ext-pack
 #     state: present
+#   tags:
+#     - debian
+#     - server
 
 - name: Add wolfgang vagrant key
   apt_key:
@@ -64,6 +67,57 @@
   apt:
     name: vagrant
     state: present
+  tags:
+    - debian
+    - server
+
+- name: vagrant plugin install vagrant-libvirt
+  shell: vagrant plugin install vagrant-libvirt
+  become: true
+  become_user: "{{ username }}"
+  args:
+    executable: /bin/bash
+    warn: no
+  changed_when: false
+  tags:
+    - debian
+    - server
+
+- name: vagrant plugin install vagrant-mutate
+  shell: vagrant plugin install vagrant-mutate
+  become: true
+  become_user: "{{ username }}"
+  args:
+    executable: /bin/bash
+    warn: no
+  ignore_errors: true
+  changed_when: false
+  tags:
+    - debian
+    - server
+
+- name: vagrant plugin install winrm
+  shell: vagrant plugin install winrm
+  become: true
+  become_user: "{{ username }}"
+  args:
+    executable: /bin/bash
+    warn: no
+  changed_when: false
+  ignore_errors: true
+  tags:
+    - debian
+    - server
+
+- name: vagrant plugin install winrm-fs
+  shell: vagrant plugin install winrm-fs
+  become: true
+  become_user: "{{ username }}"
+  args:
+    executable: /bin/bash
+    warn: no
+  changed_when: false
+  ignore_errors: true
   tags:
     - debian
     - server
