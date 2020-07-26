@@ -3,47 +3,75 @@
 
 - name: Verify
   hosts: all
+  vars:
+    username: nik
+
   tasks:
-  - name: Example assertion
-    assert:
-      that: true
+    - name: Example assertion
+      assert:
+        that: true
 
-- name: Remove All jetbrains apps
-  assert:
-    that: "/home/{{ username }}/{{ item.jetbrains }}.exists"
-    check_mode: yes
-  loop:
-    - {jetbrains: .IntelliJIdea2019.*}
-    - {jetbrains: .PyCharm2019.*}
-    - {jetbrains: .CLion2019.*}
-    - {jetbrains: .DataGrip2019.*}
-    - {jetbrains: .GoLand2019.*}
-    - {jetbrains: .RubyMine2019.*}
-    - {jetbrains: .WebStorm2019.*}
-    - {jetbrains: .java}
-  tags:
-    - debian
-    - server
+    - name: check intellij
+      stat:
+        path: /home/{{ username }}/.IntelliJIdea2019.*
+      register: idea_dir_status
 
-- name: Install all ides
-  snap:
-    name: "{{ item }}"
-    state: present
-    classic: yes
-    channel: latest/edge
-    check_mode: yes
-  with_items:
-    - pycharm-professional
-    - intellij-idea-ultimate
-    - webstorm
-    - datagrip
-    - clion
-    - rubymine
-    - goland
-    - android-studio-canary
-    - code
-    - circleci
-    - helm
-  tags:
-    - debian
-    - server
+    - name: check datagrip
+      stat:
+        path: /home/{{ username }}/.DataGrip2019.*
+      register: datagrip_dir_status
+
+    - name: check java
+      stat:
+        path: /home/{{ username }}/.java
+      register: java_dir_status
+
+    - name: Check sdkman jvms exist
+      assert:
+        that:
+          - "not {{ item }}_dir_status.stat.exists"
+      with_items:
+        - idea
+        - datagrip
+        - java
+
+    - name: check snap packages for idea
+      snap:
+        name: intellij-idea-ultimate
+        state: present
+        classic: yes
+      check_mode: yes
+      register: idea_status
+
+    - name: check snap packages for datagrip
+      snap:
+        name: datagrip
+        state: present
+        classic: yes
+      check_mode: yes
+      register: datagrip_status
+
+    - name: check snap packages for code
+      snap:
+        name: code
+        state: present
+        classic: yes
+      check_mode: yes
+      register: code_status
+
+    - name: check snap packages for circleci
+      snap:
+        name: circleci
+        state: present
+        classic: yes
+      check_mode: yes
+      register: circleci_status
+
+    - name: Check ide status
+      assert:
+        that: not {{ item }}_status.changed
+      with_items:
+        - idea
+        - datagrip
+        - code
+        - circleci

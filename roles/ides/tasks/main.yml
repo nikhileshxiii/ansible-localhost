@@ -20,10 +20,8 @@
   with_items:
     - intellij-idea-ultimate
     - datagrip
-    - android-studio-canary
     - code
     - circleci
-    - helm
   tags:
     - debian
     - server
