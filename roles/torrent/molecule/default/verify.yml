@@ -1,0 +1,39 @@
+---
+# This is an example playbook to execute Ansible tests.
+
+- name: Verify
+  hosts: all
+  tasks:
+    - name: Example assertion
+      assert:
+        that: true
+
+    - name: check qbittorrent status
+      package:
+        name: qbittorrent
+        state: present
+      check_mode: yes
+      register: qbittorrent_status
+
+    - name: check qbittorrent-nox status
+      package:
+        name: qbittorrent-nox
+        state: present
+      check_mode: yes
+      register: qbittorrent_nox_status
+
+    - name: check package status
+      assert:
+        that:
+          - "not qbittorrent_status.changed"
+          - "not qbittorrent_nox_status.changed"
+
+    - name: check if /etc/sysctl.conf exists
+      stat:
+        path: /etc/sysctl.conf
+      register: sysctl_conf_status
+
+    - name: assert /etc/sysctl.conf exists
+      assert:
+        that:
+          - sysctl_conf_status.stat.exists
