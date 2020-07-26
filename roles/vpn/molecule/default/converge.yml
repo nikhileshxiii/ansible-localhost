@@ -1,0 +1,23 @@
+---
+- name: Converge
+  hosts: all
+  vars:
+    username: nik
+
+  tasks:
+    - name: "Update cache"
+      apt:
+        name: ["unzip"]
+        update_cache: yes
+
+    - user:
+        name: "{{ username }}"
+
+    - name: touch nordvpn.txt
+      file:
+        path: /home/{{ username }}/nordvpn.txt
+        state: touch
+
+    - name: "Include vpn"
+      include_role:
+        name: "vpn"

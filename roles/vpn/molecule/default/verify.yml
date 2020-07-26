@@ -1,0 +1,53 @@
+---
+# This is an example playbook to execute Ansible tests.
+
+- name: Verify
+  hosts: all
+  vars:
+    username: nik
+
+  tasks:
+    - name: Example assertion
+      assert:
+        that: true
+
+    - name: Install openvpn
+      package:
+        name: openvpn
+        state: present
+      check_mode: yes
+      register: openvpn_status
+
+    - name: stat /etc/openvpn
+      stat:
+        path: /etc/openvpn
+      register: etc_openvpn_dir_stat
+
+    - name: stat /etc/openvpn
+      stat:
+        path: /etc/openvpn
+      register: etc_openvpn_dir_stat
+
+    - name: ovpn_tcp status
+      stat:
+        path: "/etc/openvpn/ovpn_tcp/"
+      register: ovpn_tcp_status
+
+    - name: ovpn_tcp status
+      stat:
+        path: "/etc/openvpn/ovpn_udp/"
+      register: ovpn_udp_status
+
+    - name: check txt
+      stat:
+        path: "/home/{{ username }}/nordvpn.txt"
+      register: nordvpn_txt_status
+
+    - name: check asserts
+      assert:
+        that:
+          - not openvpn_status.changed
+          - etc_openvpn_dir_stat.stat.exists
+          - ovpn_tcp_status.stat.exists
+          - ovpn_udp_status.stat.exists
+          - nordvpn_txt_status.stat.exists
