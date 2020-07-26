@@ -48,7 +48,6 @@
       args:
         executable: /bin/bash
         warn: yes
-      check_mode: yes
       register: vagrant_plugin_list
 
     - name: debug msg
