@@ -1,0 +1,113 @@
+---
+# This is an example playbook to execute Ansible tests.
+
+- name: Verify
+  hosts: all
+  vars:
+    username: nik
+
+  tasks:
+    - name: Example assertion
+      assert:
+        that: true
+
+    - name: "Add cinnamon repo"
+      apt_repository:
+        repo: ppa:embrosyn/cinnamon
+        state: present
+      check_mode: yes
+      register: cinnamon_repo_status
+
+    - name: "Install packages"
+      package:
+        name:
+          [
+            "cinnamon",
+            "ranger",
+            "docker-compose",
+            "docker",
+            "docker.io",
+            "lxd",
+            "adb",
+            "snapd",
+            "ruby-libvirt",
+            "qemu-kvm",
+            "libvirt-daemon-system",
+            "libvirt-clients",
+            "libxslt-dev",
+            "libxml2-dev",
+            "libvirt-dev",
+            "zlib1g-dev",
+            "ruby-dev",
+            "bridge-utils",
+            "virt-manager",
+          ]
+        state: present
+      check_mode: yes
+      register: packages_status
+
+    - name: Clone zsh
+      stat:
+        path: /home/{{ username }}/.oh-my-zsh
+      register: zsh_status
+
+    - name: Clone powerline fonts
+      stat:
+        path: /home/{{ username }}//.oh-my-zsh/custom/themes/powerlevel9k
+      register: powerline_status
+
+    - name: Copy default zshrc file
+      stat:
+        path: "/home/{{ username }}/.zshrc"
+      register: zshrc_status
+
+    - name: Clone bash-it
+      stat:
+        path: /home/{{ username }}/.bash-it
+      register: bash_it_status
+
+    - name: Clone alias.sh
+      stat:
+        path: /home/{{ username }}/.alias.sh
+      register: alias_sh_status
+
+    - name: Clone tmux conf
+      stat:
+        path: /home/{{ username }}/.tmux.conf
+      register: tmux_conf_status
+
+    - name: Clone source.sh
+      stat:
+        path: /home/{{ username }}/.source.sh
+      register: source_sh_status
+
+    - name: copy script to disable ipv6
+      stat:
+        path: /home/{{ username }}/disable-ipv6.sh
+      register: disable_ipv6_sh_status
+
+    - name: Create ranger config directory if it does not exist
+      stat:
+        path: /home/{{ username }}/.config/ranger
+      register: ranger_config_status
+
+    - name: copy ranger rc.conf
+      stat:
+        path: /home/{{ username }}/.config/ranger/rifle.conf
+      register: ranger_rc_conf_status
+
+    - name: Assert checks
+      assert:
+        that:
+          - not cinnamon_repo_status.changed
+          - not packages_status.changed
+          - zsh_status.stat.exists
+          - powerline_status.stat.exists
+          - zshrc_status.stat.exists
+          - bash_it_status.stat.exists
+          - alias_sh_status.stat.exists
+          - tmux_conf_status.stat.exists
+          - source_sh_status.stat.exists
+          - disable_ipv6_sh_status.stat.exists
+          - ranger_config_status.stat.exists
+          - ranger_rc_conf_status.stat.exists
