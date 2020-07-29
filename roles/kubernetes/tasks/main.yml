@@ -94,6 +94,7 @@
     validate_certs: no
   tags:
     - server
+    - debian
 
 # - name: Download helm shell script
 #   get_url:
@@ -171,3 +172,4 @@
     - microk8s
   tags:
     - server
+    - debian

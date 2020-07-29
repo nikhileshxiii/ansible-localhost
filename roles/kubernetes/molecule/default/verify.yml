@@ -1,0 +1,48 @@
+---
+# This is an example playbook to execute Ansible tests.
+
+- name: Verify
+  hosts: all
+  tasks:
+    - name: Example assertion
+      assert:
+        that: true
+
+    - name: Package status
+      package:
+        name: "{{ item }}"
+        state: present
+      with_items:
+        - apt-transport-https
+        - ca-certificates
+        - software-properties-common
+        - docker.io
+        - docker-compose
+        - docker
+      check_mode: yes
+      register: package_status
+
+    - name: Remove /etc/docker/daemon.json
+      stat:
+        path: /etc/docker/daemon.json
+      register: docker_json_status
+
+    - name: Remove /usr/local/bin/minikube
+      stat:
+        path: /usr/local/bin/minikube
+      register: minikube_status
+
+    - name: snap status
+      snap:
+        name: ["helm", "microk8s"]
+        state: present
+        classic: yes
+      register: snap_status
+
+    - name: Assert status
+      assert:
+        that:
+          - not package_status.changed
+          - not docker_json_status.stat.exists
+          - minikube_status.stat.exists
+          - not snap_status.changed
