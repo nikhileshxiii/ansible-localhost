@@ -15,11 +15,15 @@ branches:
 env:
   - ANSIBLE_VERSION=latest
 
+services:
+  - docker
+
 # Install ansible
 addons:
   apt:
     packages:
       - python3-pip
+      - docker.io
 
 # before_install:
 
