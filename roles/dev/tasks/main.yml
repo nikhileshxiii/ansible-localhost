@@ -20,7 +20,7 @@
 - name: Install ruby
   package:
     state: present
-    name: ruby-full
+    name: ruby-dev
   tags:
     - debian
 
