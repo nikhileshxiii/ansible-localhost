@@ -2,8 +2,6 @@
 language: python
 python: "3.8"
 
-# Use the new container infrastructure
-sudo: required
 dist: bionic
 
 branches:
@@ -35,7 +33,6 @@ install:
   - pip install molecule
   - pip install docker
 
-after_install:
   # Check ansible version
   - ansible --version
 
