@@ -1,31 +1,11 @@
 ---
-- name: install build-essential
-  package:
-    name: build-essential
-    state: present
-  tags:
-    - debian
-    - server
-
-- name: install checkinstall
+- name: install kernel headers and build tools
   apt:
-    name: checkinstall
-    state: present
-  tags:
-    - debian
-    - server
-
-- name: install linux-generic
-  apt:
-    name: linux-generic
-    state: present
-  tags:
-    - debian
-    - server
-
-- name: install linux-headers-generic
-  apt:
-    name: linux-headers-generic
+    name:
+      - build-essential
+      - checkinstall
+      - linux-generic
+      - linux-headers-generic
     state: present
   tags:
     - debian
