@@ -15,11 +15,11 @@
           - checkinstall
           - linux-generic
           - linux-headers-generic
-      state: present
+        state: present
       check_mode: yes
       register: packages_status
 
     - name: Assert packages_status is installed
       assert:
         that:
-          - not packages_status_status.changed
+          - not packages_status.changed
