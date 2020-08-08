@@ -27,6 +27,7 @@
       - bochs
       - adb
       - snapd
+      - thunderbird
     state: latest
   tags:
     - debian

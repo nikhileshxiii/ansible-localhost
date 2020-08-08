@@ -134,6 +134,13 @@
       check_mode: yes
       register: "snapd_status"
 
+    - name: Get thunderbird packages status
+      package:
+        name: "thunderbird"
+        state: present
+      check_mode: yes
+      register: "thunderbird_status"
+
     - name: Assert all packages are is installed
       assert:
         that:
@@ -156,3 +163,4 @@
         - bochs
         - adb
         - snapd
+        - thunderbird
