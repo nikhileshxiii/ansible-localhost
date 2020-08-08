@@ -8,6 +8,7 @@ source venv/bin/activate
 pip install ansible
 pip install yamllint
 pip install ansible-lint
+pip install molecule
 
 echo ""
 echo "==> Run yamllint"
@@ -19,4 +20,4 @@ ansible-playbook --syntax-check main.yml
 echo "==> Run ansible-lint"
 ansible-lint main.yml
 
-ansible-playbook main.yml --tags "debian" --skip-tags "vpnauth" -K
+# ansible-playbook main.yml --tags "debian" --skip-tags "vpnauth" -K
