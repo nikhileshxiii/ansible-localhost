@@ -26,7 +26,7 @@ Vagrant.configure("2") do |config|
   config.vm.provider "libvirt" do |vb|
     vb.cpus = 2
     vb.nested = true
-    vb.memory = "512"
+    vb.memory = "8192"
   end
 
   config.vm.define "localmachine" do | local |
@@ -39,13 +39,13 @@ Vagrant.configure("2") do |config|
     end
   end
 
-  config.vm.define "servermachine" do | server |
-    server.vm.hostname = "servermachine.test"
-    server.vm.network :private_network, :ip => "192.168.60.5"
-    config.vm.provision "ansible" do |ansible|
-      ansible.playbook = "tests/servermachine.yml"
-      ansible.tags = "server"
-      ansible.skip_tags = "vpnauth"
-    end
-  end
+  # config.vm.define "servermachine" do | server |
+  #   server.vm.hostname = "servermachine.test"
+  #   server.vm.network :private_network, :ip => "192.168.60.5"
+  #   config.vm.provision "ansible" do |ansible|
+  #     ansible.playbook = "tests/servermachine.yml"
+  #     ansible.tags = "server"
+  #     ansible.skip_tags = "vpnauth"
+  #   end
+  # end
 end
