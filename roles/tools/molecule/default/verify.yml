@@ -8,159 +8,42 @@
       assert:
         that: true
 
-    - name: Get dtrx packages status
-      pip:
-        name: "dtrx"
-        state: present
-      check_mode: yes
-      register: "dtrx_status"
+- name: Get pip tools status
+  pip:
+    name:
+      - dtrx
+      - speedtest-cli
+    state: latest
+  check_mode: yes
+  register: pip_tools_status
 
-    - name: Get speedtest-cli packages status
-      pip:
-        name: "speedtest-cli"
-        state: present
-      check_mode: yes
-      register: "speedtest_cli_status"
+- name: install tools
+  apt:
+    name:
+      - htop
+      - tree
+      - ranger
+      - tmux
+      - calibre
+      - openshot
+      - kdenlive
+      - audacity
+      - texlive
+      - blender
+      - xclip
+      - arandr
+      - smartmontools
+      - gsmartcontrol
+      - bochs
+      - adb
+      - snapd
+      - thunderbird
+    state: latest
+  check_mode: yes
+  register: package_status
 
-    - name: Get ranger packages status
-      package:
-        name: "ranger"
-        state: present
-      check_mode: yes
-      register: "ranger_status"
-
-    - name: Get tmux packages status
-      package:
-        name: "tmux"
-        state: present
-      check_mode: yes
-      register: "tmux_status"
-
-    - name: Get openshot packages status
-      package:
-        name: "openshot"
-        state: present
-      check_mode: yes
-      register: "openshot_status"
-
-    - name: Get kdenlive packages status
-      package:
-        name: "kdenlive"
-        state: present
-      check_mode: yes
-      register: "kdenlive_status"
-
-    - name: Get audacity packages status
-      package:
-        name: "audacity"
-        state: present
-      check_mode: yes
-      register: "audacity_status"
-
-    - name: Get texlive packages status
-      package:
-        name: "texlive"
-        state: present
-      check_mode: yes
-      register: "texlive_status"
-
-    - name: Get blender packages status
-      package:
-        name: "blender"
-        state: present
-      check_mode: yes
-      register: "blender_status"
-
-    - name: Get xclip packages status
-      package:
-        name: "xclip"
-        state: present
-      check_mode: yes
-      register: "xclip_status"
-
-    - name: Get calibri packages status
-      package:
-        name: "calibre"
-        state: present
-      check_mode: yes
-      register: "calibre_status"
-
-    - name: Get tmux packages status
-      package:
-        name: "tmux"
-        state: present
-      check_mode: yes
-      register: "tmux_status"
-
-    - name: Get arandr packages status
-      package:
-        name: "arandr"
-        state: present
-      check_mode: yes
-      register: "arandr_status"
-
-    - name: Get smartmontools packages status
-      package:
-        name: "smartmontools"
-        state: present
-      check_mode: yes
-      register: "smartmontools_status"
-
-    - name: Get gsmartcontrol packages status
-      package:
-        name: "gsmartcontrol"
-        state: present
-      check_mode: yes
-      register: "gsmartcontrol_status"
-
-    - name: Get bochs packages status
-      package:
-        name: "bochs"
-        state: present
-      check_mode: yes
-      register: "bochs_status"
-
-    - name: Get adb packages status
-      package:
-        name: "adb"
-        state: present
-      check_mode: yes
-      register: "adb_status"
-
-    - name: Get snapd packages status
-      package:
-        name: "snapd"
-        state: present
-      check_mode: yes
-      register: "snapd_status"
-
-    - name: Get thunderbird packages status
-      package:
-        name: "thunderbird"
-        state: present
-      check_mode: yes
-      register: "thunderbird_status"
-
-    - name: Assert all packages are is installed
-      assert:
-        that:
-          - not {{ item }}_status.changed
-      with_items:
-        - dtrx
-        - speedtest_cli
-        - ranger
-        - tmux
-        - calibre
-        - openshot
-        - kdenlive
-        - audacity
-        - texlive
-        - blender
-        - xclip
-        - arandr
-        - smartmontools
-        - gsmartcontrol
-        - bochs
-        - adb
-        - snapd
-        - thunderbird
+- name: Assert all packages are is installed
+  assert:
+    that:
+      - not pip_tools_status.changed
+      - not package_status.changed
