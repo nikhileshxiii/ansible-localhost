@@ -6,11 +6,33 @@
   vars_files:
     - vars/default/main.yml
 
+  tasks:
+    - name: Update apt cache
+      apt:
+        update_cache: yes
+      tags:
+        - debian
+        - server
+
+    - name: Update and upgrade apt
+      apt:
+        upgrade: "yes"
+        update_cache: yes
+      tags:
+        - debian
+        - server
+
+    - name: install APT Transport HTTPS
+      apt:
+        name: apt-transport-https
+        state: present
+      tags:
+        - debian
+        - server
+
   roles:
     - virtualbox
-    - create-new-user
-    - common
-    - update
+    - new-user
     - linux-headers
     - players
     - tools
@@ -20,6 +42,4 @@
     - keeweb
     - torrent
     - lang
-    - kubernetes
-    - comm
     - vpn
