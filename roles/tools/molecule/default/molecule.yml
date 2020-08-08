@@ -8,15 +8,8 @@ lint: |
   yamllint .
   ansible-lint
 platforms:
-  # - name: instance
-  #   image: docker.io/pycontribs/ubuntu:latest
-  #   pre_build_image: true
   - name: instance
-    image: geerlingguy/docker-ubuntu2004-ansible:latest
-    command: ""
-    volumes:
-    - /sys/fs/cgroup:/sys/fs/cgroup:ro
-    privileged: true
+    image: docker.io/pycontribs/ubuntu:latest
     pre_build_image: true
 provisioner:
   name: ansible

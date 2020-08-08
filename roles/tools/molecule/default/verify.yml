@@ -8,6 +8,41 @@
       assert:
         that: true
 
+    - name: Get dtrx packages status
+      pip:
+        name: "dtrx"
+        state: present
+      check_mode: yes
+      register: "dtrx_status"
+
+    - name: Get speedtest-cli packages status
+      pip:
+        name: "speedtest-cli"
+        state: present
+      check_mode: yes
+      register: "speedtest_cli_status"
+
+    - name: Get ranger packages status
+      package:
+        name: "ranger"
+        state: present
+      check_mode: yes
+      register: "ranger_status"
+
+    - name: Get tmux packages status
+      package:
+        name: "tmux"
+        state: present
+      check_mode: yes
+      register: "tmux_status"
+
+    - name: Get openshot packages status
+      package:
+        name: "openshot"
+        state: present
+      check_mode: yes
+      register: "openshot_status"
+
     - name: Get kdenlive packages status
       package:
         name: "kdenlive"
@@ -42,13 +77,6 @@
         state: present
       check_mode: yes
       register: "xclip_status"
-
-    - name: Get dtrx packages status
-      pip:
-        name: "dtrx"
-        state: present
-      check_mode: yes
-      register: "dtrx_status"
 
     - name: Get calibri packages status
       package:
@@ -85,19 +113,46 @@
       check_mode: yes
       register: "gsmartcontrol_status"
 
+    - name: Get bochs packages status
+      package:
+        name: "bochs"
+        state: present
+      check_mode: yes
+      register: "bochs_status"
+
+    - name: Get adb packages status
+      package:
+        name: "adb"
+        state: present
+      check_mode: yes
+      register: "adb_status"
+
+    - name: Get snapd packages status
+      package:
+        name: "snapd"
+        state: present
+      check_mode: yes
+      register: "snapd_status"
+
     - name: Assert all packages are is installed
       assert:
         that:
           - not {{ item }}_status.changed
       with_items:
-        - "kdenlive"
-        - "audacity"
-        - "texlive"
-        - "blender"
-        - "xclip"
-        - "dtrx"
-        - "calibre"
-        - "tmux"
-        - "arandr"
-        - "smartmontools"
-        - "gsmartcontrol"
+        - dtrx
+        - speedtest_cli
+        - ranger
+        - tmux
+        - calibre
+        - openshot
+        - kdenlive
+        - audacity
+        - texlive
+        - blender
+        - xclip
+        - arandr
+        - smartmontools
+        - gsmartcontrol
+        - bochs
+        - adb
+        - snapd

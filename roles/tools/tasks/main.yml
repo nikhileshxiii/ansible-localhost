@@ -1,94 +1,33 @@
 ---
-- name: install openshot
-  package:
-    name: openshot
-    state: present
-  tags:
-    - debian
-
-- name: install kdenlive
-  package:
-    name: kdenlive
-    state: present
-  tags:
-    - debian
-
-- name: install audacity
-  package:
-    name: audacity
-    state: present
-  tags:
-    - debian
-
-- name: install texlive
-  package:
-    name: texlive
-    state: present
-  tags:
-    - debian
-
-- name: install blender
-  package:
-    name: blender
-    state: present
-  tags:
-    - debian
-
-- name: install xclip
-  package:
-    name: xclip
-    state: present
-  tags:
-    - debian
-
-- name: install dtrx
+- name: install pip tools
   pip:
-    name: dtrx
-    state: present
-  tags:
-    - debian
-
-- name: install calibre
-  package:
-    name: calibre
-    state: present
-  tags:
-    - debian
-
-- name: install tmux
-  package:
-    name: tmux
-    state: present
-  tags:
-    - debian
-
-- name: install arandr
-  package:
-    name: arandr
-    state: present
-  tags:
-    - debian
-
-- name: install smartmontools
-  package:
-    name: smartmontools
-    state: present
+    name:
+      - dtrx
+      - speedtest-cli
+    state: latest
   tags:
     - debian
     - server
 
-- name: install gsmartcontrol
-  package:
-    name: gsmartcontrol
-    state: present
-  tags:
-    - debian
-    - server
-
-- name: "Install bochs"
-  package:
-    name: bochs
-    state: present
+- name: install tools
+  apt:
+    name:
+      - ranger
+      - tmux
+      - calibre
+      - openshot
+      - kdenlive
+      - audacity
+      - texlive
+      - blender
+      - xclip
+      - arandr
+      - smartmontools
+      - gsmartcontrol
+      - bochs
+      - adb
+      - snapd
+    state: latest
   tags:
     - debian
     - server
