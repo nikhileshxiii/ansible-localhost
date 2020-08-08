@@ -6,6 +6,6 @@
       - vlc
       - ffmpeg
       - mpv
-  state: present
+    state: present
   tags:
     - debian
