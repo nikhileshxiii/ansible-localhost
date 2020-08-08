@@ -4,7 +4,7 @@
     name:
       - dtrx
       - speedtest-cli
-    state: latest
+    state: present
   tags:
     - debian
     - server
@@ -30,7 +30,7 @@
       - adb
       - snapd
       - thunderbird
-    state: latest
+    state: present
   tags:
     - debian
     - server

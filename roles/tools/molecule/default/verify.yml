@@ -13,7 +13,7 @@
     name:
       - dtrx
       - speedtest-cli
-    state: latest
+    state: present
   check_mode: yes
   register: pip_tools_status
 
@@ -38,7 +38,7 @@
       - adb
       - snapd
       - thunderbird
-    state: latest
+    state: present
   check_mode: yes
   register: package_status
 
