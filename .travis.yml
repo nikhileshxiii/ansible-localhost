@@ -31,6 +31,7 @@ script:
   - yamllint *.yml && yamllint roles/
   - ansible-lint main.yml
   - ansible-playbook main.yml -i tests/inventory --syntax-check
+  - ansible-playbook main.yml -i tests/inventory --tags "debian" --skip-tags "vpnauth"
 
 # notifications:
 #   webhooks: https://galaxy.ansible.com/api/v1/notifications/
