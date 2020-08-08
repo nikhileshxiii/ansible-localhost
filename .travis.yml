@@ -23,7 +23,7 @@ addons:
   apt:
     packages:
       - python3-pip
-      - docker.io
+      - docker-ce
 
 # before_install:
 
