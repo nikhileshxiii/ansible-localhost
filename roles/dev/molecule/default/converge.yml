@@ -19,7 +19,7 @@
         name: ["snapd", "curl"]
         state: present
 
-    - name: "Include lang"
+    - name: "Include dev"
       include_role:
-        name: "lang"
+        name: "dev"
       no_log: "{{ no_logging }}"

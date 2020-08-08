@@ -33,7 +33,7 @@
   roles:
     - virtualbox
     - new-user
-    - lang
+    - dev
     - linux-headers
     - players
     - tools
