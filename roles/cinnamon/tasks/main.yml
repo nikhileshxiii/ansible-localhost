@@ -1,0 +1,19 @@
+---
+# tasks file for cinnamon
+
+- name: "Add cinnamon repo"
+  apt_repository:
+    repo: ppa:embrosyn/cinnamon
+    state: present
+    update_cache: yes
+  tags:
+    - debian
+
+- name: Install prereqs - cinnamon, docker, kvm, snapd, libvirt
+  package:
+    state: present
+    name: "{{ item }}"
+  with_items:
+    - cinnamon
+  tags:
+    - debian

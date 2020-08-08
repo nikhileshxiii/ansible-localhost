@@ -1,0 +1,11 @@
+---
+- name: Converge
+  hosts: all
+  tasks:
+    - name: Update cache
+      package:
+        update_cache: yes
+
+    - name: "Include cinnamon"
+      include_role:
+        name: "cinnamon"

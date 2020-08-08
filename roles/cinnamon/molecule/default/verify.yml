@@ -1,0 +1,29 @@
+---
+# This is an example playbook to execute Ansible tests.
+
+- name: Verify
+  hosts: all
+  tasks:
+    - name: Example assertion
+      assert:
+        that: true
+
+    - name: "Check Add cinnamon repo"
+      apt_repository:
+        repo: ppa:embrosyn/cinnamon
+        state: present
+      check_mode: yes
+      register: cinnamon_repo_status
+
+    - name: Check cinnamon status
+      package:
+        state: present
+        name: cinnamon
+      check_mode: yes
+      register: cinnamon_status
+
+    - name: Cinnamon Assert statements
+      assert:
+        that:
+          - not cinnamon_repo_status.changed
+          - not cinnamon_status.changed
