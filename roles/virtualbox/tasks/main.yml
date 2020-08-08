@@ -1,5 +1,13 @@
 ---
 # tasks file for virtualbox
+
+- name: Remove old docker stuff
+  package:
+    name: docker-engine
+    state: absent
+  tags:
+    - server
+
 - name: Add virtualbox key
   apt_key:
     id: 9F8D658297AF3EFC18D5CDFA2F683C52980AECF
@@ -33,6 +41,18 @@
     - debian
     - server
 
+- name: Install prereqs
+  apt:
+    name:
+      - apt-transport-https
+      - ca-certificates
+      - software-properties-common
+    state: latest
+    update_cache: yes
+  tags:
+    - debian
+    - server
+
 - name: Update cache
   apt:
     update_cache: yes
@@ -40,7 +60,7 @@
     - debian
     - server
 
-- name: Install prereqs docker, kvm, snapd, libvirt
+- name: Install packages
   package:
     state: present
     name: "{{ item }}"
@@ -63,6 +83,16 @@
     - bridge-utils
     - virtinst
     - virt-manager
+  tags:
+    - debian
+    - server
+
+- name: Remove /etc/docker/daemon.json
+  file:
+    path: /etc/docker/daemon.json
+    state: absent
+  notify:
+    - Start docker
   tags:
     - debian
     - server
@@ -117,3 +147,25 @@
   tags:
     - debian
     - server
+
+- name: Install minikube
+  get_url:
+    url: https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
+    mode: 0755
+    dest: /usr/local/bin/minikube
+    validate_certs: no
+  tags:
+    - server
+    - debian
+
+- name: Install snap packages for helm and microk8s
+  snap:
+    name: "{{ item }}"
+    state: present
+    classic: yes
+  with_items:
+    - helm
+    - microk8s
+  tags:
+    - server
+    - debian
