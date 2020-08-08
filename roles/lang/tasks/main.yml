@@ -11,7 +11,6 @@
   package:
     name: ["python3", "python3-pip", "python3-venv", "python-pip"]
     state: present
-    classic: yes
   tags:
     - debian
 
