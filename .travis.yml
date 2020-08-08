@@ -3,7 +3,17 @@ language: python
 python: "3.6"
 
 # Use the new container infrastructure
-sudo: false
+sudo: required
+dist: bionic
+
+branches:
+  only:
+    - master
+    - molecule
+    - dev
+
+env:
+  - ANSIBLE_VERSION=latest
 
 # Install ansible
 addons:
@@ -32,6 +42,5 @@ script:
   - ansible-lint main.yml
   - ansible-playbook main.yml -i tests/inventory --syntax-check
   - ansible-playbook main.yml -i tests/inventory --tags "debian" --skip-tags "vpnauth"
-
 # notifications:
 #   webhooks: https://galaxy.ansible.com/api/v1/notifications/
