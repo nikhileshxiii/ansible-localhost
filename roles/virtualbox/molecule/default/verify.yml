@@ -13,32 +13,33 @@
 
     - name: Get all packages status
       apt:
-        - apt-transport-https
-        - ca-certificates
-        - software-properties-common
-        - virtualbox-6.1
-        - vagrant
-        - docker-compose
-        - docker
-        - docker.io
-        - lxd
-        - virtinst
-        - qemu-kvm
-        - libvirt-daemon-system
-        - libvirt-clients
-        - libvirt-dev
-        - bridge-utils
-        - virt-manager
-      state: present
+        name:
+          - apt-transport-https
+          - ca-certificates
+          - software-properties-common
+          - virtualbox-6.1
+          - vagrant
+          - docker-compose
+          - docker
+          - docker.io
+          - lxd
+          - virtinst
+          - qemu-kvm
+          - libvirt-daemon-system
+          - libvirt-clients
+          - libvirt-dev
+          - bridge-utils
+          - virt-manager
+        state: present
       check_mode: yes
       register: packages_status
 
     - name: vagrant plugin list
-      shell: vagrant plugin list
+      command: vagrant plugin list
       become: true
       become_user: "{{ username }}"
       args:
-        executable: /bin/bash
+        # executable: /bin/bash
         warn: yes
       register: vagrant_plugin_list
 

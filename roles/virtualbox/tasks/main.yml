@@ -19,7 +19,7 @@
 
 - name: Add ansible_distribution_release to deb location
   apt_repository:
-    repo: deb [arch=amd64] https://download.virtualbox.org/virtualbox/debian {{ansible_distribution_release}} contrib
+    repo: deb [arch=amd64] https://download.virtualbox.org/virtualbox/debian {{ ansible_distribution_release }} contrib
     state: present
   tags:
     - debian
@@ -47,14 +47,7 @@
       - apt-transport-https
       - ca-certificates
       - software-properties-common
-    state: latest
-    update_cache: yes
-  tags:
-    - debian
-    - server
-
-- name: Update cache
-  apt:
+    state: present
     update_cache: yes
   tags:
     - debian
@@ -98,7 +91,7 @@
     - server
 
 - name: vagrant plugin install vagrant-mutate
-  shell: vagrant plugin install vagrant-mutate
+  command: vagrant plugin install vagrant-mutate
   become: true
   become_user: "{{ username }}"
   args:
@@ -111,7 +104,7 @@
     - server
 
 - name: vagrant plugin install winrm
-  shell: vagrant plugin install winrm
+  command: vagrant plugin install winrm
   become: true
   become_user: "{{ username }}"
   args:
@@ -124,7 +117,7 @@
     - server
 
 - name: vagrant plugin install winrm-fs
-  shell: vagrant plugin install winrm-fs
+  command: vagrant plugin install winrm-fs
   become: true
   become_user: "{{ username }}"
   args:
@@ -137,7 +130,7 @@
     - server
 
 - name: vagrant plugin install vagrant-libvirt
-  shell: vagrant plugin install vagrant-libvirt
+  command: vagrant plugin install vagrant-libvirt
   become: true
   become_user: "{{ username }}"
   args:
@@ -160,12 +153,10 @@
 
 - name: Install snap packages for helm and microk8s
   snap:
-    name: "{{ item }}"
+    name: ["helm", "microk8s"]
     state: present
     classic: yes
-  with_items:
-    - helm
-    - microk8s
+    channel: edge
   tags:
     - server
     - debian
