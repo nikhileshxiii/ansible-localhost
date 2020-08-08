@@ -6,7 +6,7 @@
 # backwards compatibility). Please don't change it unless you know what
 # you're doing.
 Vagrant.configure("2") do |config|
-  config.vm.box = "generic/ubuntu1804"
+  config.vm.box = "generic/ubuntu2004"
   config.ssh.insert_key = false
   # config.vm.box_check_update = false
 
@@ -33,7 +33,7 @@ Vagrant.configure("2") do |config|
     local.vm.hostname = "localmachine.test"
     local.vm.network :private_network, :ip => "192.168.60.4"
     config.vm.provision "ansible" do |ansible|
-      ansible.playbook = "localmachine.yml"
+      ansible.playbook = "tests/localmachine.yml"
       ansible.tags = "debian"
       ansible.skip_tags = "vpnauth"
     end
@@ -43,7 +43,7 @@ Vagrant.configure("2") do |config|
     server.vm.hostname = "servermachine.test"
     server.vm.network :private_network, :ip => "192.168.60.5"
     config.vm.provision "ansible" do |ansible|
-      ansible.playbook = "servermachine.yml"
+      ansible.playbook = "tests/servermachine.yml"
       ansible.tags = "server"
       ansible.skip_tags = "vpnauth"
     end
