@@ -17,29 +17,6 @@
     - debian
     - server
 
-- name: Update cache
-  apt:
-    update_cache: yes
-  tags:
-    - debian
-    - server
-
-- name: Install virtualbox-6.1
-  apt:
-    name: virtualbox-6.1
-    state: present
-  tags:
-    - debian
-    - server
-
-# - name: Install virtualbox-ext-pack
-#   apt:
-#     name: virtualbox-ext-pack
-#     state: present
-#   tags:
-#     - debian
-#     - server
-
 - name: Add wolfgang vagrant key
   apt_key:
     url: https://vagrant-deb.linestarve.com/vagrant-deb.asc
@@ -63,22 +40,29 @@
     - debian
     - server
 
-- name: Install vagrant
-  apt:
-    name: vagrant
+- name: Install prereqs docker, kvm, snapd, libvirt
+  package:
     state: present
-  tags:
-    - debian
-    - server
-
-- name: vagrant plugin install vagrant-libvirt
-  shell: vagrant plugin install vagrant-libvirt
-  become: true
-  become_user: "{{ username }}"
-  args:
-    executable: /bin/bash
-    warn: no
-  changed_when: false
+    name: "{{ item }}"
+  with_items:
+    - vagrant
+    - virtualbox-6.1
+    - docker-compose
+    - docker
+    - docker.io
+    - lxd
+    - ruby-libvirt
+    - qemu-kvm
+    - libvirt-daemon-system
+    - libvirt-clients
+    # - libxslt-dev
+    # - libxml2-dev
+    - libvirt-dev
+    # - zlib1g-dev
+    # - ruby-dev
+    - bridge-utils
+    - virtinst
+    - virt-manager
   tags:
     - debian
     - server
@@ -118,6 +102,18 @@
     warn: no
   changed_when: false
   ignore_errors: true
+  tags:
+    - debian
+    - server
+
+- name: vagrant plugin install vagrant-libvirt
+  shell: vagrant plugin install vagrant-libvirt
+  become: true
+  become_user: "{{ username }}"
+  args:
+    executable: /bin/bash
+    warn: no
+  changed_when: false
   tags:
     - debian
     - server

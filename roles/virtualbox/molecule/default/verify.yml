@@ -18,13 +18,6 @@
       check_mode: yes
       register: virtualbox_6_1_status
 
-    # - name: Install virtualbox-ext-pack
-    #   apt:
-    #     name: virtualbox-ext-pack
-    #     state: present
-    #   check_mode: yes
-    #   register: virtualbox_ext_pack_status
-
     - name: Vagrant should be present
       apt:
         name: vagrant
@@ -32,14 +25,82 @@
       check_mode: yes
       register: vagrant_status
 
-    - name: Assert all packages are is installed
-      assert:
-        that:
-          - not {{ item }}_status.changed
-      with_items:
-        - "virtualbox_6_1"
-        # - "virtualbox_ext_pack"
-        - "vagrant"
+    - name: docker-compose should be present
+      apt:
+        name: docker-compose
+        state: present
+      check_mode: yes
+      register: docker_compose_status
+
+    - name: docker should be present
+      apt:
+        name: docker
+        state: present
+      check_mode: yes
+      register: docker_status
+
+    - name: docker_io should be present
+      apt:
+        name: docker.io
+        state: present
+      check_mode: yes
+      register: docker_io_status
+
+    - name: lxd should be present
+      apt:
+        name: lxd
+        state: present
+      check_mode: yes
+      register: lxd_status
+
+    - name: virtinst should be present
+      apt:
+        name: virtinst
+        state: present
+      check_mode: yes
+      register: virtinst_status
+
+    - name: qemu-kvm should be present
+      apt:
+        name: qemu-kvm
+        state: present
+      check_mode: yes
+      register: qemu_kvm_status
+
+    - name: libvirt-daemon-system should be present
+      apt:
+        name: libvirt-daemon-system
+        state: present
+      check_mode: yes
+      register: libvirt_daemon_system_status
+
+    - name: libvirt-clients should be present
+      apt:
+        name: libvirt-clients
+        state: present
+      check_mode: yes
+      register: libvirt_clients_status
+
+    - name: libvirt-dev should be present
+      apt:
+        name: libvirt-dev
+        state: present
+      check_mode: yes
+      register: libvirt_dev_status
+
+    - name: bridge-utils should be present
+      apt:
+        name: bridge-utils
+        state: present
+      check_mode: yes
+      register: bridge_utils_status
+
+    - name: virt-manager should be present
+      apt:
+        name: virt-manager
+        state: present
+      check_mode: yes
+      register: virt_manager_status
 
     - name: vagrant plugin list
       shell: vagrant plugin list
@@ -54,8 +115,22 @@
       debug:
         msg: "vagrant plugin list = {{ vagrant_plugin_list }}"
 
-    - name: assert vagrant plugins
+    - name: Assert installations
       assert:
         that:
+          - not vagrant_status.changed
+          - not virtualbox_6_1_status.changed
+          - not docker_compose_status.changed
+          - not docker_status.changed
+          - not docker_io_status.changed
+          - not lxd_status.changed
+          # - not ruby_libvirt_status.changed
+          - not qemu_kvm_status.changed
+          - not libvirt_daemon_system_status.changed
+          - not libvirt_clients_status.changed
+          - not libvirt_dev_status.changed
+          - not bridge_utils_status.changed
+          - not virtinst_status.changed
+          - not virt_manager_status.changed
           - "vagrant_plugin_list.stdout is search('libvirt')"
           - "vagrant_plugin_list.stdout is search('mutate')"
