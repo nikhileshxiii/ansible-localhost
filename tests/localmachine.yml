@@ -4,8 +4,8 @@
   become_method: sudo
 
   vars_files:
-    - vars/default/main.yml
-    - vars/default/main_localmachine.yml
+    - ../vars/default/main.yml
+    - ../vars/default/main_localmachine.yml
 
   pre_tasks:
     - name: touch norvpn.txt
@@ -15,6 +15,7 @@
   roles:
     - virtualbox
     - new-user
+    - lang
     - linux-headers
     - players
     - tools
@@ -23,5 +24,4 @@
     - browsers
     - keeweb
     - torrent
-    - lang
     - vpn

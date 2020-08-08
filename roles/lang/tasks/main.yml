@@ -7,6 +7,14 @@
   tags:
     - debian
 
+- name: Install python3 packages
+  package:
+    name: ["python3", "python3-pip", "python3-venv", "python-pip"]
+    state: present
+    classic: yes
+  tags:
+    - debian
+
 - name: Install ruby
   package:
     state: present

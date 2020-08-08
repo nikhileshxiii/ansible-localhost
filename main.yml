@@ -33,6 +33,7 @@
   roles:
     - virtualbox
     - new-user
+    - lang
     - linux-headers
     - players
     - tools
@@ -41,5 +42,4 @@
     - browsers
     - keeweb
     - torrent
-    - lang
     - vpn
