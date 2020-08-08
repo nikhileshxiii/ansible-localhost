@@ -2,10 +2,10 @@
 
 Configure new installation of ubuntu based systems with my default configs.
 
-####Master branch build status: 
+#### Master branch build status: 
 ![](https://travis-ci.org/nikhileshxiii/ansible-config.svg?branch=master)
 
-####Molecule branch build status: 
+#### Molecule branch build status: 
 ![](https://travis-ci.org/nikhileshxiii/ansible-config.svg?branch=molecule)
 
 ## Installation instructions
