@@ -8,42 +8,42 @@
       assert:
         that: true
 
-- name: Get pip tools status
-  pip:
-    name:
-      - dtrx
-      - speedtest-cli
-    state: present
-  check_mode: yes
-  register: pip_tools_status
+    - name: install pip tools
+      pip:
+        name:
+          - dtrx
+          - speedtest-cli
+        state: present
+      check_mode: yes
+      register: pip_tools_status
 
-- name: install tools
-  apt:
-    name:
-      - htop
-      - tree
-      - ranger
-      - tmux
-      - calibre
-      - openshot
-      - kdenlive
-      - audacity
-      - texlive
-      - blender
-      - xclip
-      - arandr
-      - smartmontools
-      - gsmartcontrol
-      - bochs
-      - adb
-      - snapd
-      - thunderbird
-    state: present
-  check_mode: yes
-  register: package_status
+    - name: install tools
+      apt:
+        name:
+          - htop
+          - tree
+          - ranger
+          - tmux
+          - calibre
+          - openshot
+          - kdenlive
+          - audacity
+          - texlive
+          - blender
+          - xclip
+          - arandr
+          - smartmontools
+          - gsmartcontrol
+          - bochs
+          - adb
+          - snapd
+          - thunderbird
+        state: present
+      check_mode: yes
+      register: package_status
 
-- name: Assert all packages are is installed
-  assert:
-    that:
-      - not pip_tools_status.changed
-      - not package_status.changed
+    - name: Assert all packages are is installed
+      assert:
+        that:
+          - not pip_tools_status.changed
+          - not package_status.changed
