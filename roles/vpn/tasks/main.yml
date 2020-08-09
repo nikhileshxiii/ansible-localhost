@@ -77,6 +77,7 @@
   tags:
     - debian
     - server
+    - vpnauth
 
 - name: Copy nordvpnauth.txt to udp profiles
   copy:
@@ -85,3 +86,4 @@
   tags:
     - debian
     - server
+    - vpnauth
