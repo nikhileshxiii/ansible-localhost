@@ -2,6 +2,8 @@
 name: CI for ansible playbook
 on:
   pull_request:
+    branches:
+      - master
   push:
     branches:
       - master
@@ -29,4 +31,4 @@ jobs:
         run: pip3 install ansible ansible-lint yamllint molecule docker
 
       - name: run playbook
-        run: ansible-playbook main.yml --tags "debian" --skip-tags "vpnauth" -vvvv
+        run: ansible-playbook main.yml --tags "debian" --skip-tags "vpnauth"
