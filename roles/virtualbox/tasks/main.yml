@@ -56,25 +56,26 @@
 - name: Install packages
   apt:
     state: fixed
-    name:
-      - vagrant
-      - virtualbox-6.1
-      - docker-compose
-      - docker
-      - docker.io
-      - lxd
-      - ruby-libvirt
-      - qemu-kvm
-      - libvirt-daemon-system
-      - libvirt-clients
-      # - libxslt-dev
-      # - libxml2-dev
-      - libvirt-dev
-      # - zlib1g-dev
-      # - ruby-dev
-      - bridge-utils
-      - virtinst
-      - virt-manager
+    name: "{{ name }}"
+  with_items:
+    - vagrant
+    - virtualbox-6.1
+    - docker-compose
+    - docker
+    - docker.io
+    - lxd
+    - ruby-libvirt
+    - qemu-kvm
+    - libvirt-daemon-system
+    - libvirt-clients
+    # - libxslt-dev
+    # - libxml2-dev
+    - libvirt-dev
+    # - zlib1g-dev
+    # - ruby-dev
+    - bridge-utils
+    - virtinst
+    - virt-manager
   tags:
     - debian
     - server
