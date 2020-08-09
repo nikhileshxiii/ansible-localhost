@@ -1,5 +1,5 @@
 ---
-name: CI for ansible playbook
+name: CI
 on:
   pull_request:
     branches:
