@@ -45,14 +45,14 @@ install:
 #   - ansible-lint main.yml
 #   - ansible-playbook main.yml -i tests/inventory --syntax-check
 
-  # - cd roles/virtualbox && molecule test && cd ..
-  # - cd roles/new-user && molecule test && cd ..
+# - cd roles/virtualbox && molecule test && cd ..
+# - cd roles/new-user && molecule test && cd ..
 
-script:
-  # Basic role syntax check
-  # - ansible-playbook tests/test.yml -i tests/inventory --syntax-check
-  ./run_all_tests.sh
-  # - ansible-playbook main.yml -i tests/inventory --tags "debian" --skip-tags "vpnauth"
+# script:
+# Basic role syntax check
+# - ansible-playbook tests/test.yml -i tests/inventory --syntax-check
+# ./run_all_tests.sh
+# - ansible-playbook main.yml -i tests/inventory --tags "debian" --skip-tags "vpnauth"
 # notifications:
 #   webhooks: https://galaxy.ansible.com/api/v1/notifications/
 
@@ -63,3 +63,56 @@ script:
 # before_deploy:
 # deploy:
 # after_deploy:
+
+jobs:
+  include:
+    - stage: "browsers molecule test"
+      name: "browsers molecule test"
+      script: cd roles/browsers && molecule test
+
+    - stage: "virtualbox molecule test"
+      name: "virtualbox molecule test"
+      script: cd roles/virtualbox && molecule test
+
+    - stage: "cinnamon molecule test"
+      name: "cinnamon molecule test"
+      script: cd roles/cinnamon && molecule test
+
+    - stage: "new-user molecule test"
+      name: "new-user molecule test"
+      script: cd roles/new-user && molecule test
+
+    - stage: "linux-headers molecule test"
+      name: "linux-headers molecule test"
+      script: cd roles/linux-headers && molecule test
+
+    - stage: "dev molecule test"
+      name: "dev molecule test"
+      script: cd roles/dev && molecule test
+
+    - stage: "ides molecule test"
+      name: "ides molecule test"
+      script: cd roles/ides && molecule test
+
+    - stage: "keeweb molecule test"
+      name: "keeweb molecule test"
+      script: cd roles/keeweb && molecule test
+
+    - stage: "players molecule test"
+      name: "players molecule test"
+      script: cd roles/players && molecule test
+
+    - stage: "tools molecule test"
+      name: "tools molecule test"
+      script: cd roles/tools && molecule test
+
+    - stage: "torrent molecule test"
+      name: "torrent molecule test"
+      script: cd roles/torrent && molecule test
+
+    - stage: "vim molecule test"
+      name: "vim molecule test"
+      script: cd roles/vim && molecule test
+    # - stage: "vpn molecule test"
+    #   name: "vpn molecule test"
+    #   script: cd roles/vpn && molecule test

@@ -23,15 +23,51 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+
       - name: setup python3
         uses: actions/setup-python@v2
         with:
           python-verison: "3.x"
+
       - name: install deps
         run: pip3 install ansible ansible-lint yamllint molecule docker
 
-      - name: run tests shell script
-        run: ./run_all_tests.sh
+      - name: "browsers molecule test"
+        run: cd roles/browsers && molecule test
 
+      - name: "virtualbox molecule test"
+        run: cd roles/virtualbox && molecule test
+
+      - name: "cinnamon molecule test"
+        run: cd roles/cinnamon && molecule test
+
+      - name: "new-user molecule test"
+        run: cd roles/new-user && molecule test
+
+      - name: "linux-headers molecule test"
+        run: cd roles/linux-headers && molecule test
+
+      - name: "dev molecule test"
+        run: cd roles/dev && molecule test
+
+      - name: "ides molecule test"
+        run: cd roles/ides && molecule test
+
+      - name: "keeweb molecule test"
+        run: cd roles/keeweb && molecule test
+
+      - name: "players molecule test"
+        run: cd roles/players && molecule test
+
+      - name: "tools molecule test"
+        run: cd roles/tools && molecule test
+
+      - name: "torrent molecule test"
+        run: cd roles/torrent && molecule test
+
+      - name: "vim molecule test"
+        run: cd roles/vim && molecule test
+      # - name: "vpn molecule test"
+      #   run:  cd roles/vpn && molecule test
       # - name: run playbook
       #   run: ansible-playbook main.yml --tags "debian" --skip-tags "vpnauth"
