@@ -153,10 +153,13 @@
 
 - name: Install snap packages for helm and microk8s
   snap:
-    name: ["helm", "microk8s"]
+    name: "{{ item }}"
     state: present
     classic: yes
     channel: edge
+  with_items:
+    - "helm"
+    - "microk8s"
   tags:
     - server
     - debian
