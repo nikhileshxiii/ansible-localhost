@@ -23,7 +23,8 @@ addons:
       - python3-pip
       - docker-ce
 
-# before_install:
+before_install:
+  - sudo apt-get update -qq
 
 install:
   # Install ansible
@@ -44,14 +45,14 @@ before_script:
   - ansible-lint main.yml
   - ansible-playbook main.yml -i tests/inventory --syntax-check
 
-  - cd roles/virtualbox && molecule test && cd ..
-  - cd roles/new-user && molecule test && cd ..
+  # - cd roles/virtualbox && molecule test && cd ..
+  # - cd roles/new-user && molecule test && cd ..
 
 script:
   # Basic role syntax check
   # - ansible-playbook tests/test.yml -i tests/inventory --syntax-check
 
-  - ansible-playbook main.yml -i tests/inventory --tags "debian" --skip-tags "vpnauth"
+  - ansible-playbook main.yml -i tests/inventory -vvvv --tags "debian" --skip-tags "vpnauth"
 # notifications:
 #   webhooks: https://galaxy.ansible.com/api/v1/notifications/
 
