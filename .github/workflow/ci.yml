@@ -1,0 +1,32 @@
+---
+name: CI for ansible playbook
+on:
+  pull_request:
+  push:
+    branches:
+      - master
+      - dev
+      - molecule
+jobs:
+  test:
+    name: test
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        os: ["ubuntu-20.04"]
+    env:
+      PY_COLORS: "1"
+      ANSIBLE_FORCE_COLOR: "1"
+      MOLECULE_DISTRO: ${{ matrix.os }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: setup python3
+        uses: actions/setup-python@v2
+        with:
+          python-verison: "3.x"
+      - name: install deps
+        run: pip3 install ansible ansible-lint yamllint molecule docker
+
+      - name: run playbook
+        run: ansible-playbook main.yml --tags "debian" --skip-tags "vpnauth" -vvvv
