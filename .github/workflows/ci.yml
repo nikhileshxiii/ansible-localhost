@@ -30,5 +30,8 @@ jobs:
       - name: install deps
         run: pip3 install ansible ansible-lint yamllint molecule docker
 
-      - name: run playbook
-        run: ansible-playbook main.yml --tags "debian" --skip-tags "vpnauth"
+      - name: run tests shell script
+        run: ./run_all_tests.sh
+
+      # - name: run playbook
+      #   run: ansible-playbook main.yml --tags "debian" --skip-tags "vpnauth"

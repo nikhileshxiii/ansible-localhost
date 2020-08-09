@@ -40,10 +40,10 @@ install:
   # Create ansible.cfg with correct roles_path
   # - printf '[defaults]\nroles_path=../' >ansible.cfg
 
-before_script:
-  - yamllint *.yml && yamllint roles/
-  - ansible-lint main.yml
-  - ansible-playbook main.yml -i tests/inventory --syntax-check
+# before_script:
+#   - yamllint *.yml && yamllint roles/
+#   - ansible-lint main.yml
+#   - ansible-playbook main.yml -i tests/inventory --syntax-check
 
   # - cd roles/virtualbox && molecule test && cd ..
   # - cd roles/new-user && molecule test && cd ..
@@ -51,8 +51,8 @@ before_script:
 script:
   # Basic role syntax check
   # - ansible-playbook tests/test.yml -i tests/inventory --syntax-check
-
-  - ansible-playbook main.yml -i tests/inventory -vvvv --tags "debian" --skip-tags "vpnauth"
+  ./run_all_tests.sh
+  # - ansible-playbook main.yml -i tests/inventory --tags "debian" --skip-tags "vpnauth"
 # notifications:
 #   webhooks: https://galaxy.ansible.com/api/v1/notifications/
 
