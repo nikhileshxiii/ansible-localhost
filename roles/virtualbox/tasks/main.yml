@@ -56,7 +56,7 @@
 - name: Install packages
   apt:
     state: fixed
-    name: "{{ name }}"
+    name: "{{ item }}"
   with_items:
     - vagrant
     - virtualbox-6.1
