@@ -13,7 +13,7 @@ pip install docker
 
 echo ""
 echo "==> Run yamllint"
-yamllint *.yml && yamllint roles/ 
+yamllint *.yml && yamllint roles/
 
 echo "==> Run syntax-check"
 ansible-playbook --syntax-check main.yml
