@@ -22,7 +22,7 @@
     - name: check ruby
       package:
         state: present
-        name: ruby-full
+        name: ruby-dev
       check_mode: yes
       register: ruby_status
 
@@ -54,6 +54,17 @@
       check_mode: yes
       register: npm_status
 
+    - name: check python3
+      package:
+        name: "{{ item }}"
+        state: present
+      with_items:
+        - python3
+        - python3-pip
+        - python3-venv
+      check_mode: yes
+      register: python3_status
+
     - name: Assert {{ item }} is installed
       assert:
         that:
@@ -65,6 +76,7 @@
         - cargo
         - nodejs
         - npm
+        - python3
 
     - name: check java
       stat:
