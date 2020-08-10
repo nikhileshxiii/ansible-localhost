@@ -4,9 +4,16 @@ dependency:
 driver:
   name: docker
 platforms:
-  - name: instance
-    image: docker.io/pycontribs/ubuntu:latest
-    pre_build_image: true
+  # - name: instance
+  #   image: docker.io/pycontribs/ubuntu:latest
+  #   pre_build_image: true
+  - name: systemd
+    image: jrei/systemd-ubuntu
+    privileged: true
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro
+      - /var/run/snapd-snap.socket:/var/run/snapd-snap.socket:ro
+      - /var/run/snapd.socket:/var/run/snapd.socket:ro
 provisioner:
   name: ansible
 verifier:

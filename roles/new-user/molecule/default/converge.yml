@@ -13,6 +13,24 @@
       user:
         name: "{{ username }}"
 
+    - name: "Install packages"
+      package:
+        name: ["git"]
+        state: present
+
+    - name: Add group
+      group:
+        name: "{{ item }}"
+      with_items:
+        - sudo
+        - docker
+        - "{{ username }}"
+        - plugdev
+        - lxd
+        - libvirt
+        - kvm
+        - vboxusers
+
     - name: "Include create-new-user"
       include_role:
         name: "new-user"

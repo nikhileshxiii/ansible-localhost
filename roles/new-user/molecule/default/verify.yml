@@ -11,40 +11,23 @@
       assert:
         that: true
 
-    - name: "Add cinnamon repo"
-      apt_repository:
-        repo: ppa:embrosyn/cinnamon
+    - name: Check if groups exists.
+      user:
+        name: "{{ username }}"
         state: present
+        shell: /bin/bash
+        groups:
+          - sudo
+          - docker
+          - "{{ username }}"
+          - plugdev
+          - lxd
+          - libvirt
+          - kvm
+          - vboxusers
+        append: yes
       check_mode: yes
-      register: cinnamon_repo_status
-
-    - name: "Install packages"
-      package:
-        name:
-          [
-            "cinnamon",
-            "ranger",
-            "docker-compose",
-            "docker",
-            "docker.io",
-            "lxd",
-            "adb",
-            "snapd",
-            "ruby-libvirt",
-            "qemu-kvm",
-            "libvirt-daemon-system",
-            "libvirt-clients",
-            "libxslt-dev",
-            "libxml2-dev",
-            "libvirt-dev",
-            "zlib1g-dev",
-            "ruby-dev",
-            "bridge-utils",
-            "virt-manager",
-          ]
-        state: present
-      check_mode: yes
-      register: packages_status
+      register: "groups_status"
 
     - name: Clone zsh
       stat:
@@ -106,8 +89,7 @@
     - name: Assert checks
       assert:
         that:
-          - not cinnamon_repo_status.changed
-          - not packages_status.changed
+          - not groups_status.changed
           - zsh_status.stat.exists
           - not fonts_powerline_status.changed
           - powerline_status.stat.exists
