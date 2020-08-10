@@ -2,11 +2,6 @@
 - name: Converge
   hosts: all
   tasks:
-    - name: touch /etc/sysctl.conf
-      file:
-        path: /etc/sysctl.conf
-        state: touch
-
     - name: Update cache
       apt:
         update_cache: yes

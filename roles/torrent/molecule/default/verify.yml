@@ -10,30 +10,31 @@
 
     - name: check qbittorrent status
       package:
-        name: qbittorrent
+        name: "{{ item }}"
         state: present
+      with_items:
+        - qbittorrent
+        - qbittorrent-nox
       check_mode: yes
-      register: qbittorrent_status
-
-    - name: check qbittorrent-nox status
-      package:
-        name: qbittorrent-nox
-        state: present
-      check_mode: yes
-      register: qbittorrent_nox_status
-
-    - name: check package status
-      assert:
-        that:
-          - "not qbittorrent_status.changed"
-          - "not qbittorrent_nox_status.changed"
+      register: qbittorrent_packages_status
 
     - name: check if /etc/sysctl.conf exists
       stat:
         path: /etc/sysctl.conf
-      register: sysctl_conf_status
+      register: sysctl_conf_file_status
 
-    - name: assert /etc/sysctl.conf exists
+    - name: "Searching for net.ipv6.conf.default.disable_ipv6 = 1 in /etc/sysctl.conf"
+      lineinfile:
+        path: /etc/sysctl.conf
+        line: "net.ipv6.conf.default.disable_ipv6 = 1"
+        state: present
+      check_mode: yes
+      register: sysctl_conf_string_status
+      # failed_when: presence is changed 
+
+    - name: assert requirements for qbittorrent
       assert:
         that:
-          - sysctl_conf_status.stat.exists
+          - sysctl_conf_file_status.stat.exists
+          - not sysctl_conf_string_status.changed
+          - "not qbittorrent_packages_status.changed"
