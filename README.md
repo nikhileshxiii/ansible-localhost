@@ -4,13 +4,13 @@ Configure new installation of ubuntu based systems with my default configs.
 
 #### Master branch build status:
 
-![Github Actions](https://github.com/nikhileshxiii/ansible-config/workflows/.github/workflows/ci.yml/badge.svg?branch=master)
+![Github Actions](https://github.com/nikhileshxiii/ansible-config/workflows/CI/badge.svg?branch=master)
 
 ![Travis CI](https://travis-ci.org/nikhileshxiii/ansible-config.svg?branch=master)
 
 #### Molecule branch build status:
 
-![Github Actions](https://github.com/nikhileshxiii/ansible-config/workflows/.github/workflows/ci.yml/badge.svg?branch=molecule)
+![Github Actions](https://github.com/nikhileshxiii/ansible-config/workflows/CI/badge.svg?branch=molecule)
 
 ![Travis CI](https://travis-ci.org/nikhileshxiii/ansible-config.svg?branch=molecule)
 
@@ -38,3 +38,4 @@ Ripped code from multiple sources
 
 - [Jeff Geerling](https://www.youtube.com/channel/UCR-DXc1voovS8nhAvccRZhg)
 - [Michael heap](https://michaelheap.com/ansible-installing-google-chrome/)
+- []
