@@ -147,6 +147,7 @@
     mode: 0755
     dest: /usr/local/bin/minikube
     validate_certs: no
+  become: yes
   tags:
     - server
     - debian
