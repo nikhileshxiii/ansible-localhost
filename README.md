@@ -38,4 +38,3 @@ Ripped code from multiple sources
 
 - [Jeff Geerling](https://www.youtube.com/channel/UCR-DXc1voovS8nhAvccRZhg)
 - [Michael heap](https://michaelheap.com/ansible-installing-google-chrome/)
-- []
