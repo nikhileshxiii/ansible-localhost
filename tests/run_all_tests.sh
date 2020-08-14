@@ -2,6 +2,11 @@
 
 # rm -rf venv
 
+export CUR_DIR=${PWD}
+echo "CUR_DIR = ${CUR_DIR}"
+
+cd {CUR_DIR}
+
 python3 -m venv venv
 source venv/bin/activate
 # pip install -r requirements.txt
@@ -21,6 +26,6 @@ ansible-playbook --syntax-check main.yml
 echo "==> Run ansible-lint"
 ansible-lint main.yml
 
-bash ./run_molecule_tests.sh
+bash ./tests/run_molecule_tests.sh
 
 # ansible-playbook main.yml --tags "debian" --skip-tags "vpnauth" -K
