@@ -8,6 +8,13 @@
     - debian
     - server
 
+- name: Create /etc/openvpn
+  file:
+    path: /etc/openvpn
+    state: directory
+  tags:
+    - debian
+
 # - name: Install nordvpn
 #   apt:
 #     deb: https://repo.nordvpn.com/deb/nordvpn/debian/pool/main/nordvpn-release_1.0.0_all.deb
