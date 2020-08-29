@@ -30,14 +30,16 @@ Vagrant.configure("2") do |config|
     vb.memory = "8192"
   end
 
-  config.vm.define "localmachine" do | local |
-    local.vm.hostname = "localmachine.test"
+  config.vm.define "ubuntumachine" do | local |
+    local.vm.hostname = "ubuntumachine"
     local.vm.network :private_network, :ip => "192.168.60.4"
     config.vm.provision "ansible" do |ansible|
-      ansible.playbook = "tests/localmachine.yml"
+      ansible.limit = "all"
+      ansible.playbook = "tests/ubuntumachine.yml"
+      ansible.inventory_path = "tests/inventory"      
       # ansible.tags = "ubuntu"
       ansible.skip_tags = "vpnauth"
-      ansible.extra_vars = { ansible_python_interpreter:"/usr/bin/python3" }
+      # ansible.extra_vars = { ansible_python_interpreter:"/usr/bin/python3" }
     end
   end
 end
