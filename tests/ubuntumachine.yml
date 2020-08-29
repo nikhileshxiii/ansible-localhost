@@ -1,0 +1,60 @@
+---
+- hosts: "ubuntumachine"
+  become: yes
+  become_method: sudo
+
+  vars_files:
+    - ../vars/default/main.yml
+    - ../vars/default/main_ubuntumachine.yml
+
+  pre_tasks:
+    - name: touch norvpn.txt
+      file:
+        state: touch
+        path: /home/{{ username }}/nordvpn.txt
+        mode: "0777"
+      changed_when: false
+
+    # - name: Creating a user named {{ username }} on the specified machine with groups.
+    #   user:
+    #     name: "{{ username }}"
+    #     state: present
+    #     shell: /bin/bash
+    #     groups:
+    #       - sudo
+    #       - "{{ username }}"
+    #     append: yes
+    #   tags:
+    #     - ubuntu
+
+    # - name: Update /etc to 777
+    #   file:
+    #     path: /etc/
+    #     state: directory
+    #     mode: "0777"
+    #     recurse: yes
+  roles:
+    - virtualbox
+    - new-user
+    - dev
+    - linux-headers
+    - players
+    - tools
+    - vim
+    - ides
+    - browsers
+    - keeweb
+    - torrent
+    - vpn
+# - import_playbook: "../roles/virtualbox/molecule/default/verify.yml username=vagrant"
+# - import_playbook: "../roles/new-user/molecule/default/verify.yml username=vagrant"
+# - import_playbook: "../roles/dev/molecule/default/verify.yml username=vagrant"
+# - import_playbook: "../roles/linux-headers/molecule/default/verify.yml username=vagrant"
+# - import_playbook: "../roles/players/molecule/default/verify.yml username=vagrant"
+# - import_playbook: "../roles/tools/molecule/default/verify.yml username=vagrant"
+# - import_playbook: "../roles/vim/molecule/default/verify.yml username=vagrant"
+# - import_playbook: "../roles/ides/molecule/default/verify.yml username=vagrant"
+# - import_playbook: "../roles/browsers/molecule/default/verify.yml username=vagrant"
+# - import_playbook: "../roles/keeweb/molecule/default/verify.yml username=vagrant"
+# - import_playbook: "../roles/torrent/molecule/default/verify.yml username=vagrant"
+# - import_playbook: "../roles/vpn/molecule/default/verify.yml username=vagrant"
