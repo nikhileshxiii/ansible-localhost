@@ -4,35 +4,8 @@
 [local:vars]
 ansible_connection=local
 
-# [server]
-# server          
-
-[localandserver:children]
-local
-# server
-
-[localandserver:vars]
-ansible_ssh_user=nik
-# ansible_sudo_pass=
-ansible_python_interpreter=/usr/bin/python3
-
-[localmachine]
+[ubuntumachine]
 192.168.60.4
 ansible_ssh_user=vagrant
-ansible_ssh_private_key=~/.vagrant.d/insecure_private_key
-
-
-# [servermachine]
-# 192.168.60.5
-# ansible_ssh_user=vagrant
-# ansible_ssh_private_key=~/.vagrant.d/insecure_private_key
-
-
-[multi:children]
-localmachine
-# servermachine
-
-[multi:vars]
-ansible_ssh_user=vagrant
-ansible_python_interpreter=/usr/bin/python3
+# ansible_python_interpreter=/usr/bin/python3
 ansible_ssh_private_key=~/.vagrant.d/insecure_private_key
