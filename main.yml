@@ -6,29 +6,26 @@
   vars_files:
     - vars/default/main.yml
 
-  tasks:
+  pre_tasks:
     - name: Update apt cache
       apt:
         update_cache: yes
       tags:
-        - debian
-        - server
+        - ubuntu
 
     - name: Update and upgrade apt
       apt:
         upgrade: "yes"
         update_cache: yes
       tags:
-        - debian
-        - server
+        - ubuntu
 
     - name: install APT Transport HTTPS
       apt:
         name: apt-transport-https
         state: present
       tags:
-        - debian
-        - server
+        - ubuntu
 
   roles:
     - virtualbox
