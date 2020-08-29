@@ -4,10 +4,6 @@
 - name: Verify
   hosts: all
   tasks:
-    - name: update cache
-      apt:
-        update_cache: yes
-
     - name: install kernel headers and build tools
       apt:
         name:
