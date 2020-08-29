@@ -8,4 +8,4 @@
       - mpv
     state: present
   tags:
-    - debian
+    - ubuntu

@@ -5,15 +5,15 @@
     state: present
     update_cache: yes
   tags:
-    - debian
-    - server
+    - ubuntu
+
 
 - name: Create /etc/openvpn
   file:
     path: /etc/openvpn
     state: directory
   tags:
-    - debian
+    - ubuntu
 
 # - name: Install nordvpn
 #   apt:
@@ -24,16 +24,16 @@
     url: https://downloads.nordcdn.com/configs/archives/servers/ovpn.zip
     dest: /etc/openvpn
   tags:
-    - debian
-    - server
+    - ubuntu
+
 
 - name: openvpn easy-rsa
   file:
     state: directory
     path: /etc/openvpn/easy-rsa
   tags:
-    - debian
-    - server
+    - ubuntu
+
 
 - name: Unzip openvpn profiles
   unarchive:
@@ -42,8 +42,8 @@
     remote_src: yes
     creates: "/etc/openvpn/ovpn_tcp"
   tags:
-    - debian
-    - server
+    - ubuntu
+
     - vpnauth
 
 - name: find nordvpn servers
@@ -54,16 +54,16 @@
     patterns: "*.ovpn"
   register: nordvpnservers
   tags:
-    - debian
-    - server
+    - ubuntu
+
     - vpnauth
 
 # - name: Print all openvpn profiles
 #   debug:
 #     msg: nordvpnservers = {{ nordvpnservers }}
 #   tags:
-#     - debian
-#     - server
+#     - ubuntu
+# 
 #     - vpnauth
 
 - name: Add credential in the openvpn profiles files
@@ -73,8 +73,8 @@
     replace: "auth-user-pass nordvpnauth.txt"
   with_items: "{{ nordvpnservers.files }}"
   tags:
-    - debian
-    - server
+    - ubuntu
+
     - vpnauth
 
 - name: Copy nordvpnauth.txt to tcp profiles
@@ -82,8 +82,8 @@
     src: /home/{{ username }}/nordvpnauth.txt
     dest: "/etc/openvpn/ovpn_tcp/nordvpnauth.txt"
   tags:
-    - debian
-    - server
+    - ubuntu
+
     - vpnauth
 
 - name: Copy nordvpnauth.txt to udp profiles
@@ -91,6 +91,6 @@
     src: /home/{{ username }}/nordvpnauth.txt
     dest: "/etc/openvpn/ovpn_udp/nordvpnauth.txt"
   tags:
-    - debian
-    - server
+    - ubuntu
+
     - vpnauth

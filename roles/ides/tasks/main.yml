@@ -8,8 +8,7 @@
     - {jetbrains: .DataGrip2019.*}
     - {jetbrains: .java}
   tags:
-    - debian
-    - server
+    - ubuntu
 
 - name: Install all ides
   snap:
@@ -23,5 +22,4 @@
     - code
     - circleci
   tags:
-    - debian
-    - server
+    - ubuntu

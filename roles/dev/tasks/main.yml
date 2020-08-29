@@ -5,7 +5,7 @@
     state: present
     classic: yes
   tags:
-    - debian
+    - ubuntu
 
 - name: Install python3 packages
   package:
@@ -16,14 +16,14 @@
     - "python3-pip"
     - "python3-venv"
   tags:
-    - debian
+    - ubuntu
 
 - name: Install ruby
   package:
     state: present
     name: ruby-dev
   tags:
-    - debian
+    - ubuntu
 
 - name: Install rust
   package:
@@ -33,7 +33,7 @@
     - rustc
     - cargo
   tags:
-    - debian
+    - ubuntu
 
 - name: Install node
   package:
@@ -43,7 +43,7 @@
     - nodejs
     - npm
   tags:
-    - debian
+    - ubuntu
 
 - name: Create npm folders
   file:
@@ -64,7 +64,7 @@
     executable: /bin/bash
   changed_when: false
   tags:
-    - debian
+    - ubuntu
 
 - name: Setup npm cache to user home
   shell: npm config set cache "$HOME/.npm/npm_cache"
@@ -74,7 +74,7 @@
     executable: /bin/bash
   changed_when: false
   tags:
-    - debian
+    - ubuntu
 
 - name: Setup node modules tmp to user home
   shell: npm config set tmp "$HOME/.npm/tmp"
@@ -84,14 +84,14 @@
     executable: /bin/bash
   changed_when: false
   tags:
-    - debian
+    - ubuntu
 
 - name: check if sdkman template file exists
   stat:
     path: /home/{{ username }}/.sdkman/bin/sdkman-init.sh
   register: check_sdkman_exists
   tags:
-    - debian
+    - ubuntu
 
 - name: Install sdkman
   shell: |
@@ -104,14 +104,14 @@
     executable: /bin/bash
     warn: no
   tags:
-    - debian
+    - ubuntu
 
 - name: check if sdkman template file exists
   stat:
     path: /home/{{ username }}/.sdkman/bin/sdkman-init.sh
   register: check_sdkman_before_lang_install
   tags:
-    - debian
+    - ubuntu
 
 - name: Install sdk java
   shell: |
@@ -127,7 +127,7 @@
   ignore_errors: yes
   when: check_sdkman_before_lang_install.stat.exists
   tags:
-    - debian
+    - ubuntu
 
 - name: Install sdk maven
   shell: |
@@ -143,7 +143,7 @@
   ignore_errors: yes
   when: check_sdkman_before_lang_install.stat.exists
   tags:
-    - debian
+    - ubuntu
 
 - name: Install sdk gradle
   shell: |
@@ -159,7 +159,7 @@
   ignore_errors: yes
   when: check_sdkman_before_lang_install.stat.exists
   tags:
-    - debian
+    - ubuntu
 
 - name: Install sdk scala
   shell: |
@@ -175,7 +175,7 @@
   ignore_errors: yes
   when: check_sdkman_before_lang_install.stat.exists
   tags:
-    - debian
+    - ubuntu
 
 - name: Install sdk sbt
   shell: |
@@ -191,7 +191,7 @@
   ignore_errors: yes
   when: check_sdkman_before_lang_install.stat.exists
   tags:
-    - debian
+    - ubuntu
 
 - name: Install sdk kotlin
   shell: |
@@ -207,7 +207,7 @@
   ignore_errors: yes
   when: check_sdkman_before_lang_install.stat.exists
   tags:
-    - debian
+    - ubuntu
 
 - name: Install sdk springboot
   shell: |
@@ -223,4 +223,4 @@
   ignore_errors: yes
   when: check_sdkman_before_lang_install.stat.exists
   tags:
-    - debian
+    - ubuntu

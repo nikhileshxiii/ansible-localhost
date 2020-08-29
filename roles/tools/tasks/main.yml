@@ -6,8 +6,7 @@
       - speedtest-cli
     state: present
   tags:
-    - debian
-    - server
+    - ubuntu
 
 - name: install tools
   apt:
@@ -32,5 +31,4 @@
       - thunderbird
     state: present
   tags:
-    - debian
-    - server
+    - ubuntu

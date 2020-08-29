@@ -6,7 +6,7 @@
     name: docker-engine
     state: absent
   tags:
-    - server
+    - ubuntu
 
 - name: Add virtualbox key
   apt_key:
@@ -14,32 +14,28 @@
     url: https://www.virtualbox.org/download/oracle_vbox_2016.asc
     state: present
   tags:
-    - debian
-    - server
+    - ubuntu
 
 - name: Add ansible_distribution_release to deb location
   apt_repository:
     repo: deb [arch=amd64] https://download.virtualbox.org/virtualbox/debian {{ ansible_distribution_release }} contrib
     state: present
   tags:
-    - debian
-    - server
+    - ubuntu
 
 - name: Add wolfgang vagrant key
   apt_key:
     url: https://vagrant-deb.linestarve.com/vagrant-deb.asc
     state: present
   tags:
-    - debian
-    - server
+    - ubuntu
 
 - name: Add vagrant unofficial repo
   apt_repository:
     repo: deb https://vagrant-deb.linestarve.com any main
     state: present
   tags:
-    - debian
-    - server
+    - ubuntu
 
 - name: Install prereqs
   apt:
@@ -50,35 +46,39 @@
     state: present
     update_cache: yes
   tags:
-    - debian
-    - server
+    - ubuntu
 
 - name: Install packages
   apt:
     state: fixed
-    name: "{{ item }}"
-  with_items:
-    - vagrant
-    - virtualbox-6.1
-    - docker-compose
-    - docker
-    - docker.io
-    - lxd
-    - ruby-libvirt
-    - qemu-kvm
-    - libvirt-daemon-system
-    - libvirt-clients
-    # - libxslt-dev
-    # - libxml2-dev
-    - libvirt-dev
-    # - zlib1g-dev
-    # - ruby-dev
-    - bridge-utils
-    - virtinst
-    - virt-manager
+    name:
+      [
+        "vagrant",
+        "virtualbox-6.1",
+        "docker-compose",
+        "docker",
+        "docker.io",
+        "lxd",
+      ]
   tags:
-    - debian
-    - server
+    - ubuntu
+
+- name: Install packages
+  apt:
+    state: fixed
+    name:
+      [
+        "ruby-libvirt",
+        "qemu-kvm",
+        "libvirt-daemon-system",
+        "libvirt-clients",
+        "libvirt-dev",
+        "bridge-utils",
+        "virtinst",
+        "virt-manager",
+      ]
+  tags:
+    - ubuntu
 
 - name: Remove /etc/docker/daemon.json
   file:
@@ -87,59 +87,42 @@
   notify:
     - Start docker
   tags:
-    - debian
-    - server
+    - ubuntu
 
 - name: vagrant plugin install vagrant-mutate
   command: vagrant plugin install vagrant-mutate
   become: true
   become_user: "{{ username }}"
-  args:
-    executable: /bin/bash
-    warn: no
   ignore_errors: true
   changed_when: false
   tags:
-    - debian
-    - server
+    - ubuntu
 
 - name: vagrant plugin install winrm
   command: vagrant plugin install winrm
   become: true
   become_user: "{{ username }}"
-  args:
-    executable: /bin/bash
-    warn: no
   changed_when: false
   ignore_errors: true
   tags:
-    - debian
-    - server
+    - ubuntu
 
 - name: vagrant plugin install winrm-fs
   command: vagrant plugin install winrm-fs
   become: true
   become_user: "{{ username }}"
-  args:
-    executable: /bin/bash
-    warn: no
   changed_when: false
   ignore_errors: true
   tags:
-    - debian
-    - server
+    - ubuntu
 
 - name: vagrant plugin install vagrant-libvirt
   command: vagrant plugin install vagrant-libvirt
   become: true
   become_user: "{{ username }}"
-  args:
-    executable: /bin/bash
-    warn: no
   changed_when: false
   tags:
-    - debian
-    - server
+    - ubuntu
 
 - name: Install minikube
   get_url:
@@ -149,8 +132,7 @@
     validate_certs: no
   become: yes
   tags:
-    - server
-    - debian
+    - ubuntu
 
 - name: Install snap packages for helm and microk8s
   snap:
@@ -162,5 +144,4 @@
     - "helm"
     - "microk8s"
   tags:
-    - server
-    - debian
+    - ubuntu

@@ -9,21 +9,18 @@
     validate: grep -ir 'net.ipv6.conf.default.disable_ipv6 = 1' %s
     create: yes
   tags:
-    - debian
-    - server
+    - ubuntu
 
 - name: Install qbittorrent
   package:
     name: qbittorrent
     state: present
   tags:
-    - debian
-    - server
+    - ubuntu
 
 - name: Install qbittorrent-nox
   package:
     name: qbittorrent-nox
     state: present
   tags:
-    - debian
-    - server
+    - ubuntu

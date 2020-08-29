@@ -5,28 +5,28 @@
     name: firefox
     state: present
   tags:
-    - debian
+    - ubuntu
 
 - name: install chromium
   package:
     name: chromium-browser
     state: present
   tags:
-    - debian
+    - ubuntu
 
 - name: install wget
   package:
     name: wget
     state: present
   tags:
-    - debian
+    - ubuntu
 
 - name: install curl
   package:
     name: curl
     state: present
   tags:
-    - debian
+    - ubuntu
 
 - name: Add chrome key if not present
   apt_key:
@@ -35,7 +35,7 @@
     state: present
   become: true
   tags:
-    - debian
+    - ubuntu
 
 - name: Add Google Chrome repo
   apt_repository:
@@ -43,11 +43,11 @@
     update_cache: yes
     state: present
   tags:
-    - debian
+    - ubuntu
 
 - name: Install Google Chrome
   apt:
     name: google-chrome-unstable
     state: present
   tags:
-    - debian
+    - ubuntu

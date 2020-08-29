@@ -4,10 +4,10 @@
     url: https://github.com/keeweb/keeweb/releases/download/v1.15.5/KeeWeb-1.15.5.linux.x64.deb
     dest: /tmp/keeweb.deb
   tags:
-    - debian
+    - ubuntu
 
 - name: Install keeweb package from tmp
   apt:
     deb: /tmp/keeweb.deb
   tags:
-    - debian
+    - ubuntu

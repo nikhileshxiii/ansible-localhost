@@ -8,5 +8,4 @@
       - linux-headers-generic
     state: present
   tags:
-    - debian
-    - server
+    - ubuntu

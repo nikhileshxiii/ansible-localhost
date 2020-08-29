@@ -7,13 +7,11 @@
     state: present
     update_cache: yes
   tags:
-    - debian
+    - ubuntu
 
-- name: Install prereqs - cinnamon, docker, kvm, snapd, libvirt
+- name: Install prereqs - cinnamon
   package:
     state: present
-    name: "{{ item }}"
-  with_items:
-    - cinnamon
+    name: cinnamon
   tags:
-    - debian
+    - ubuntu

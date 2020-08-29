@@ -15,8 +15,7 @@
       - vboxusers
     append: yes
   tags:
-    - debian
-    - server
+    - ubuntu
 
 - name: Remove libvirt users
   become: yes
@@ -24,8 +23,7 @@
     name: "Libvirt"
     state: absent
   tags:
-    - debian
-    - server
+    - ubuntu
 
 - name: Remove qemu users
   become: yes
@@ -33,8 +31,7 @@
     name: "Qemu"
     state: absent
   tags:
-    - debian
-    - server
+    - ubuntu
 
 - name: Remove libvirt qemu users
   become: yes
@@ -42,8 +39,7 @@
     name: "Libvirt Qemu"
     state: absent
   tags:
-    - debian
-    - server
+    - ubuntu
 
 # - name: Add user to sudoers list
 #   lineinfile:
@@ -60,16 +56,14 @@
     dest: /home/{{ username }}/.oh-my-zsh
     version: master
   tags:
-    - debian
-    - server
+    - ubuntu
 
 - name: install powerline fonts
   package:
     name: fonts-powerline
     state: present
   tags:
-    - debian
-    - server
+    - ubuntu
 
 - name: Clone powerline fonts
   git:
@@ -77,26 +71,24 @@
     dest: /home/{{ username }}//.oh-my-zsh/custom/themes/powerlevel9k
     version: master
   tags:
-    - debian
-    - server
+    - ubuntu
 
 - name: check if zsh template file exists
   stat:
     path: /home/{{ username }}/.oh-my-zsh/templates/zshrc.zsh-template
   register: check_zsh_exists
   tags:
-    - debian
-    - server
+    - ubuntu
 
 - name: Copy default zshrc file
   copy:
     src: "/home/{{ username }}/.oh-my-zsh/templates/zshrc.zsh-template"
     dest: "/home/{{ username }}/.zshrc"
+    mode: "744"
     remote_src: yes
   when: check_zsh_exists.stat.exists
   tags:
-    - debian
-    - server
+    - ubuntu
 
 - name: Clone bash-it
   git:
@@ -104,13 +96,13 @@
     dest: /home/{{ username }}/.bash-it
     version: master
   tags:
-    - debian
-    - server
+    - ubuntu
 
 - name: copy alias and export files
   copy:
     src: "{{ item }}"
     dest: /home/{{ username }}/.{{ item }}
+    mode: "744"
   with_items:
     - alias.sh
     - tmux.conf
@@ -119,18 +111,17 @@
   become: yes
   become_user: "{{ username }}"
   tags:
-    - debian
-    - server
+    - ubuntu
 
 - name: copy script to disable ipv6
   copy:
     src: disable-ipv6.sh
     dest: /home/{{ username }}/disable-ipv6.sh
+    mode: "744"
   become: yes
   become_user: "{{ username }}"
   tags:
-    - debian
-    - server
+    - ubuntu
 
 - name: Create ranger config directory if it does not exist
   file:
@@ -140,15 +131,14 @@
   become: yes
   become_user: "{{ username }}"
   tags:
-    - debian
-    - server
+    - ubuntu
 
 - name: copy ranger rc.conf
   copy:
     src: rifle.conf
     dest: /home/{{ username }}/.config/ranger/rifle.conf
+    mode: "755"
   become: yes
   become_user: "{{ username }}"
   tags:
-    - debian
-    - server
+    - ubuntu
