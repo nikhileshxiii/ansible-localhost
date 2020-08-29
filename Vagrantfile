@@ -1,6 +1,7 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
+ENV['VAGRANT_DEFAULT_PROVIDER'] = 'virtualbox'
 # All Vagrant configuration is done below. The "2" in Vagrant.configure
 # configures the configuration version (we support older styles for
 # backwards compatibility). Please don't change it unless you know what
@@ -34,18 +35,9 @@ Vagrant.configure("2") do |config|
     local.vm.network :private_network, :ip => "192.168.60.4"
     config.vm.provision "ansible" do |ansible|
       ansible.playbook = "tests/localmachine.yml"
-      ansible.tags = "debian"
+      # ansible.tags = "ubuntu"
       ansible.skip_tags = "vpnauth"
+      ansible.extra_vars = { ansible_python_interpreter:"/usr/bin/python3" }
     end
   end
-
-  # config.vm.define "servermachine" do | server |
-  #   server.vm.hostname = "servermachine.test"
-  #   server.vm.network :private_network, :ip => "192.168.60.5"
-  #   config.vm.provision "ansible" do |ansible|
-  #     ansible.playbook = "tests/servermachine.yml"
-  #     ansible.tags = "server"
-  #     ansible.skip_tags = "vpnauth"
-  #   end
-  # end
 end
