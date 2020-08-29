@@ -27,12 +27,13 @@
     #   tags:
     #     - ubuntu
 
-    # - name: Update /etc to 777
-    #   file:
-    #     path: /etc/
-    #     state: directory
-    #     mode: "0777"
-    #     recurse: yes
+    - name: Update /root/.ansible/tmp to 777
+      file:
+        path: /root/.ansible/tmp
+        state: directory
+        mode: "0755"
+        recurse: yes
+
   roles:
     - virtualbox
     - new-user

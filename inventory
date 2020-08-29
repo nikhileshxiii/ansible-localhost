@@ -3,9 +3,12 @@
 
 [local:vars]
 ansible_connection=local
+ansible_python_interpreter=/usr/bin/python3
 
 [ubuntumachine]
 192.168.60.4
+
+[ubuntumachine:vars]
 ansible_ssh_user=vagrant
-# ansible_python_interpreter=/usr/bin/python3
+ansible_python_interpreter=/usr/bin/python3
 ansible_ssh_private_key=~/.vagrant.d/insecure_private_key
