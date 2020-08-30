@@ -1,9 +1,8 @@
 ---
-- name: Install snap packages for golang
-  snap:
-    name: go
+- name: Install golang packages
+  package:
+    name: golang
     state: present
-    classic: yes
   tags:
     - ubuntu
 

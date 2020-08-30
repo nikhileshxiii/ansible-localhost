@@ -11,11 +11,10 @@
       assert:
         that: true
 
-    - name: check snap packages for golang
-      snap:
-        name: go
+    - name: check golang package
+      package:
+        name: golang
         state: present
-        classic: yes
       check_mode: yes
       register: go_status
 
