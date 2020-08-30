@@ -1,0 +1,14 @@
+---
+- hosts: "ubuntumachine"
+  become: yes
+  become_method: sudo
+
+  vars_files:
+    - ../vars/default/main.yml
+    - ../vars/default/main_ubuntumachine.yml
+
+  tasks:
+    - name: Install python3 stuff
+      apt:
+        name: ["python3", "python3-venv", "python3-pip"]
+        state: present
