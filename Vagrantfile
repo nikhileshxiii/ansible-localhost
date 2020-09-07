@@ -41,9 +41,17 @@ Vagrant.configure("2") do |config|
     local.vm.hostname = "ubuntumachine"
     local.vm.network :private_network, :ip => "192.168.60.4"
     config.vm.provision "shell", inline: <<-SHELL
-      apt-get update
-      apt-get install -y python3 python3-venv python3-pip
+    #   apt-get update
+    #   apt-get install -y python3 python3-venv python3-pip
+      sudo systemctl restart sshd
     SHELL
+
+    config.vm.provision "ansible" do |ansible|
+      ansible.limit = "all"
+      ansible.playbook = "tests/python3.yml"
+      # ansible.inventory_path = "tests/inventory"
+      ansible.extra_vars = { ansible_python_interpreter:"/usr/bin/python3" }
+    end
 
     config.vm.provision "ansible" do |ansible|
       ansible.limit = "all"
