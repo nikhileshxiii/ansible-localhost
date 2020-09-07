@@ -98,18 +98,40 @@
   tags:
     - ubuntu
 
+- name: Install bash-it bashrc
+  shell: ~/.bash-it/install.sh
+  args:
+    executable: "/bin/bash"
+  become_user: "{{ username }}"
+  tags:
+    - ubuntu
+
 - name: copy alias and export files
   copy:
     src: "{{ item }}"
     dest: /home/{{ username }}/.{{ item }}
     mode: "744"
   with_items:
-    - alias.sh
     - tmux.conf
     - source.sh
-    - bashrc # - zshrc
   become: yes
   become_user: "{{ username }}"
+  tags:
+    - ubuntu
+
+- name: lineinfile add source.sh in bashrc
+  lineinfile:
+    line: source ~/.source.sh
+    dest: /home/{{ username }}/.bashrc
+    validate: "grep -ir 'source ~/.source.sh' %s"
+  tags:
+    - ubuntu
+
+- name: lineinfile add source.sh in zshrc
+  lineinfile:
+    line: source ~/.source.sh
+    dest: /home/{{ username }}/.zshrc
+    validate: "grep -ir 'source ~/.source.sh' %s"
   tags:
     - ubuntu
 

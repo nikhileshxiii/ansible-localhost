@@ -56,11 +56,6 @@
         path: /home/{{ username }}/.bash-it
       register: bash_it_status
 
-    - name: Clone alias.sh
-      stat:
-        path: /home/{{ username }}/.alias.sh
-      register: alias_sh_status
-
     - name: Clone tmux conf
       stat:
         path: /home/{{ username }}/.tmux.conf
@@ -95,7 +90,6 @@
           - powerline_status.stat.exists
           - zshrc_status.stat.exists
           - bash_it_status.stat.exists
-          - alias_sh_status.stat.exists
           - tmux_conf_status.stat.exists
           - source_sh_status.stat.exists
           - disable_ipv6_sh_status.stat.exists
