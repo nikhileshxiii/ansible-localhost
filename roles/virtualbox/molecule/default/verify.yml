@@ -30,6 +30,8 @@
           - libvirt-dev
           - bridge-utils
           - virt-manager
+          - kubectl
+          - helm
         state: present
       check_mode: yes
       register: packages_status
@@ -53,13 +55,6 @@
         path: /usr/local/bin/minikube
       register: minikube_status
 
-    - name: snap status
-      snap:
-        name: ["helm", "microk8s"]
-        state: present
-        classic: yes
-      register: snap_status
-
     - name: Assert installations
       assert:
         that:
@@ -68,4 +63,3 @@
           - "vagrant_plugin_list.stdout is search('mutate')"
           - not docker_json_status.stat.exists
           - minikube_status.stat.exists
-          - not snap_status.changed

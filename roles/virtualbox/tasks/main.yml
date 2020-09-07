@@ -134,14 +134,47 @@
   tags:
     - ubuntu
 
-- name: Install snap packages for helm and microk8s
-  snap:
-    name: "{{ item }}"
+- name: Add kubectl key
+  apt_key:
+    url: https://packages.cloud.google.com/apt/doc/apt-key.gpg
     state: present
-    classic: yes
-    channel: edge
-  with_items:
-    - "helm"
-    - "microk8s"
+  tags:
+    - ubuntu
+
+- name: Add kubectl apt_repository
+  apt_repository:
+    repo: deb https://apt.kubernetes.io/ kubernetes-xenial main
+    path: /etc/apt/sources.list.d/kubernetes.list
+    update_cache: yes
+  tags:
+    - ubuntu
+
+- name: Install kubectl
+  apt:
+    name: kubectl
+    state: present
+  tags:
+    - ubuntu
+
+- name: Add helm apt key
+  apt_key:
+    url: https://baltocdn.com/helm/signing.asc
+    state: present
+    update_cache: yes
+  tags:
+    - ubuntu
+
+- name: Add helm apt_repository
+  apt_repository:
+    repo: "deb https://baltocdn.com/helm/stable/debian/ all main"
+    state: present
+    filename: /etc/apt/sources.list.d/helm-stable-debian.list
+    update_cache: yes
+  tags:
+    - ubuntu
+- name: Install helm
+  apt:
+    name: helm
+    state: present
   tags:
     - ubuntu
