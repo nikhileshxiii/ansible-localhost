@@ -95,6 +95,8 @@
     repo: https://github.com/Bash-it/bash-it.git
     dest: /home/{{ username }}/.bash-it
     version: master
+  become: yes
+  become_user: "{{ username }}"
   tags:
     - ubuntu
 
@@ -102,7 +104,10 @@
   shell: ~/.bash-it/install.sh
   args:
     executable: "/bin/bash"
+  become: yes
   become_user: "{{ username }}"
+  register: install_bash_it_result
+  failed_when: install_bash_it_result.rc > 2
   tags:
     - ubuntu
 

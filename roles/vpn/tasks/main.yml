@@ -7,7 +7,6 @@
   tags:
     - ubuntu
 
-
 - name: Create /etc/openvpn
   file:
     path: /etc/openvpn
@@ -26,14 +25,12 @@
   tags:
     - ubuntu
 
-
 - name: openvpn easy-rsa
   file:
     state: directory
     path: /etc/openvpn/easy-rsa
   tags:
     - ubuntu
-
 
 - name: Unzip openvpn profiles
   unarchive:
@@ -43,54 +40,4 @@
     creates: "/etc/openvpn/ovpn_tcp"
   tags:
     - ubuntu
-
-    - vpnauth
-
-- name: find nordvpn servers
-  find:
-    paths:
-      - "/etc/openvpn/ovpn_tcp/"
-      - "/etc/openvpn/ovpn_udp/"
-    patterns: "*.ovpn"
-  register: nordvpnservers
-  tags:
-    - ubuntu
-
-    - vpnauth
-
-# - name: Print all openvpn profiles
-#   debug:
-#     msg: nordvpnservers = {{ nordvpnservers }}
-#   tags:
-#     - ubuntu
-# 
-#     - vpnauth
-
-- name: Add credential in the openvpn profiles files
-  replace:
-    path: "{{ item.path }}"
-    regexp: "^(auth-user-pass[ ]*$)"
-    replace: "auth-user-pass nordvpnauth.txt"
-  with_items: "{{ nordvpnservers.files }}"
-  tags:
-    - ubuntu
-
-    - vpnauth
-
-- name: Copy nordvpnauth.txt to tcp profiles
-  copy:
-    src: /home/{{ username }}/nordvpnauth.txt
-    dest: "/etc/openvpn/ovpn_tcp/nordvpnauth.txt"
-  tags:
-    - ubuntu
-
-    - vpnauth
-
-- name: Copy nordvpnauth.txt to udp profiles
-  copy:
-    src: /home/{{ username }}/nordvpnauth.txt
-    dest: "/etc/openvpn/ovpn_udp/nordvpnauth.txt"
-  tags:
-    - ubuntu
-
     - vpnauth
