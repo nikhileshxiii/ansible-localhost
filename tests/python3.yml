@@ -8,6 +8,10 @@
     - ../vars/default/main_ubuntumachine.yml
 
   tasks:
+    - name: Update cache
+      apt:
+        update_cache: yes
+
     - name: Install python3 stuff
       apt:
         name: ["python3", "python3-venv", "python3-pip"]

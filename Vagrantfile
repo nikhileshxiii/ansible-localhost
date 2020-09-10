@@ -43,7 +43,7 @@ Vagrant.configure("2") do |config|
     config.vm.provision "shell", inline: <<-SHELL
     #   apt-get update
     #   apt-get install -y python3 python3-venv python3-pip
-      sudo systemctl restart sshd
+    #   sudo systemctl restart sshd
     SHELL
 
     config.vm.provision "ansible" do |ansible|

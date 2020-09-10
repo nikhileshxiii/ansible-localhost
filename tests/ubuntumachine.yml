@@ -8,26 +8,6 @@
     - ../vars/default/main_ubuntumachine.yml
 
   pre_tasks:
-    - name: touch norvpn.txt
-      file:
-        state: touch
-        path: /home/{{ username }}/nordvpn.txt
-        mode: "0777"
-      become_user: "{{ username }}"
-      changed_when: false
-
-    # - name: Creating a user named {{ username }} on the specified machine with groups.
-    #   user:
-    #     name: "{{ username }}"
-    #     state: present
-    #     shell: /bin/bash
-    #     groups:
-    #       - sudo
-    #       - "{{ username }}"
-    #     append: yes
-    #   tags:
-    #     - ubuntu
-
     - name: Update /root/.ansible/tmp to 777
       file:
         path: /root/.ansible/tmp
@@ -35,53 +15,29 @@
         mode: "0755"
         recurse: yes
 
-    - name: Clone bash-it
-      git:
-        repo: https://github.com/Bash-it/bash-it.git
-        dest: /home/{{ username }}/.bash-it
-        version: master
-      become_user: "{{ username }}"
-      tags:
-        - ubuntu
+  roles:
+    - virtualbox
+    - new-user
+    - dev
+    - linux-headers
+    - players
+    - tools
+    - vim
+    - ides
+    - browsers
+    - keeweb
+    - torrent
+    - vpn
 
-    - name: Install bash-it bashrc
-      shell: ~/.bash-it/install.sh
-      args:
-        executable: "/bin/bash"
-      become_user: "{{ username }}"
-      tags:
-        - ubuntu
-
-    - name: lineinfile add source.sh in bashrc
-      lineinfile:
-        line: source ~/.source.sh
-        dest: /home/{{ username }}/.bashrc
-        validate: "grep -ir 'source ~/.source.sh' %s"
-      tags:
-        - ubuntu
-  # roles:
-  #   - virtualbox
-  #   - new-user
-  #   - dev
-  #   - linux-headers
-  #   - players
-  #   - tools
-  #   - vim
-  #   - ides
-  #   - browsers
-  #   - keeweb
-  #   - torrent
-  #   - vpn
-
-# - import_playbook: "../roles/virtualbox/molecule/default/verify.yml username=vagrant"
-# - import_playbook: "../roles/new-user/molecule/default/verify.yml username=vagrant"
-# - import_playbook: "../roles/dev/molecule/default/verify.yml username=vagrant"
-# - import_playbook: "../roles/linux-headers/molecule/default/verify.yml username=vagrant"
-# - import_playbook: "../roles/players/molecule/default/verify.yml username=vagrant"
-# - import_playbook: "../roles/tools/molecule/default/verify.yml username=vagrant"
-# - import_playbook: "../roles/vim/molecule/default/verify.yml username=vagrant"
-# - import_playbook: "../roles/ides/molecule/default/verify.yml username=vagrant"
-# - import_playbook: "../roles/browsers/molecule/default/verify.yml username=vagrant"
-# - import_playbook: "../roles/keeweb/molecule/default/verify.yml username=vagrant"
-# - import_playbook: "../roles/torrent/molecule/default/verify.yml username=vagrant"
-# - import_playbook: "../roles/vpn/molecule/default/verify.yml username=vagrant"
+- import_playbook: "../roles/virtualbox/molecule/default/verify.yml username=vagrant"
+- import_playbook: "../roles/new-user/molecule/default/verify.yml username=vagrant"
+- import_playbook: "../roles/dev/molecule/default/verify.yml username=vagrant"
+- import_playbook: "../roles/linux-headers/molecule/default/verify.yml username=vagrant"
+- import_playbook: "../roles/players/molecule/default/verify.yml username=vagrant"
+- import_playbook: "../roles/tools/molecule/default/verify.yml username=vagrant"
+- import_playbook: "../roles/vim/molecule/default/verify.yml username=vagrant"
+- import_playbook: "../roles/ides/molecule/default/verify.yml username=vagrant"
+- import_playbook: "../roles/browsers/molecule/default/verify.yml username=vagrant"
+- import_playbook: "../roles/keeweb/molecule/default/verify.yml username=vagrant"
+- import_playbook: "../roles/torrent/molecule/default/verify.yml username=vagrant"
+- import_playbook: "../roles/vpn/molecule/default/verify.yml username=vagrant"
