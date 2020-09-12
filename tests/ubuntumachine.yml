@@ -17,27 +17,27 @@
 
   roles:
     - virtualbox
-    - new-user
-    - dev
-    - linux-headers
-    - players
-    - tools
-    - vim
-    - ides
-    - browsers
-    - keeweb
-    - torrent
-    - vpn
+    # - new-user
+    # - dev
+    # - linux-headers
+    # - players
+    # - tools
+    # - vim
+    # - ides
+    # - browsers
+    # - keeweb
+    # - torrent
+    # - vpn
 
 - import_playbook: "../roles/virtualbox/molecule/default/verify.yml username=vagrant"
-- import_playbook: "../roles/new-user/molecule/default/verify.yml username=vagrant"
-- import_playbook: "../roles/dev/molecule/default/verify.yml username=vagrant"
-- import_playbook: "../roles/linux-headers/molecule/default/verify.yml username=vagrant"
-- import_playbook: "../roles/players/molecule/default/verify.yml username=vagrant"
-- import_playbook: "../roles/tools/molecule/default/verify.yml username=vagrant"
-- import_playbook: "../roles/vim/molecule/default/verify.yml username=vagrant"
-- import_playbook: "../roles/ides/molecule/default/verify.yml username=vagrant"
-- import_playbook: "../roles/browsers/molecule/default/verify.yml username=vagrant"
-- import_playbook: "../roles/keeweb/molecule/default/verify.yml username=vagrant"
-- import_playbook: "../roles/torrent/molecule/default/verify.yml username=vagrant"
-- import_playbook: "../roles/vpn/molecule/default/verify.yml username=vagrant"
+# - import_playbook: "../roles/new-user/molecule/default/verify.yml username=vagrant"
+# - import_playbook: "../roles/dev/molecule/default/verify.yml username=vagrant"
+# - import_playbook: "../roles/linux-headers/molecule/default/verify.yml username=vagrant"
+# - import_playbook: "../roles/players/molecule/default/verify.yml username=vagrant"
+# - import_playbook: "../roles/tools/molecule/default/verify.yml username=vagrant"
+# - import_playbook: "../roles/vim/molecule/default/verify.yml username=vagrant"
+# - import_playbook: "../roles/ides/molecule/default/verify.yml username=vagrant"
+# - import_playbook: "../roles/browsers/molecule/default/verify.yml username=vagrant"
+# - import_playbook: "../roles/keeweb/molecule/default/verify.yml username=vagrant"
+# - import_playbook: "../roles/torrent/molecule/default/verify.yml username=vagrant"
+# - import_playbook: "../roles/vpn/molecule/default/verify.yml username=vagrant"
