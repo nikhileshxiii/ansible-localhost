@@ -11,55 +11,76 @@
       assert:
         that: true
 
-    - name: Get all packages status
+    - name: Prereq packages
       apt:
         name:
           - apt-transport-https
           - ca-certificates
           - software-properties-common
-          - virtualbox-6.1
-          - vagrant
-          - docker-compose
-          - docker
-          - docker.io
-          - lxd
-          - virtinst
-          - qemu-kvm
-          - libvirt-daemon-system
-          - libvirt-clients
-          - libvirt-dev
-          - bridge-utils
-          - virt-manager
-          - kubectl
-          - helm
         state: present
       check_mode: yes
-      register: packages_status
+      register: prereq_packages_status
 
-    - name: vagrant plugin list
-      command: vagrant plugin list
-      become: true
-      become_user: "{{ username }}"
-      args:
-        # executable: /bin/bash
-        warn: yes
-      register: vagrant_plugin_list
+    - name: Install packages
+      apt:
+        state: present
+        name:
+          [
+            "vagrant",
+            "virtualbox-6.1",
+            "docker-compose",
+            "docker",
+            "docker.io",
+            "lxd",
+          ]
+      check_mode: yes
+      register: vagrant_vb_docker_packages_status
+
+    - name: Install packages
+      apt:
+        state: fixed
+        name:
+          [
+            "ruby-libvirt",
+            "qemu-kvm",
+            "libvirt-daemon-system",
+            "libvirt-clients",
+            "libvirt-dev",
+            "bridge-utils",
+            "virtinst",
+            "virt-manager",
+          ]
+      become: yes
+      check_mode: yes
+      register: qemu_packages_status
+
+    # - name: vagrant plugin list
+    #   command: vagrant plugin list
+    #   become: true
+    #   become_user: "{{ username }}"
+    #   args:
+    #     # executable: /bin/bash
+    #     warn: yes
+    #   register: vagrant_plugin_list
+    #   changed_when: false
 
     - name: Remove /etc/docker/daemon.json
       stat:
         path: /etc/docker/daemon.json
       register: docker_json_status
 
-    - name: Remove /usr/local/bin/minikube
-      stat:
-        path: /usr/local/bin/minikube
-      register: minikube_status
+    # - name: Remove /usr/local/bin/minikube
+    #   stat:
+    #     path: /usr/local/bin/minikube
+    #   register: minikube_status
 
     - name: Assert installations
       assert:
         that:
-          - not packages_status.changed
-          - "vagrant_plugin_list.stdout is search('libvirt')"
-          - "vagrant_plugin_list.stdout is search('mutate')"
+          - not prereq_packages_status.changed
+          - not qemu_packages_status.changed
+          - not vagrant_vb_docker_packages_status.changed
+          # - "vagrant_plugin_list.stdout is search('libvirt')"
+          # - "vagrant_plugin_list.stdout is search('mutate')"
           - not docker_json_status.stat.exists
-          - minikube_status.stat.exists
+          # - minikube_status.stat.exists
